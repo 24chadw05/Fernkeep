@@ -1,0 +1,480 @@
+{
+  "comment": "Quest chains in Fernkeep. Each citizen has a storyline. Quests unlock buildings, recipes, and city events.",
+
+  "quests": {
+
+    "intro_first_citizen": {
+      "id": "intro_first_citizen",
+      "name": "A Familiar Face",
+      "chain": "intro",
+      "chain_order": 1,
+      "type": "arrival",
+      "trigger": { "event": "first_citizen_arrives" },
+      "description": "A wanderer has arrived at your hamlet. They need a place to stay.",
+      "objectives": [
+        { "id": "build_house", "type": "build", "building": "house", "count": 1, "description": "Build a house for the new arrival." }
+      ],
+      "rewards": {
+        "gold": 50,
+        "xp": 25,
+        "unlock_quest": "intro_first_income"
+      },
+      "dialogue": {
+        "start": "Well, look at this place. Could use some work, but it's got potential. You wouldn't happen to have a spare room, would you?",
+        "complete": "That'll do nicely! I'll get settled in. Maybe others will follow once word gets around."
+      }
+    },
+
+    "intro_first_income": {
+      "id": "intro_first_income",
+      "name": "Earn Your Keep",
+      "chain": "intro",
+      "chain_order": 2,
+      "type": "economy",
+      "trigger": { "quest_completed": "intro_first_citizen" },
+      "description": "Your first citizen is settled. Time to start generating some income.",
+      "objectives": [
+        { "id": "collect_gold", "type": "collect", "resource": "gold", "amount": 100, "description": "Collect 100 gold from passive income." }
+      ],
+      "rewards": {
+        "gold": 75,
+        "xp": 30,
+        "unlock_quest": "intro_build_tavern"
+      },
+      "dialogue": {
+        "start": "A town needs income to grow. Let the gold flow in and see what happens.",
+        "complete": "Now you're talking. With gold in the treasury, we can start building something real."
+      }
+    },
+
+    "intro_build_tavern": {
+      "id": "intro_build_tavern",
+      "name": "The First Round",
+      "chain": "intro",
+      "chain_order": 3,
+      "type": "build",
+      "trigger": { "quest_completed": "intro_first_income" },
+      "description": "Every good settlement needs a gathering place.",
+      "objectives": [
+        { "id": "build_tavern", "type": "build", "building": "tavern", "count": 1, "description": "Build a tavern." },
+        { "id": "assign_staff", "type": "assign", "building": "tavern", "count": 1, "description": "Assign a citizen as tavern staff." }
+      ],
+      "rewards": {
+        "gold": 100,
+        "xp": 50,
+        "unlock_quest": "intro_first_quest_board",
+        "unlock_recipe": "forest_mushroom_soup"
+      },
+      "dialogue": {
+        "start": "People need a place to eat, drink, and hear the news. Build a tavern and it'll pay for itself.",
+        "complete": "Ahh, now that smells like a real town. I'll be a regular, I promise."
+      }
+    },
+
+    "intro_first_quest_board": {
+      "id": "intro_first_quest_board",
+      "name": "Word Gets Around",
+      "chain": "intro",
+      "chain_order": 4,
+      "type": "progression",
+      "trigger": { "quest_completed": "intro_build_tavern" },
+      "description": "Citizens are starting to talk. Post a notice to attract more arrivals.",
+      "objectives": [
+        { "id": "reach_citizens", "type": "stat", "stat": "citizen_count", "value": 5, "description": "Reach 5 citizens in your city." }
+      ],
+      "rewards": {
+        "gold": 150,
+        "xp": 75,
+        "reputation": 10,
+        "unlock_quest": "npc_chain_aldric_1"
+      },
+      "dialogue": {
+        "start": "Five people. That's not a hamlet anymore — that's a village in the making.",
+        "complete": "Look at that. People are coming. Let's make sure they want to stay."
+      }
+    },
+
+    "npc_chain_aldric_1": {
+      "id": "npc_chain_aldric_1",
+      "name": "The Wandering Cook",
+      "chain": "npc_aldric",
+      "chain_order": 1,
+      "type": "npc_story",
+      "trigger": { "quest_completed": "intro_first_quest_board", "npc_skill": "cook" },
+      "npc_archetype": "cook",
+      "description": "A cook has arrived claiming they can change the whole reputation of your tavern — if you give them a proper kitchen.",
+      "objectives": [
+        { "id": "upgrade_tavern", "type": "upgrade", "building": "tavern", "level": 2, "description": "Upgrade the tavern to level 2." }
+      ],
+      "rewards": {
+        "gold": 200,
+        "xp": 100,
+        "reputation": 15,
+        "unlock_quest": "npc_chain_aldric_2",
+        "unlock_recipe": "honey_glazed_root_vegetables"
+      },
+      "dialogue": {
+        "start": "You've got good ingredients in this land. But that kitchen? I've seen better setups in a cave. Upgrade it and I'll make you something worth talking about.",
+        "complete": "Much better. Now stand back and let me work."
+      }
+    },
+
+    "npc_chain_aldric_2": {
+      "id": "npc_chain_aldric_2",
+      "name": "A Recipe Worth Keeping",
+      "chain": "npc_aldric",
+      "chain_order": 2,
+      "type": "gathering",
+      "trigger": { "quest_completed": "npc_chain_aldric_1" },
+      "npc_archetype": "cook",
+      "description": "The cook needs wild honey from the forest for a special dish.",
+      "objectives": [
+        { "id": "gather_honey", "type": "gather", "ingredient": "wild_honey", "count": 5, "description": "Gather 5 wild honey through foraging." }
+      ],
+      "rewards": {
+        "gold": 150,
+        "xp": 80,
+        "reputation": 20,
+        "unlock_quest": "npc_chain_aldric_3",
+        "unlock_recipe": "herb_roasted_boar"
+      },
+      "dialogue": {
+        "start": "There's wild honey out there in that forest. Bring me five jars and I'll make a dish this town will never forget.",
+        "complete": "Perfect. Golden, fragrant, exactly right. Watch what happens to your tavern's reputation after tonight."
+      }
+    },
+
+    "npc_chain_aldric_3": {
+      "id": "npc_chain_aldric_3",
+      "name": "The Feast of Fernkeep",
+      "chain": "npc_aldric",
+      "chain_order": 3,
+      "type": "city_event",
+      "trigger": { "quest_completed": "npc_chain_aldric_2" },
+      "npc_archetype": "cook",
+      "description": "The cook wants to host a feast for the whole city. It'll cost you, but the reputation gain will be enormous.",
+      "objectives": [
+        { "id": "spend_gold", "type": "spend", "resource": "gold", "amount": 300, "description": "Fund the feast (300 gold)." },
+        { "id": "city_happiness", "type": "stat", "stat": "city_happiness", "value": 70, "description": "Maintain 70%+ city happiness during the feast." }
+      ],
+      "rewards": {
+        "gold": 0,
+        "xp": 200,
+        "reputation": 50,
+        "city_happiness_bonus": 15.0,
+        "unlock_quest": null,
+        "permanent_unlock": "seasonal_harvest_feast_recipe"
+      },
+      "dialogue": {
+        "start": "I want to cook for everyone. One great feast — the kind that people talk about for years. It'll cost, but Fernkeep will never be the same after.",
+        "complete": "Did you see their faces? This city has a reputation now. I'm staying as long as you'll have me."
+      }
+    },
+
+    "npc_chain_enchanter_1": {
+      "id": "npc_chain_enchanter_1",
+      "name": "The Arriving Enchanter",
+      "chain": "npc_enchanter",
+      "chain_order": 1,
+      "type": "npc_story",
+      "trigger": { "npc_special_skill": "enchanter" },
+      "npc_archetype": "enchanter",
+      "description": "A rare enchanter has arrived. They'll settle here — but only if you have a magic tower.",
+      "objectives": [
+        { "id": "build_magic_tower", "type": "build", "building": "magic_tower", "count": 1, "description": "Build a magic tower." }
+      ],
+      "rewards": {
+        "gold": 250,
+        "xp": 150,
+        "unlock_quest": "npc_chain_enchanter_2"
+      },
+      "dialogue": {
+        "start": "I can feel the ley lines here. Strong ones. But I need a proper place to work. Build me a tower and I'll make this city hum with magic.",
+        "complete": "Yes. This will do. I can already feel the threads of power settling into place."
+      }
+    },
+
+    "npc_chain_enchanter_2": {
+      "id": "npc_chain_enchanter_2",
+      "name": "A Citizen's Charm",
+      "chain": "npc_enchanter",
+      "chain_order": 2,
+      "type": "crafting",
+      "trigger": { "quest_completed": "npc_chain_enchanter_1" },
+      "npc_archetype": "enchanter",
+      "description": "The enchanter wants to brew a Citizen's Charm — a potion that draws better people to the city.",
+      "objectives": [
+        { "id": "gather_flowers", "type": "gather", "ingredient": "rare_flowers", "count": 4, "description": "Gather 4 rare flowers (available in spring)." },
+        { "id": "gather_berries", "type": "gather", "ingredient": "enchanted_berries", "count": 4, "description": "Gather 4 enchanted berries." }
+      ],
+      "time_limit": { "seasons": ["spring"] },
+      "rewards": {
+        "gold": 200,
+        "xp": 120,
+        "unlock_potion": "citizens_charm",
+        "unlock_quest": null
+      },
+      "dialogue": {
+        "start": "The ingredients are seasonal — you'll need to act while spring lasts. Rare flowers and enchanted berries. Get me those and I'll brew something that changes who comes to Fernkeep.",
+        "complete": "There. A Citizen's Charm. Use it wisely — its effects won't last forever, but the citizens it draws will."
+      }
+    },
+
+    "npc_chain_blacksmith_1": {
+      "id": "npc_chain_blacksmith_1",
+      "name": "The Smith's Arrival",
+      "chain": "npc_blacksmith",
+      "chain_order": 1,
+      "type": "npc_story",
+      "trigger": { "npc_special_skill": "blacksmith" },
+      "npc_archetype": "blacksmith",
+      "description": "A rare blacksmith has arrived in town. Their skill alone will unlock a building no one else can build.",
+      "objectives": [
+        { "id": "house_blacksmith", "type": "assign_housing", "npc_skill": "blacksmith", "description": "Ensure the blacksmith has housing." }
+      ],
+      "rewards": {
+        "gold": 0,
+        "xp": 100,
+        "unlock_building": "blacksmith",
+        "unlock_quest": "npc_chain_blacksmith_2"
+      },
+      "dialogue": {
+        "start": "I've heard there's room in this city for a smith. Give me a place to live and I'll show you what proper craftsmanship looks like.",
+        "complete": "Right. Now — are you going to build me a forge, or shall I just make do with a fire pit?"
+      }
+    },
+
+    "npc_chain_blacksmith_2": {
+      "id": "npc_chain_blacksmith_2",
+      "name": "First Fire",
+      "chain": "npc_blacksmith",
+      "chain_order": 2,
+      "type": "build",
+      "trigger": { "quest_completed": "npc_chain_blacksmith_1" },
+      "npc_archetype": "blacksmith",
+      "description": "The blacksmith is ready to work. Build their forge.",
+      "objectives": [
+        { "id": "build_blacksmith", "type": "build", "building": "blacksmith", "count": 1, "description": "Build a blacksmith." },
+        { "id": "assign_blacksmith", "type": "assign", "building": "blacksmith", "npc_skill": "blacksmith", "description": "Assign the blacksmith as staff." }
+      ],
+      "rewards": {
+        "gold": 300,
+        "xp": 200,
+        "city_bonus": { "building_cost_reduction": 0.05 },
+        "unlock_quest": null
+      },
+      "dialogue": {
+        "start": "Stone, ore, and a proper bellows. That's all I need. Give me those and I'll make tools that last a lifetime.",
+        "complete": "First fire's lit. First blade's already cooling. You'll notice the difference in your building costs — good tools make good builders."
+      }
+    },
+
+    "seasonal_spring_bloom": {
+      "id": "seasonal_spring_bloom",
+      "name": "The Bloom Festival",
+      "chain": "seasonal",
+      "chain_order": 1,
+      "type": "seasonal_event",
+      "trigger": { "season_start": "spring" },
+      "description": "Spring has arrived. Citizens want floral decorations and light herb dishes. A happy city earns bonus gold during the festival.",
+      "objectives": [
+        { "id": "serve_bloom_tea", "type": "serve_dish", "dish": "bloom_festival_tea", "count": 10, "description": "Serve 10 Bloom Festival Teas at the tavern." },
+        { "id": "city_happiness_spring", "type": "stat", "stat": "city_happiness", "value": 75, "description": "Maintain 75%+ city happiness through the festival." }
+      ],
+      "time_limit": { "season_duration": "full" },
+      "rewards": {
+        "gold": 300,
+        "xp": 100,
+        "reputation": 25,
+        "seasonal_bonus": { "type": "income_bonus", "value": 0.1, "duration_days": 3 }
+      }
+    },
+
+    "seasonal_summer_harvest": {
+      "id": "seasonal_summer_harvest",
+      "name": "The Harvest Rush",
+      "chain": "seasonal",
+      "chain_order": 2,
+      "type": "seasonal_event",
+      "trigger": { "season_start": "summer" },
+      "description": "Summer brings a rush of merchants and doubled farm output. Make the most of it.",
+      "objectives": [
+        { "id": "farm_output", "type": "produce", "building": "farm", "ingredient_any": true, "count": 30, "description": "Produce 30 farm ingredients during the summer." },
+        { "id": "sell_to_caravan", "type": "trade", "trade_type": "caravan", "count": 3, "description": "Complete 3 caravan trades." }
+      ],
+      "time_limit": { "season_duration": "full" },
+      "rewards": {
+        "gold": 500,
+        "xp": 150,
+        "reputation": 30,
+        "unlock_quest": "harvest_festival_quest"
+      }
+    },
+
+    "harvest_festival_quest": {
+      "id": "harvest_festival_quest",
+      "name": "The Grand Harvest Feast",
+      "chain": "seasonal",
+      "chain_order": 3,
+      "type": "cooking_challenge",
+      "trigger": { "quest_completed": "seasonal_summer_harvest" },
+      "description": "The summer fair calls for a grand feast. Prepare the Seasonal Harvest Feast for the whole city.",
+      "objectives": [
+        { "id": "unlock_feast_recipe", "type": "cook", "dish": "seasonal_harvest_feast", "count": 1, "description": "Cook the Seasonal Harvest Feast." }
+      ],
+      "rewards": {
+        "gold": 400,
+        "xp": 250,
+        "reputation": 60,
+        "unlock_recipe": "seasonal_harvest_feast",
+        "city_happiness_bonus": 20.0
+      }
+    },
+
+    "seasonal_autumn_wanderer": {
+      "id": "seasonal_autumn_wanderer",
+      "name": "The Wanderer's Moon",
+      "chain": "seasonal",
+      "chain_order": 4,
+      "type": "seasonal_event",
+      "trigger": { "season_start": "autumn" },
+      "description": "Autumn brings mysterious travellers with rare quests and enchanted ingredients.",
+      "objectives": [
+        { "id": "brew_autumn_potion", "type": "craft_potion", "potion": "autumn_brew", "count": 2, "description": "Brew 2 Wanderer's Moon potions." },
+        { "id": "accept_mysterious_npc", "type": "accept_arrival", "npc_type": "mysterious", "count": 1, "description": "Accept one mysterious autumn arrival." }
+      ],
+      "time_limit": { "season_duration": "full" },
+      "rewards": {
+        "gold": 350,
+        "xp": 180,
+        "reputation": 35,
+        "seasonal_bonus": { "type": "xp_gain_bonus", "value": 0.15, "duration_days": 5 }
+      }
+    },
+
+    "seasonal_winter_frost": {
+      "id": "seasonal_winter_frost",
+      "name": "The Frost Quiet",
+      "chain": "seasonal",
+      "chain_order": 5,
+      "type": "seasonal_event",
+      "trigger": { "season_start": "winter" },
+      "description": "Winter is hard. Passive income slows and citizens need warmth and food. Keep happiness up to survive the Frost Quiet.",
+      "objectives": [
+        { "id": "serve_cider", "type": "serve_dish", "dish": "winter_spiced_cider", "count": 15, "description": "Serve 15 Winter Spiced Ciders." },
+        { "id": "happiness_winter", "type": "stat", "stat": "city_happiness", "value": 65, "description": "Keep city happiness above 65% through the winter." }
+      ],
+      "time_limit": { "season_duration": "full" },
+      "rewards": {
+        "gold": 250,
+        "xp": 200,
+        "reputation": 50,
+        "unlock_quest": "winter_festival",
+        "seasonal_bonus": { "type": "happiness_bonus_permanent", "value": 2.0 }
+      }
+    },
+
+    "winter_festival": {
+      "id": "winter_festival",
+      "name": "The Winter Festival",
+      "chain": "seasonal",
+      "chain_order": 6,
+      "type": "city_event",
+      "trigger": { "quest_completed": "seasonal_winter_frost" },
+      "description": "You've survived the frost. Throw the Winter Festival — the biggest reputation event of the year.",
+      "objectives": [
+        { "id": "fund_festival", "type": "spend", "resource": "gold", "amount": 500, "description": "Fund the Winter Festival (500 gold)." },
+        { "id": "all_citizens_happy", "type": "stat", "stat": "city_happiness", "value": 80, "description": "Achieve 80%+ city happiness during the festival." }
+      ],
+      "rewards": {
+        "gold": 0,
+        "xp": 400,
+        "reputation": 100,
+        "city_happiness_bonus": 25.0,
+        "permanent_unlock": "winter_festival_decor"
+      },
+      "dialogue": {
+        "start": "The frost is broken. It's time for Fernkeep's greatest celebration.",
+        "complete": "They'll talk about this festival for years. Fernkeep's reputation is known across the land."
+      }
+    },
+
+    "market_first_caravan": {
+      "id": "market_first_caravan",
+      "name": "Strange Visitors",
+      "chain": "market",
+      "chain_order": 1,
+      "type": "trade",
+      "trigger": { "building_level": { "building": "market", "level": 4 } },
+      "description": "A caravan has arrived at the market. Their wares are unusual — and their prices, negotiable.",
+      "objectives": [
+        { "id": "complete_barter", "type": "trade", "trade_type": "barter", "count": 1, "description": "Complete a barter deal with the caravan." }
+      ],
+      "rewards": {
+        "gold": 100,
+        "xp": 60,
+        "reputation": 10,
+        "unlock_quest": "market_trade_route"
+      }
+    },
+
+    "market_trade_route": {
+      "id": "market_trade_route",
+      "name": "The Long Road",
+      "chain": "market",
+      "chain_order": 2,
+      "type": "trade",
+      "trigger": { "quest_completed": "market_first_caravan" },
+      "description": "A merchant wants to establish a regular trade route with Fernkeep. Prove the city can handle the volume.",
+      "objectives": [
+        { "id": "caravan_trades", "type": "trade", "trade_type": "caravan", "count": 5, "description": "Complete 5 caravan trades." },
+        { "id": "market_level", "type": "upgrade", "building": "market", "level": 6, "description": "Upgrade the market to level 6." }
+      ],
+      "rewards": {
+        "gold": 500,
+        "xp": 200,
+        "reputation": 40,
+        "permanent_unlock": "passive_trade_route"
+      },
+      "dialogue": {
+        "start": "Your market has potential. Show me it can handle real volume, and I'll set up a permanent route.",
+        "complete": "Done. You'll see my wagons here regularly now. Fernkeep is officially on the trade map."
+      }
+    },
+
+    "guild_first_expedition": {
+      "id": "guild_first_expedition",
+      "name": "Into the Unknown",
+      "chain": "guild",
+      "chain_order": 1,
+      "type": "expedition",
+      "trigger": { "building_level": { "building": "guild_hall", "level": 7 } },
+      "description": "The guild has dispatched its first expedition. Wait for them to return.",
+      "objectives": [
+        { "id": "dispatch_expedition", "type": "dispatch_expedition", "description": "Dispatch an expedition from the guild hall." },
+        { "id": "await_return", "type": "wait", "duration_days": 3, "description": "Wait 3 in-game days for the expedition to return." }
+      ],
+      "rewards": {
+        "gold": 300,
+        "xp": 250,
+        "loot": { "rare_ingredients": 3, "enchanted_ore": 5 },
+        "unlock_quest": null
+      }
+    }
+  },
+
+  "quest_types": {
+    "arrival":       "Triggered when a new citizen arrives.",
+    "economy":       "Triggered by economic milestones.",
+    "build":         "Triggered by building or upgrading structures.",
+    "npc_story":     "Personal storyline for a specific NPC archetype.",
+    "gathering":     "Collect specific ingredients through foraging, fishing, or farming.",
+    "crafting":      "Craft a specific potion or item at the magic tower.",
+    "cooking_challenge": "Cook a specific dish at the tavern.",
+    "seasonal_event": "Triggered at the start of a season, expires at season end.",
+    "city_event":    "Triggered by player action — a feast, festival, or ceremony.",
+    "trade":         "Related to the market and caravan system.",
+    "expedition":    "Sent out by the guild hall.",
+    "progression":   "Tied to city stat milestones like citizen count or reputation."
+  }
+}

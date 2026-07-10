@@ -1,0 +1,76 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/BuildMenu.gd" id="1_bm"]
+
+[node name="BuildMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+visible = false
+script = ExtResource("1_bm")
+
+[node name="Panel" type="Panel" parent="."]
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -252.0
+offset_bottom = 0.0
+
+[node name="TabBar" type="HBoxContainer" parent="Panel"]
+anchor_right = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = 44.0
+add_theme_constant_override("separation") = 4
+
+[node name="TabBuildings" type="Button" parent="Panel/TabBar"]
+custom_minimum_size = Vector2(100, 0)
+text = "Buildings"
+theme_override_font_sizes/font_size = 13
+
+[node name="TabRoads" type="Button" parent="Panel/TabBar"]
+custom_minimum_size = Vector2(80, 0)
+flat = true
+text = "Roads"
+theme_override_font_sizes/font_size = 13
+
+[node name="TabDecor" type="Button" parent="Panel/TabBar"]
+custom_minimum_size = Vector2(80, 0)
+flat = true
+text = "Decor"
+theme_override_font_sizes/font_size = 13
+
+[node name="Spacer" type="Control" parent="Panel/TabBar"]
+size_flags_horizontal = 3
+
+[node name="SlotsLabel" type="Label" parent="Panel/TabBar"]
+text = "Slots 0 / 4"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.75, 0.85, 1.0, 1.0)
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="Panel/TabBar"]
+custom_minimum_size = Vector2(38, 0)
+text = "✕"
+theme_override_font_sizes/font_size = 16
+
+[node name="HSep" type="HSeparator" parent="Panel"]
+anchor_right = 1.0
+offset_top = 46.0
+offset_bottom = 52.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 54.0
+offset_right = -6.0
+offset_bottom = -6.0
+horizontal_scroll_mode = 1
+vertical_scroll_mode = 0
+
+[node name="ContentBox" type="HBoxContainer" parent="Panel/ScrollContainer"]
+size_flags_vertical = 3
+add_theme_constant_override("separation") = 8

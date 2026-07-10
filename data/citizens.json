@@ -1,0 +1,376 @@
+{
+  "name_pools": {
+    "first_names_male": [
+      "Aldric", "Bastian", "Caelan", "Dorian", "Emric", "Finn", "Gareth",
+      "Hadwin", "Idris", "Jasper", "Kellan", "Lorcan", "Maren", "Norwin",
+      "Osric", "Penn", "Quillan", "Roran", "Stellan", "Theron", "Uric",
+      "Valdis", "Wren", "Xander", "Yorick", "Zane", "Arden", "Bram",
+      "Corwin", "Drake", "Evander", "Faolan", "Gideon", "Holt", "Ivan",
+      "Jarvis", "Keiran", "Leif", "Magnus", "Noel", "Owen", "Pierce",
+      "Quinn", "Rowan", "Soren", "Tam", "Ulric", "Vance", "Wynn"
+    ],
+    "first_names_female": [
+      "Aelith", "Brynn", "Caela", "Dara", "Elowen", "Faye", "Gwen",
+      "Halla", "Iona", "Jessa", "Kira", "Lyra", "Mira", "Nessa",
+      "Orla", "Petra", "Quinn", "Reva", "Sable", "Tara", "Una",
+      "Vesper", "Willa", "Xena", "Yara", "Zola", "Asha", "Brea",
+      "Calla", "Dwyn", "Evren", "Fern", "Glynn", "Hilde", "Isla",
+      "Jora", "Kael", "Lenna", "Maren", "Niamh", "Oona", "Peri",
+      "Rion", "Senna", "Tilda", "Ursa", "Vala", "Wren", "Zara"
+    ],
+    "first_names_neutral": [
+      "Ash", "Blair", "Cedar", "Dawn", "Echo", "Finch", "Grey",
+      "Haze", "Indigo", "Jade", "Kit", "Lark", "Moss", "North",
+      "Oak", "Pax", "Reed", "Sage", "Teal", "Vale"
+    ],
+    "last_names": [
+      "Ashford", "Blackwood", "Copperhill", "Dawnmere", "Elderstone",
+      "Fairweather", "Goldbrook", "Hartwell", "Ironholm", "Jewelmoor",
+      "Kestrel", "Lightbourne", "Millstream", "Northvale", "Oakenshield",
+      "Pinehurst", "Quickwater", "Ravenscroft", "Silverbell", "Thornwick",
+      "Underholt", "Vellmar", "Whitmore", "Yarrow", "Aldgate",
+      "Briarcliff", "Coldwater", "Dustmantle", "Emberglow", "Foxhollow",
+      "Grimshaw", "Hearthstone", "Ivywood", "Junipervale", "Kettlebrook",
+      "Lanternmoor", "Mudforge", "Netherfield", "Orryn", "Pebblemarch",
+      "Quarrystone", "Rustleaf", "Saltmere", "Tumblewick", "Underbarrow",
+      "Vineshadow", "Willowmere", "Crossfield", "Duskmantle", "Fernhollow"
+    ]
+  },
+
+  "wealth_levels": {
+    "1":  { "label": "Destitute",   "rent_multiplier": 0.4, "base_rent": 2.0,  "headhunt_cost": 0    },
+    "2":  { "label": "Poor",        "rent_multiplier": 0.6, "base_rent": 4.0,  "headhunt_cost": 0    },
+    "3":  { "label": "Modest",      "rent_multiplier": 0.8, "base_rent": 6.0,  "headhunt_cost": 0    },
+    "4":  { "label": "Comfortable", "rent_multiplier": 1.0, "base_rent": 8.0,  "headhunt_cost": 0    },
+    "5":  { "label": "Well-off",    "rent_multiplier": 1.2, "base_rent": 12.0, "headhunt_cost": 200  },
+    "6":  { "label": "Prosperous",  "rent_multiplier": 1.5, "base_rent": 18.0, "headhunt_cost": 400  },
+    "7":  { "label": "Wealthy",     "rent_multiplier": 2.0, "base_rent": 28.0, "headhunt_cost": 700  },
+    "8":  { "label": "Rich",        "rent_multiplier": 2.8, "base_rent": 45.0, "headhunt_cost": 1200 },
+    "9":  { "label": "Affluent",    "rent_multiplier": 3.8, "base_rent": 65.0, "headhunt_cost": 2000 },
+    "10": { "label": "Noble",       "rent_multiplier": 5.0, "base_rent": 90.0, "headhunt_cost": 3500 }
+  },
+
+  "job_skills": {
+    "bartender": {
+      "id": "bartender",
+      "label": "Bartender",
+      "rarity": "common",
+      "compatible_buildings": ["tavern"],
+      "happiness_bonus": 20.0,
+      "efficiency_bonus": 0.15,
+      "description": "Keeps patrons happy and drinks flowing. Great tavern staff."
+    },
+    "farmer": {
+      "id": "farmer",
+      "label": "Farmer",
+      "rarity": "common",
+      "compatible_buildings": ["farm"],
+      "happiness_bonus": 18.0,
+      "efficiency_bonus": 0.15,
+      "description": "Knows crops and soil. Farm yield increases with a skilled farmer."
+    },
+    "fisherman": {
+      "id": "fisherman",
+      "label": "Fisherman",
+      "rarity": "common",
+      "compatible_buildings": [],
+      "happiness_bonus": 15.0,
+      "efficiency_bonus": 0.1,
+      "description": "Skilled with rod and net. Catches more and rarer fish."
+    },
+    "cook": {
+      "id": "cook",
+      "label": "Cook",
+      "rarity": "common",
+      "compatible_buildings": ["tavern"],
+      "happiness_bonus": 22.0,
+      "efficiency_bonus": 0.2,
+      "description": "Unlocks additional menu items and improves dish quality."
+    },
+    "merchant": {
+      "id": "merchant",
+      "label": "Merchant",
+      "rarity": "common",
+      "compatible_buildings": ["market"],
+      "happiness_bonus": 18.0,
+      "efficiency_bonus": 0.15,
+      "description": "Negotiates better deals and attracts more caravan traffic."
+    },
+    "herbalist": {
+      "id": "herbalist",
+      "label": "Herbalist",
+      "rarity": "common",
+      "compatible_buildings": ["farm", "magic_tower"],
+      "happiness_bonus": 16.0,
+      "efficiency_bonus": 0.15,
+      "description": "Identifies and cultivates rare herbs. Boosts potion ingredient quality."
+    },
+    "guard": {
+      "id": "guard",
+      "label": "Guard",
+      "rarity": "common",
+      "compatible_buildings": ["guild_hall", "town_hall"],
+      "happiness_bonus": 12.0,
+      "efficiency_bonus": 0.1,
+      "description": "Keeps order in the city. Small city happiness bonus."
+    },
+    "carpenter": {
+      "id": "carpenter",
+      "label": "Carpenter",
+      "rarity": "common",
+      "compatible_buildings": ["guild_hall"],
+      "happiness_bonus": 14.0,
+      "efficiency_bonus": 0.1,
+      "description": "Skilled builder. Slightly reduces wood cost on construction."
+    },
+    "miner": {
+      "id": "miner",
+      "label": "Miner",
+      "rarity": "common",
+      "compatible_buildings": [],
+      "happiness_bonus": 13.0,
+      "efficiency_bonus": 0.1,
+      "description": "Extracts stone and ore efficiently during resource-gathering."
+    },
+    "alchemist": {
+      "id": "alchemist",
+      "label": "Alchemist",
+      "rarity": "uncommon",
+      "compatible_buildings": ["magic_tower"],
+      "happiness_bonus": 25.0,
+      "efficiency_bonus": 0.25,
+      "description": "Brews complex potions and extends their duration. Rare skill."
+    },
+    "scribe": {
+      "id": "scribe",
+      "label": "Scribe",
+      "rarity": "uncommon",
+      "compatible_buildings": ["guild_hall", "town_hall"],
+      "happiness_bonus": 15.0,
+      "efficiency_bonus": 0.12,
+      "description": "Keeps records, speeds up quest resolution times."
+    },
+    "hunter": {
+      "id": "hunter",
+      "label": "Hunter",
+      "rarity": "uncommon",
+      "compatible_buildings": [],
+      "happiness_bonus": 17.0,
+      "efficiency_bonus": 0.1,
+      "description": "Gathers rare meats and pelts during foraging expeditions."
+    },
+    "innkeeper": {
+      "id": "innkeeper",
+      "label": "Innkeeper",
+      "rarity": "uncommon",
+      "compatible_buildings": ["tavern"],
+      "happiness_bonus": 28.0,
+      "efficiency_bonus": 0.2,
+      "description": "Maximises guest satisfaction. Higher nightly room income."
+    },
+    "blacksmith_worker": {
+      "id": "blacksmith_worker",
+      "label": "Blacksmith's Apprentice",
+      "rarity": "uncommon",
+      "compatible_buildings": ["blacksmith"],
+      "happiness_bonus": 20.0,
+      "efficiency_bonus": 0.2,
+      "description": "Assists the master smith. Required for blacksmith at higher levels."
+    },
+    "forager": {
+      "id": "forager",
+      "label": "Forager",
+      "rarity": "common",
+      "compatible_buildings": ["farm"],
+      "happiness_bonus": 14.0,
+      "efficiency_bonus": 0.1,
+      "description": "Gathers wild ingredients efficiently. Unlocks rare forage finds sooner."
+    }
+  },
+
+  "special_skills": {
+    "architect": {
+      "id": "architect",
+      "label": "Architect",
+      "rarity": "rare",
+      "passive_effect": "city_wide",
+      "description": "Unlocks cheaper, faster, and more varied building options city-wide. Just living here is enough.",
+      "effects": {
+        "building_cost_reduction": 0.1,
+        "build_speed_bonus": 0.2,
+        "unlocks_building_variants": true
+      }
+    },
+    "blacksmith": {
+      "id": "blacksmith",
+      "label": "Blacksmith",
+      "rarity": "rare",
+      "passive_effect": "building_unlock",
+      "description": "Their presence unlocks the Blacksmith building. City-wide tool efficiency improves.",
+      "effects": {
+        "unlocks_building": "blacksmith",
+        "tool_efficiency_bonus": 0.1
+      }
+    },
+    "enchanter": {
+      "id": "enchanter",
+      "label": "Enchanter",
+      "rarity": "rare",
+      "passive_effect": "city_wide",
+      "description": "Passively enhances magic tower output. Potion effects last longer city-wide.",
+      "effects": {
+        "magic_tower_income_bonus": 0.15,
+        "potion_duration_bonus": 0.25
+      }
+    },
+    "healer": {
+      "id": "healer",
+      "label": "Healer",
+      "rarity": "rare",
+      "passive_effect": "city_wide",
+      "description": "Citizens in this city recover happiness faster. Illness events reduced.",
+      "effects": {
+        "happiness_recovery_rate": 0.2,
+        "illness_event_reduction": 0.5
+      }
+    },
+    "bard": {
+      "id": "bard",
+      "label": "Bard",
+      "rarity": "rare",
+      "passive_effect": "city_wide",
+      "description": "Their music raises city happiness passively. Reputation gain slightly increased.",
+      "effects": {
+        "city_happiness_bonus": 5.0,
+        "reputation_gain_bonus": 0.1
+      }
+    },
+    "explorer": {
+      "id": "explorer",
+      "label": "Explorer",
+      "rarity": "rare",
+      "passive_effect": "player",
+      "description": "Unlocks new foraging areas and fishing spots on the overworld map sooner.",
+      "effects": {
+        "unlock_speed_bonus": 0.3,
+        "rare_find_chance_bonus": 0.1
+      }
+    },
+    "master_cook": {
+      "id": "master_cook",
+      "label": "Master Cook",
+      "rarity": "legendary",
+      "passive_effect": "city_wide",
+      "description": "Their presence alone raises all tavern income by 20% and unlocks secret recipes.",
+      "effects": {
+        "tavern_income_bonus": 0.2,
+        "unlocks_secret_recipes": true
+      }
+    },
+    "noble": {
+      "id": "noble",
+      "label": "Noble",
+      "rarity": "legendary",
+      "passive_effect": "city_wide",
+      "description": "A noble taking residence dramatically boosts city reputation and attracts wealthy arrivals.",
+      "effects": {
+        "reputation_bonus": 20.0,
+        "wealthy_arrival_chance_bonus": 0.25
+      }
+    }
+  },
+
+  "bad_skills": {
+    "clumsy": {
+      "id": "clumsy",
+      "label": "Clumsy",
+      "description": "Prone to minor accidents. Slight efficiency penalty when assigned to any building.",
+      "effects": { "efficiency_penalty": 0.05 }
+    },
+    "loud": {
+      "id": "loud",
+      "label": "Loud",
+      "description": "Disrupts neighbours. Small happiness penalty to adjacent citizens.",
+      "effects": { "adjacent_happiness_penalty": 3.0 }
+    },
+    "lazy": {
+      "id": "lazy",
+      "label": "Lazy",
+      "description": "Works at reduced speed. Efficiency penalty when assigned as staff.",
+      "effects": { "efficiency_penalty": 0.1 }
+    },
+    "wasteful": {
+      "id": "wasteful",
+      "label": "Wasteful",
+      "description": "Uses more resources than necessary. Slight material cost increase.",
+      "effects": { "resource_cost_increase": 0.08 }
+    },
+    "grumpy": {
+      "id": "grumpy",
+      "label": "Grumpy",
+      "description": "Has a naturally low happiness ceiling. Harder to keep satisfied.",
+      "effects": { "happiness_cap_penalty": 15.0 }
+    },
+    "gossipy": {
+      "id": "gossipy",
+      "label": "Gossipy",
+      "description": "Spreads rumours. Occasional small city happiness dip event.",
+      "effects": { "occasional_happiness_event": -3.0 }
+    },
+    "superstitious": {
+      "id": "superstitious",
+      "label": "Superstitious",
+      "description": "Refuses to work near the magic tower. Happiness penalty if assigned nearby.",
+      "effects": { "magic_tower_proximity_penalty": 10.0 }
+    },
+    "homesick": {
+      "id": "homesick",
+      "label": "Homesick",
+      "description": "Happiness decays slightly faster unless city has high overall happiness.",
+      "effects": { "happiness_decay_rate": 0.05 }
+    },
+    "picky_eater": {
+      "id": "picky_eater",
+      "label": "Picky Eater",
+      "description": "Requires a specific food type in the tavern to maintain happiness.",
+      "effects": { "food_requirement": "specific" }
+    },
+    "night_owl": {
+      "id": "night_owl",
+      "label": "Night Owl",
+      "description": "Less effective in morning shifts. Slight daytime efficiency penalty.",
+      "effects": { "daytime_efficiency_penalty": 0.07 }
+    }
+  },
+
+  "arrival_weights": {
+    "comment": "Probability weights for wealth level by player level bracket. Higher player level = better rolls.",
+    "player_level_1_3": {
+      "wealth_distribution": [20, 30, 25, 15, 7, 2, 1, 0, 0, 0],
+      "special_skill_chance": 0.03,
+      "rare_skill_chance": 0.08
+    },
+    "player_level_4_6": {
+      "wealth_distribution": [5, 15, 25, 25, 15, 8, 5, 2, 0, 0],
+      "special_skill_chance": 0.06,
+      "rare_skill_chance": 0.12
+    },
+    "player_level_7_9": {
+      "wealth_distribution": [0, 5, 15, 20, 20, 18, 12, 7, 2, 1],
+      "special_skill_chance": 0.1,
+      "rare_skill_chance": 0.18
+    },
+    "player_level_10_plus": {
+      "wealth_distribution": [0, 0, 5, 10, 18, 22, 20, 14, 8, 3],
+      "special_skill_chance": 0.15,
+      "rare_skill_chance": 0.25
+    }
+  },
+
+  "age_ranges": {
+    "young":  { "min": 18, "max": 28, "weight": 30 },
+    "adult":  { "min": 29, "max": 45, "weight": 45 },
+    "mature": { "min": 46, "max": 60, "weight": 20 },
+    "elder":  { "min": 61, "max": 80, "weight": 5  }
+  }
+}

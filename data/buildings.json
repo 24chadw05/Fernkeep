@@ -1,0 +1,2083 @@
+{
+  "buildings": {
+	"town_hall": {
+	  "id": "town_hall",
+	  "name": "Town Hall",
+	  "size": [
+		4,
+		4
+	  ],
+	  "max_count": 1,
+	  "unlock": "default",
+	  "description": "The heart of your city. Governs citizen cap, building unlocks, and prestige.",
+	  "positions": [
+		{
+		  "id": "administrator",
+		  "name": "Administrator",
+		  "description": "Manages city records and public order.",
+		  "good_skills": [
+			"scribe",
+			"guard",
+            "merchant"
+		  ],
+		  "bad_skills": [
+			"bartender",
+			"fisherman",
+			"farmer",
+            "cook"
+		  ]
+		},
+		{
+		  "id": "city_guard",
+		  "name": "City Guard",
+		  "description": "Keeps order and deters trouble.",
+		  "good_skills": [
+			"guard",
+            "hunter"
+		  ],
+		  "bad_skills": [
+			"cook",
+			"alchemist",
+			"bartender",
+            "innkeeper"
+		  ]
+		}
+	  ],
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "description": "A modest hall for a fledgling settlement.",
+		  "unlock_condition": "default",
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 0,
+			  "resource_cost": {},
+			  "income_per_minute": 0,
+			  "citizen_cap": 5,
+			  "building_slots": 4,
+			  "reward": "Starting town hall. Basic buildings unlocked."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 200,
+			  "resource_cost": {
+				"wood": 10
+			  },
+			  "income_per_minute": 0,
+			  "citizen_cap": 8,
+			  "building_slots": 6,
+			  "reward": "Citizen cap raised. Two more building slots."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 500,
+			  "resource_cost": {
+				"wood": 20,
+				"stone": 10
+			  },
+			  "income_per_minute": 0,
+			  "citizen_cap": 12,
+			  "building_slots": 8,
+			  "reward": "Citizen cap raised. Market unlocked."
+			}
+		  ]
+		},
+		{
+		  "tier": 2,
+		  "description": "A proper stone hall with banners and a council chamber.",
+		  "unlock_condition": {
+			"player_level": 5,
+			"town_hall_level": 3
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 1200,
+			  "resource_cost": {
+				"stone": 30,
+				"wood": 20
+			  },
+			  "income_per_minute": 0,
+			  "citizen_cap": 18,
+			  "building_slots": 12,
+			  "reward": "Better citizen attribute rolls. Guild hall unlocked."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 2000,
+			  "resource_cost": {
+				"stone": 50,
+				"wood": 30
+			  },
+			  "income_per_minute": 0,
+			  "citizen_cap": 24,
+			  "building_slots": 14,
+			  "reward": "Headhunting unlocked via guild hall. Citizen cap raised."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 3500,
+			  "resource_cost": {
+				"stone": 80,
+				"wood": 40,
+				"enchanted_ore": 5
+			  },
+			  "income_per_minute": 0,
+			  "citizen_cap": 30,
+			  "building_slots": 16,
+			  "reward": "Magic tower unlocked. City-wide +5% happiness bonus."
+			}
+		  ]
+		},
+		{
+		  "tier": 3,
+		  "description": "A grand citadel. The mark of a true kingdom.",
+		  "unlock_condition": {
+			"player_level": 10,
+			"town_hall_level": 6
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 6000,
+			  "resource_cost": {
+				"stone": 150,
+				"enchanted_ore": 20,
+				"wood": 60
+			  },
+			  "income_per_minute": 0,
+			  "citizen_cap": 40,
+			  "building_slots": 20,
+			  "reward": "Prestige option available. City-wide +10% income."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 9000,
+			  "resource_cost": {
+				"stone": 200,
+				"enchanted_ore": 35,
+				"rare_ingredient": 5
+			  },
+			  "income_per_minute": 0,
+			  "citizen_cap": 50,
+			  "building_slots": 24,
+			  "reward": "City-wide buffs unlocked. Seasonal bonus events doubled."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 15000,
+			  "resource_cost": {
+				"stone": 300,
+				"enchanted_ore": 60,
+				"rare_ingredient": 15
+			  },
+			  "income_per_minute": 0,
+			  "citizen_cap": 65,
+			  "building_slots": 30,
+			  "reward": "Maximum tier. Full prestige suite available."
+			}
+		  ]
+		}
+	  ]
+	},
+	"house": {
+	  "id": "house",
+	  "name": "House",
+	  "size": [
+		3,
+		3
+	  ],
+	  "max_count": -1,
+	  "unlock": "default",
+	  "description": "Housing for your citizens. Renters pay daily. Homeowners pay tax.",
+	  "positions": [],
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "description": "A simple wooden cottage.",
+		  "unlock_condition": "default",
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 150,
+			  "resource_cost": {
+				"wood": 8
+			  },
+			  "income_per_minute": 2.0,
+			  "citizen_cap": 2,
+			  "base_rent": 5.0,
+			  "base_tax": 2.0,
+			  "reward": "Houses 2 citizens. Basic rent income."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 300,
+			  "resource_cost": {
+				"wood": 15
+			  },
+			  "income_per_minute": 3.5,
+			  "citizen_cap": 2,
+			  "base_rent": 8.0,
+			  "base_tax": 3.0,
+			  "reward": "Improved comfort. Higher rent ceiling."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 550,
+			  "resource_cost": {
+				"wood": 25,
+				"stone": 5
+			  },
+			  "income_per_minute": 5.0,
+			  "citizen_cap": 2,
+			  "base_rent": 12.0,
+			  "base_tax": 4.5,
+			  "reward": "Well-furnished cottage. Attracts slightly wealthier renters."
+			}
+		  ]
+		},
+		{
+		  "tier": 2,
+		  "description": "A proper stone-and-timber townhouse with an interior.",
+		  "unlock_condition": {
+			"player_level": 3
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 900,
+			  "resource_cost": {
+				"wood": 30,
+				"stone": 20
+			  },
+			  "income_per_minute": 7.0,
+			  "citizen_cap": 4,
+			  "base_rent": 18.0,
+			  "base_tax": 7.0,
+			  "reward": "Houses 4 citizens. Interior unlocked."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 1400,
+			  "resource_cost": {
+				"wood": 40,
+				"stone": 30
+			  },
+			  "income_per_minute": 9.5,
+			  "citizen_cap": 4,
+			  "base_rent": 24.0,
+			  "base_tax": 9.0,
+			  "reward": "Better interiors. Higher happiness from housing."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 2000,
+			  "resource_cost": {
+				"wood": 50,
+				"stone": 45
+			  },
+			  "income_per_minute": 12.0,
+			  "citizen_cap": 4,
+			  "base_rent": 30.0,
+			  "base_tax": 11.0,
+			  "reward": "Grand townhouse. Top-tier rent. Wealthier arrivals likely."
+			}
+		  ]
+		},
+		{
+		  "tier": 3,
+		  "description": "A manor estate. Prestigious and income-generating.",
+		  "unlock_condition": {
+			"player_level": 7,
+			"town_hall_tier": 2
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 4000,
+			  "resource_cost": {
+				"stone": 80,
+				"wood": 50,
+				"enchanted_ore": 5
+			  },
+			  "income_per_minute": 18.0,
+			  "citizen_cap": 6,
+			  "base_rent": 50.0,
+			  "base_tax": 18.0,
+			  "reward": "Manor. Bonus city happiness. Attracts wealthy citizens."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 6000,
+			  "resource_cost": {
+				"stone": 110,
+				"wood": 65,
+				"enchanted_ore": 10
+			  },
+			  "income_per_minute": 24.0,
+			  "citizen_cap": 6,
+			  "base_rent": 65.0,
+			  "base_tax": 23.0,
+			  "reward": "Grand manor gardens. City happiness +3%."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 9000,
+			  "resource_cost": {
+				"stone": 160,
+				"wood": 80,
+				"enchanted_ore": 20,
+				"rare_ingredient": 3
+			  },
+			  "income_per_minute": 32.0,
+			  "citizen_cap": 8,
+			  "base_rent": 85.0,
+			  "base_tax": 30.0,
+			  "reward": "Palatial estate. Maximum prestige housing. Rare NPC arrivals."
+			}
+		  ]
+		}
+	  ]
+	},
+	"tavern": {
+	  "id": "tavern",
+	  "name": "Tavern",
+	  "size": [
+		4,
+		3
+	  ],
+	  "max_count": -1,
+	  "unlock": "default",
+	  "description": "Serves food and drink. Generates income and quest hooks.",
+	  "positions": [
+		{
+		  "id": "bartender",
+		  "name": "Bartender",
+		  "description": "Keeps drinks flowing and patrons happy.",
+		  "good_skills": [
+			"bartender",
+            "innkeeper"
+		  ],
+		  "bad_skills": [
+			"farmer",
+			"miner",
+			"guard",
+            "carpenter"
+		  ]
+		},
+		{
+		  "id": "cook",
+		  "name": "Cook",
+		  "description": "Prepares dishes and unlocks menu items.",
+		  "good_skills": [
+			"cook",
+            "herbalist"
+		  ],
+		  "bad_skills": [
+			"miner",
+			"carpenter",
+			"guard",
+            "farmer"
+		  ]
+		},
+		{
+		  "id": "server",
+		  "name": "Server",
+		  "description": "Keeps tables cleared and guests comfortable.",
+		  "good_skills": [
+			"bartender",
+			"innkeeper",
+            "merchant"
+		  ],
+		  "bad_skills": [
+			"miner",
+			"carpenter",
+			"farmer",
+            "guard"
+		  ]
+		}
+	  ],
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "description": "A rough-hewn alehouse with a few tables.",
+		  "unlock_condition": "default",
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 300,
+			  "resource_cost": {
+				"wood": 15
+			  },
+			  "income_per_minute": 5.0,
+			  "staff_slots": 1,
+			  "menu_slots": 3,
+			  "reward": "Basic food and drink. Rest income."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 550,
+			  "resource_cost": {
+				"wood": 25
+			  },
+			  "income_per_minute": 8.0,
+			  "staff_slots": 2,
+			  "menu_slots": 5,
+			  "reward": "More seating. Second staff slot."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 900,
+			  "resource_cost": {
+				"wood": 35,
+				"stone": 10
+			  },
+			  "income_per_minute": 12.0,
+			  "staff_slots": 2,
+			  "menu_slots": 7,
+			  "reward": "Improved kitchen. First quest hook unlocked."
+			}
+		  ]
+		},
+		{
+		  "tier": 2,
+		  "description": "A proper inn with rooms, a kitchen, and a full menu.",
+		  "unlock_condition": {
+			"player_level": 4
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 1800,
+			  "resource_cost": {
+				"wood": 40,
+				"stone": 20
+			  },
+			  "income_per_minute": 18.0,
+			  "staff_slots": 3,
+			  "menu_slots": 10,
+			  "reward": "Menu unlocks available. Quests appear. Kitchen upgradeable."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 2800,
+			  "resource_cost": {
+				"wood": 55,
+				"stone": 30
+			  },
+			  "income_per_minute": 25.0,
+			  "staff_slots": 4,
+			  "menu_slots": 14,
+			  "reward": "Upgraded kitchen. Caravan merchants may visit."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 4000,
+			  "resource_cost": {
+				"wood": 70,
+				"stone": 45
+			  },
+			  "income_per_minute": 34.0,
+			  "staff_slots": 4,
+			  "menu_slots": 18,
+			  "reward": "Grand inn. Tier 3 branch choice unlocked."
+			}
+		  ]
+		},
+		{
+		  "tier": 3,
+		  "description": "Branch point: Grand Tavern or Cuisine Restaurant.",
+		  "unlock_condition": {
+			"player_level": 8,
+			"tavern_level": 6
+		  },
+		  "branch_options": [
+			"grand_tavern",
+            "cuisine_restaurant"
+		  ],
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 7000,
+			  "resource_cost": {
+				"stone": 80,
+				"wood": 60,
+				"rare_ingredient": 5
+			  },
+			  "income_per_minute": 50.0,
+			  "staff_slots": 6,
+			  "menu_slots": 25,
+			  "reward": "Grand atmosphere. Broad menu. High reputation gain."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 10000,
+			  "resource_cost": {
+				"stone": 110,
+				"wood": 80,
+				"rare_ingredient": 10
+			  },
+			  "income_per_minute": 65.0,
+			  "staff_slots": 7,
+			  "menu_slots": 30,
+			  "reward": "Prestige meals available. Reputation events triggered."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 15000,
+			  "resource_cost": {
+				"stone": 150,
+				"wood": 100,
+				"rare_ingredient": 20,
+				"enchanted_ore": 10
+			  },
+			  "income_per_minute": 85.0,
+			  "staff_slots": 8,
+			  "menu_slots": 40,
+			  "reward": "Maximum tier establishment. Peak income and reputation."
+			}
+		  ]
+		}
+	  ]
+	},
+	"market": {
+	  "id": "market",
+	  "name": "Market",
+	  "size": [
+		5,
+		4
+	  ],
+	  "max_count": -1,
+	  "unlock": {
+		"town_hall_level": 3
+	  },
+	  "description": "Enables trading, market orders, and eventually caravan routes.",
+	  "positions": [
+		{
+		  "id": "merchant",
+		  "name": "Merchant",
+		  "description": "Negotiates deals and manages trade stock.",
+		  "good_skills": [
+			"merchant",
+            "scribe"
+		  ],
+		  "bad_skills": [
+			"farmer",
+			"fisherman",
+			"miner",
+            "herbalist"
+		  ]
+		},
+		{
+		  "id": "stall_keeper",
+		  "name": "Stall Keeper",
+		  "description": "Manages individual stalls and attracts foot traffic.",
+		  "good_skills": [
+			"merchant",
+			"forager",
+            "hunter"
+		  ],
+		  "bad_skills": [
+			"alchemist",
+			"guard",
+            "scribe"
+		  ]
+		}
+	  ],
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "description": "A small outdoor stall market.",
+		  "unlock_condition": {
+			"town_hall_level": 3
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 400,
+			  "resource_cost": {
+				"wood": 20
+			  },
+			  "income_per_minute": 4.0,
+			  "staff_slots": 1,
+			  "reward": "Local gold trade. Basic goods available for order."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 700,
+			  "resource_cost": {
+				"wood": 30
+			  },
+			  "income_per_minute": 7.0,
+			  "staff_slots": 2,
+			  "reward": "Expanded goods list. Faster order delivery."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 1200,
+			  "resource_cost": {
+				"wood": 40,
+				"stone": 15
+			  },
+			  "income_per_minute": 10.0,
+			  "staff_slots": 2,
+			  "reward": "Merchant reputation grows. Caravan visits unlocked next tier."
+			}
+		  ]
+		},
+		{
+		  "tier": 2,
+		  "description": "A covered market square with merchant stalls.",
+		  "unlock_condition": {
+			"player_level": 5,
+			"market_level": 3
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 2000,
+			  "resource_cost": {
+				"wood": 50,
+				"stone": 30
+			  },
+			  "income_per_minute": 15.0,
+			  "staff_slots": 3,
+			  "reward": "Caravan NPCs visit. Barter deals available."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 3000,
+			  "resource_cost": {
+				"wood": 65,
+				"stone": 45
+			  },
+			  "income_per_minute": 22.0,
+			  "staff_slots": 3,
+			  "reward": "Better barter odds. Rare goods occasionally available."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 4500,
+			  "resource_cost": {
+				"wood": 80,
+				"stone": 60
+			  },
+			  "income_per_minute": 30.0,
+			  "staff_slots": 4,
+			  "reward": "Trade routes seeded. Passive resource trickle begins."
+			}
+		  ]
+		},
+		{
+		  "tier": 3,
+		  "description": "A grand bazaar \u2014 the trading hub of the region.",
+		  "unlock_condition": {
+			"player_level": 9,
+			"market_level": 6
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 7000,
+			  "resource_cost": {
+				"stone": 100,
+				"wood": 70,
+				"enchanted_ore": 10
+			  },
+			  "income_per_minute": 45.0,
+			  "staff_slots": 5,
+			  "reward": "All resource types available. Bulk discounts active."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 10000,
+			  "resource_cost": {
+				"stone": 140,
+				"wood": 90,
+				"enchanted_ore": 20
+			  },
+			  "income_per_minute": 60.0,
+			  "staff_slots": 6,
+			  "reward": "Trade routes become passive resource generators."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 15000,
+			  "resource_cost": {
+				"stone": 200,
+				"wood": 120,
+				"enchanted_ore": 35
+			  },
+			  "income_per_minute": 80.0,
+			  "staff_slots": 7,
+			  "reward": "Regional trade dominance. Maximum bulk discounts."
+			}
+		  ]
+		}
+	  ]
+	},
+	"magic_tower": {
+	  "id": "magic_tower",
+	  "name": "Magic Tower",
+	  "size": [
+		2,
+		4
+	  ],
+	  "max_count": -1,
+	  "unlock": {
+		"town_hall_tier": 2,
+		"town_hall_level": 6
+	  },
+	  "description": "Enchantments, potions, and city-wide magic buffs.",
+	  "positions": [
+		{
+		  "id": "apprentice",
+		  "name": "Apprentice",
+		  "description": "Assists with enchantments and ingredient preparation.",
+		  "good_skills": [
+			"alchemist",
+			"herbalist",
+            "scribe"
+		  ],
+		  "bad_skills": [
+			"guard",
+			"carpenter",
+			"miner",
+            "blacksmith_worker"
+		  ]
+		},
+		{
+		  "id": "researcher",
+		  "name": "Researcher",
+		  "description": "Works on new potions and city-wide enchantments.",
+		  "good_skills": [
+			"alchemist",
+			"scribe",
+            "herbalist"
+		  ],
+		  "bad_skills": [
+			"farmer",
+			"bartender",
+			"fisherman",
+            "guard"
+		  ]
+		}
+	  ],
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "description": "A crooked stone tower with a glowing window.",
+		  "unlock_condition": {
+			"town_hall_tier": 2
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 800,
+			  "resource_cost": {
+				"stone": 25,
+				"enchanted_ore": 3
+			  },
+			  "income_per_minute": 3.0,
+			  "staff_slots": 1,
+			  "potion_slots": 2,
+			  "reward": "Basic enchantments. Simple potions craftable."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 1400,
+			  "resource_cost": {
+				"stone": 35,
+				"enchanted_ore": 6
+			  },
+			  "income_per_minute": 5.0,
+			  "staff_slots": 1,
+			  "potion_slots": 4,
+			  "reward": "More potion recipes. Enchantment duration extended."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 2200,
+			  "resource_cost": {
+				"stone": 50,
+				"enchanted_ore": 12
+			  },
+			  "income_per_minute": 8.0,
+			  "staff_slots": 2,
+			  "potion_slots": 6,
+			  "reward": "City boost potions unlocked. Autumn brew recipes available."
+			}
+		  ]
+		},
+		{
+		  "tier": 2,
+		  "description": "A tall spire with a telescope and alchemical lab.",
+		  "unlock_condition": {
+			"player_level": 7,
+			"magic_tower_level": 3
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 3500,
+			  "resource_cost": {
+				"stone": 70,
+				"enchanted_ore": 20,
+				"rare_ingredient": 5
+			  },
+			  "income_per_minute": 14.0,
+			  "staff_slots": 2,
+			  "potion_slots": 10,
+			  "reward": "Advanced potion crafting. City happiness boosts available."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 5000,
+			  "resource_cost": {
+				"stone": 90,
+				"enchanted_ore": 30,
+				"rare_ingredient": 8
+			  },
+			  "income_per_minute": 20.0,
+			  "staff_slots": 3,
+			  "potion_slots": 14,
+			  "reward": "Seasonal magic recipes unlocked. Stronger city buffs."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 7500,
+			  "resource_cost": {
+				"stone": 120,
+				"enchanted_ore": 45,
+				"rare_ingredient": 15
+			  },
+			  "income_per_minute": 28.0,
+			  "staff_slots": 3,
+			  "potion_slots": 18,
+			  "reward": "Rare potion tier unlocked. City-wide aura effects."
+			}
+		  ]
+		},
+		{
+		  "tier": 3,
+		  "description": "A shimmering arcane spire visible from across the map.",
+		  "unlock_condition": {
+			"player_level": 10,
+			"magic_tower_level": 6
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 12000,
+			  "resource_cost": {
+				"stone": 180,
+				"enchanted_ore": 70,
+				"rare_ingredient": 25
+			  },
+			  "income_per_minute": 40.0,
+			  "staff_slots": 4,
+			  "potion_slots": 25,
+			  "reward": "City-wide magic aura active. Passive happiness bonus."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 18000,
+			  "resource_cost": {
+				"stone": 240,
+				"enchanted_ore": 100,
+				"rare_ingredient": 40
+			  },
+			  "income_per_minute": 55.0,
+			  "staff_slots": 5,
+			  "potion_slots": 30,
+			  "reward": "Rare seasonal recipes unlocked. Aura strengthened."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 25000,
+			  "resource_cost": {
+				"stone": 320,
+				"enchanted_ore": 150,
+				"rare_ingredient": 60
+			  },
+			  "income_per_minute": 75.0,
+			  "staff_slots": 5,
+			  "potion_slots": 40,
+			  "reward": "Maximum arcane power. City-wide +15% income from magic aura."
+			}
+		  ]
+		}
+	  ]
+	},
+	"farm": {
+	  "id": "farm",
+	  "name": "Farm",
+	  "size": [
+		6,
+		4
+	  ],
+	  "max_count": -1,
+	  "unlock": {
+		"player_level": 4
+	  },
+	  "description": "Produces crops, herbs, and seasonal ingredients for cooking and crafting.",
+	  "positions": [
+		{
+		  "id": "farmhand",
+		  "name": "Farmhand",
+		  "description": "Tills fields, plants crops, and brings in the harvest.",
+		  "good_skills": [
+			"farmer",
+            "forager"
+		  ],
+		  "bad_skills": [
+			"merchant",
+			"scribe",
+			"alchemist",
+            "bartender"
+		  ]
+		},
+		{
+		  "id": "herbalist_role",
+		  "name": "Herbalist",
+		  "description": "Tends the herb garden and manages rare crop cultivation.",
+		  "good_skills": [
+			"herbalist",
+			"forager",
+            "farmer"
+		  ],
+		  "bad_skills": [
+			"bartender",
+			"innkeeper",
+			"merchant",
+            "guard"
+		  ]
+		}
+	  ],
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "description": "A plot of tilled earth with a small barn.",
+		  "unlock_condition": {
+			"player_level": 4
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 350,
+			  "resource_cost": {
+				"wood": 20
+			  },
+			  "income_per_minute": 3.0,
+			  "staff_slots": 1,
+			  "produces": [
+				"grain",
+				"vegetables",
+                "basic_fruit"
+			  ],
+			  "reward": "Grain, vegetables, basic fruits. Reduces market orders needed.",
+			  "resource_production": {
+				"grain": 1.0,
+				"vegetables": 0.8
+			  }
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 600,
+			  "resource_cost": {
+				"wood": 30
+			  },
+			  "income_per_minute": 5.0,
+			  "staff_slots": 1,
+			  "produces": [
+				"grain",
+				"vegetables",
+				"basic_fruit",
+                "herbs"
+			  ],
+			  "reward": "Herbs added. Higher yield across all crops.",
+			  "resource_production": {
+				"grain": 1.4,
+				"vegetables": 1.0,
+				"basic_fruit": 0.4
+			  }
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 1000,
+			  "resource_cost": {
+				"wood": 40,
+				"stone": 10
+			  },
+			  "income_per_minute": 8.0,
+			  "staff_slots": 2,
+			  "produces": [
+				"grain",
+				"vegetables",
+				"basic_fruit",
+				"herbs",
+                "seasonal_crops"
+			  ],
+			  "reward": "Seasonal crops added. Storage silo unlocked.",
+			  "resource_production": {
+				"grain": 1.8,
+				"vegetables": 1.4,
+				"basic_fruit": 0.6,
+				"herbs": 0.4
+			  }
+			}
+		  ]
+		},
+		{
+		  "tier": 2,
+		  "description": "A full working farm with fields, orchards, and a herb garden.",
+		  "unlock_condition": {
+			"player_level": 6,
+			"farm_level": 3
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 2000,
+			  "resource_cost": {
+				"wood": 50,
+				"stone": 20
+			  },
+			  "income_per_minute": 14.0,
+			  "staff_slots": 2,
+			  "produces": [
+				"grain",
+				"vegetables",
+				"herbs",
+				"better_fruit",
+                "seasonal_crops"
+			  ],
+			  "reward": "Better fruit varieties. Herb garden expanded.",
+			  "resource_production": {
+				"grain": 2.4,
+				"vegetables": 1.8,
+				"basic_fruit": 0.8,
+				"herbs": 0.6,
+				"seasonal_crops": 0.4
+			  }
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 3000,
+			  "resource_cost": {
+				"wood": 65,
+				"stone": 30
+			  },
+			  "income_per_minute": 20.0,
+			  "staff_slots": 3,
+			  "produces": [
+				"grain",
+				"vegetables",
+				"herbs",
+				"better_fruit",
+				"seasonal_crops",
+                "rare_herbs"
+			  ],
+			  "reward": "Rare herbs appear. Seasonal yield doubled.",
+			  "resource_production": {
+				"grain": 3.0,
+				"vegetables": 2.2,
+				"basic_fruit": 1.0,
+				"herbs": 0.8,
+				"seasonal_crops": 0.5,
+				"rare_herbs": 0.3
+			  }
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 4500,
+			  "resource_cost": {
+				"wood": 80,
+				"stone": 45
+			  },
+			  "income_per_minute": 28.0,
+			  "staff_slots": 3,
+			  "produces": [
+				"grain",
+				"vegetables",
+				"herbs",
+				"better_fruit",
+				"seasonal_crops",
+				"rare_herbs",
+                "premium_fruit"
+			  ],
+			  "reward": "Premium fruits available. Enchanted garden seeded next tier.",
+			  "resource_production": {
+				"grain": 3.6,
+				"vegetables": 2.6,
+				"basic_fruit": 1.2,
+				"herbs": 1.0,
+				"seasonal_crops": 0.6,
+				"rare_herbs": 0.4,
+				"premium_fruit": 0.3
+			  }
+			}
+		  ]
+		},
+		{
+		  "tier": 3,
+		  "description": "An enchanted garden with glowing crops and magical soil.",
+		  "unlock_condition": {
+			"player_level": 9,
+			"farm_level": 6
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 8000,
+			  "resource_cost": {
+				"stone": 80,
+				"wood": 60,
+				"enchanted_ore": 15
+			  },
+			  "income_per_minute": 40.0,
+			  "staff_slots": 4,
+			  "produces": [
+				"all_tier2",
+				"enchanted_crops",
+                "rare_ingredients"
+			  ],
+			  "reward": "Enchanted garden. Rare cooking and potion ingredients.",
+			  "resource_production": {
+				"grain": 4.5,
+				"vegetables": 3.2,
+				"basic_fruit": 1.5,
+				"herbs": 1.3,
+				"seasonal_crops": 0.8,
+				"rare_herbs": 0.6,
+				"premium_fruit": 0.5,
+				"rare_ingredients": 0.15
+			  }
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 12000,
+			  "resource_cost": {
+				"stone": 110,
+				"wood": 80,
+				"enchanted_ore": 25
+			  },
+			  "income_per_minute": 55.0,
+			  "staff_slots": 4,
+			  "produces": [
+				"all_tier2",
+				"enchanted_crops",
+				"rare_ingredients",
+                "legendary_herbs"
+			  ],
+			  "reward": "Legendary herbs. Unlocks rare seasonal recipes in magic tower.",
+			  "resource_production": {
+				"grain": 5.5,
+				"vegetables": 4.0,
+				"basic_fruit": 1.8,
+				"herbs": 1.6,
+				"seasonal_crops": 1.0,
+				"rare_herbs": 0.8,
+				"premium_fruit": 0.7,
+				"rare_ingredients": 0.25,
+				"legendary_herbs": 0.1
+			  }
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 18000,
+			  "resource_cost": {
+				"stone": 160,
+				"wood": 100,
+				"enchanted_ore": 40
+			  },
+			  "income_per_minute": 75.0,
+			  "staff_slots": 5,
+			  "produces": [
+				"all_tier2",
+				"enchanted_crops",
+				"rare_ingredients",
+				"legendary_herbs",
+                "enchanted_fruit"
+			  ],
+			  "reward": "Peak magical agriculture. Maximum ingredient variety.",
+			  "resource_production": {
+				"grain": 7.0,
+				"vegetables": 5.0,
+				"basic_fruit": 2.2,
+				"herbs": 2.0,
+				"seasonal_crops": 1.3,
+				"rare_herbs": 1.0,
+				"premium_fruit": 1.0,
+				"rare_ingredients": 0.4,
+				"legendary_herbs": 0.2
+			  }
+			}
+		  ]
+		}
+	  ]
+	},
+	"guild_hall": {
+	  "id": "guild_hall",
+	  "name": "Guild Hall",
+	  "size": [
+		4,
+		3
+	  ],
+	  "max_count": 1,
+	  "unlock": {
+		"town_hall_tier": 2,
+		"town_hall_level": 4
+	  },
+	  "description": "Quest board, headhunting, and specialist NPC recruitment.",
+	  "positions": [
+		{
+		  "id": "quest_master",
+		  "name": "Quest Master",
+		  "description": "Manages the quest board and tracks expedition progress.",
+		  "good_skills": [
+			"scribe",
+			"hunter",
+            "guard"
+		  ],
+		  "bad_skills": [
+			"cook",
+			"farmer",
+			"alchemist",
+            "bartender"
+		  ]
+		},
+		{
+		  "id": "guard_post",
+		  "name": "Guard Post",
+		  "description": "Enforces guild contracts and keeps order.",
+		  "good_skills": [
+			"guard",
+            "hunter"
+		  ],
+		  "bad_skills": [
+			"cook",
+			"alchemist",
+			"bartender",
+            "innkeeper"
+		  ]
+		}
+	  ],
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "description": "A simple notice board and meeting hall.",
+		  "unlock_condition": {
+			"town_hall_tier": 2
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 600,
+			  "resource_cost": {
+				"wood": 25,
+				"stone": 10
+			  },
+			  "income_per_minute": 2.0,
+			  "quest_slots": 2,
+			  "reward": "Quest board active. Basic NPC quests available."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 1000,
+			  "resource_cost": {
+				"wood": 35,
+				"stone": 15
+			  },
+			  "income_per_minute": 3.5,
+			  "quest_slots": 3,
+			  "reward": "More quest slots. Higher quest reward tier."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 1800,
+			  "resource_cost": {
+				"wood": 50,
+				"stone": 25
+			  },
+			  "income_per_minute": 5.0,
+			  "quest_slots": 4,
+			  "reward": "Headhunting option seeded. Specialist NPCs hinted."
+			}
+		  ]
+		},
+		{
+		  "tier": 2,
+		  "description": "A proper guild with archives, a bar, and a job board.",
+		  "unlock_condition": {
+			"player_level": 6,
+			"guild_hall_level": 3
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 3000,
+			  "resource_cost": {
+				"wood": 60,
+				"stone": 35
+			  },
+			  "income_per_minute": 10.0,
+			  "quest_slots": 5,
+			  "headhunt_cost": 500,
+			  "reward": "Headhunting unlocked. Specialist NPCs can be recruited."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 4500,
+			  "resource_cost": {
+				"wood": 75,
+				"stone": 50
+			  },
+			  "income_per_minute": 15.0,
+			  "quest_slots": 6,
+			  "headhunt_cost": 400,
+			  "reward": "Headhunt cost reduced. Better specialist pool."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 6500,
+			  "resource_cost": {
+				"wood": 90,
+				"stone": 65
+			  },
+			  "income_per_minute": 22.0,
+			  "quest_slots": 8,
+			  "headhunt_cost": 300,
+			  "reward": "Expedition system seeded. Rare skill recruitment possible."
+			}
+		  ]
+		},
+		{
+		  "tier": 3,
+		  "description": "A legendary adventurers' guild with expedition dispatch.",
+		  "unlock_condition": {
+			"player_level": 9,
+			"guild_hall_level": 6
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 10000,
+			  "resource_cost": {
+				"stone": 120,
+				"wood": 80,
+				"enchanted_ore": 15
+			  },
+			  "income_per_minute": 35.0,
+			  "quest_slots": 10,
+			  "headhunt_cost": 200,
+			  "reward": "Expedition system active. Rare skill NPCs arrive more often."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 15000,
+			  "resource_cost": {
+				"stone": 160,
+				"wood": 100,
+				"enchanted_ore": 25
+			  },
+			  "income_per_minute": 50.0,
+			  "quest_slots": 12,
+			  "headhunt_cost": 150,
+			  "reward": "Multi-expedition dispatch. Legendary skill NPCs possible."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 22000,
+			  "resource_cost": {
+				"stone": 220,
+				"wood": 130,
+				"enchanted_ore": 40
+			  },
+			  "income_per_minute": 70.0,
+			  "quest_slots": 15,
+			  "headhunt_cost": 100,
+			  "reward": "Maximum guild prestige. Every rare skill type recruitable."
+			}
+		  ]
+		}
+	  ]
+	},
+	"blacksmith": {
+	  "id": "blacksmith",
+	  "name": "Blacksmith",
+	  "size": [
+		3,
+		2
+	  ],
+	  "max_count": -1,
+	  "unlock": {
+		"special_npc_skill": "blacksmith"
+	  },
+	  "description": "Unlocked only when a Blacksmith NPC lives in the city. Produces tools, weapons, enchanted gear.",
+	  "positions": [
+		{
+		  "id": "apprentice_smith",
+		  "name": "Apprentice Smith",
+		  "description": "Assists the blacksmith with forging and repairs.",
+		  "good_skills": [
+			"blacksmith_worker",
+			"carpenter",
+            "miner"
+		  ],
+		  "bad_skills": [
+			"bartender",
+			"cook",
+			"innkeeper",
+			"fisherman",
+            "alchemist"
+		  ]
+		}
+	  ],
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "description": "A forge and anvil under a rough timber roof.",
+		  "unlock_condition": {
+			"special_npc_skill": "blacksmith"
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 500,
+			  "resource_cost": {
+				"wood": 15,
+				"stone": 10,
+				"enchanted_ore": 2
+			  },
+			  "income_per_minute": 5.0,
+			  "staff_slots": 1,
+			  "produces": [
+                "basic_tools"
+			  ],
+			  "reward": "Basic tools produced. City-wide building efficiency +2%."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 900,
+			  "resource_cost": {
+				"wood": 20,
+				"stone": 20,
+				"enchanted_ore": 5
+			  },
+			  "income_per_minute": 9.0,
+			  "staff_slots": 1,
+			  "produces": [
+				"basic_tools",
+                "farming_tools"
+			  ],
+			  "reward": "Farming tools. Farm yield +5%."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 1500,
+			  "resource_cost": {
+				"wood": 25,
+				"stone": 30,
+				"enchanted_ore": 10
+			  },
+			  "income_per_minute": 14.0,
+			  "staff_slots": 2,
+			  "produces": [
+				"basic_tools",
+				"farming_tools",
+                "basic_weapons"
+			  ],
+			  "reward": "Basic weapons. Blacksmith tier 2 unlocked."
+			}
+		  ]
+		},
+		{
+		  "tier": 2,
+		  "description": "A proper smithy with a bellows, quench tanks, and a display rack.",
+		  "unlock_condition": {
+			"blacksmith_level": 3
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 3000,
+			  "resource_cost": {
+				"stone": 40,
+				"enchanted_ore": 20
+			  },
+			  "income_per_minute": 22.0,
+			  "staff_slots": 2,
+			  "produces": [
+				"all_tier1",
+				"weapons",
+                "armor"
+			  ],
+			  "reward": "Weapons and armor tiers. Higher income from sales."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 4500,
+			  "resource_cost": {
+				"stone": 55,
+				"enchanted_ore": 30
+			  },
+			  "income_per_minute": 32.0,
+			  "staff_slots": 2,
+			  "produces": [
+				"all_tier1",
+				"weapons",
+				"armor",
+                "fine_tools"
+			  ],
+			  "reward": "Fine tools. Building upgrade cost reduced 5%."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 7000,
+			  "resource_cost": {
+				"stone": 75,
+				"enchanted_ore": 45
+			  },
+			  "income_per_minute": 45.0,
+			  "staff_slots": 3,
+			  "produces": [
+				"all_tier1",
+				"weapons",
+				"armor",
+				"fine_tools",
+                "enchanted_tools"
+			  ],
+			  "reward": "Enchanted tools seeded. Tier 3 unlocked."
+			}
+		  ]
+		},
+		{
+		  "tier": 3,
+		  "description": "A master forge glowing with arcane fire.",
+		  "unlock_condition": {
+			"blacksmith_level": 6,
+			"magic_tower_level": 3
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 12000,
+			  "resource_cost": {
+				"stone": 120,
+				"enchanted_ore": 70,
+				"rare_ingredient": 10
+			  },
+			  "income_per_minute": 65.0,
+			  "staff_slots": 3,
+			  "produces": [
+				"all_tier2",
+                "enchanted_gear"
+			  ],
+			  "reward": "Enchanted gear. City defense bonuses active."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 18000,
+			  "resource_cost": {
+				"stone": 160,
+				"enchanted_ore": 100,
+				"rare_ingredient": 20
+			  },
+			  "income_per_minute": 90.0,
+			  "staff_slots": 4,
+			  "produces": [
+				"all_tier2",
+				"enchanted_gear",
+                "legendary_weapons"
+			  ],
+			  "reward": "Legendary weapons possible. Major city defense bonus."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 26000,
+			  "resource_cost": {
+				"stone": 220,
+				"enchanted_ore": 150,
+				"rare_ingredient": 40
+			  },
+			  "income_per_minute": 120.0,
+			  "staff_slots": 4,
+			  "produces": [
+				"all_tier2",
+				"enchanted_gear",
+				"legendary_weapons",
+                "artifact_gear"
+			  ],
+			  "reward": "Artifact-tier gear. Maximum city defense and income."
+			}
+		  ]
+		}
+	  ]
+	},
+	"logging_camp": {
+	  "id": "logging_camp",
+	  "name": "Logging Camp",
+	  "size": [
+		3,
+		2
+	  ],
+	  "max_count": -1,
+	  "unlock": {
+		"player_level": 1,
+		"count_per_5_levels": true
+	  },
+	  "description": "Workers chop timber and gather forest resources. Each assigned worker produces wood every minute.",
+	  "positions": [
+		{
+		  "id": "lumberjack",
+		  "name": "Lumberjack",
+		  "description": "Chops timber and hauls logs.",
+		  "good_skills": [
+			"carpenter",
+			"forager",
+            "hunter"
+		  ],
+		  "bad_skills": [
+			"merchant",
+			"scribe",
+			"alchemist",
+            "bartender"
+		  ]
+		}
+	  ],
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "description": "A rough timber yard with hand axes.",
+		  "unlock_condition": "default",
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 100,
+			  "resource_cost": {},
+			  "income_per_minute": 0,
+			  "staff_slots": 2,
+			  "resource_production": {
+				"wood": 1
+			  },
+			  "reward": "1 wood per worker per minute."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 200,
+			  "resource_cost": {},
+			  "income_per_minute": 0,
+			  "staff_slots": 2,
+			  "resource_production": {
+				"wood": 1.5
+			  },
+			  "reward": "1.5 wood per worker per minute."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 400,
+			  "resource_cost": {
+				"wood": 5
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 3,
+			  "resource_production": {
+				"wood": 2
+			  },
+			  "reward": "Extra slot. 2 wood per worker per minute."
+			}
+		  ]
+		},
+		{
+		  "tier": 2,
+		  "description": "A proper sawmill with iron axes.",
+		  "unlock_condition": {
+			"player_level": 4
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 800,
+			  "resource_cost": {
+				"wood": 20,
+				"stone": 5
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 3,
+			  "resource_production": {
+				"wood": 2.5
+			  },
+			  "reward": "2.5 wood per worker per minute."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 1400,
+			  "resource_cost": {
+				"wood": 30,
+				"stone": 10
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 4,
+			  "resource_production": {
+				"wood": 3
+			  },
+			  "reward": "3 wood per worker per minute."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 2200,
+			  "resource_cost": {
+				"wood": 40,
+				"stone": 15
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 4,
+			  "resource_production": {
+				"wood": 3.5,
+				"herbs": 0.5
+			  },
+			  "reward": "3.5 wood and 0.5 herbs per worker."
+			}
+		  ]
+		},
+		{
+		  "tier": 3,
+		  "description": "An enchanted grove.",
+		  "unlock_condition": {
+			"player_level": 8
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 4000,
+			  "resource_cost": {
+				"wood": 60,
+				"stone": 20,
+				"enchanted_ore": 5
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 5,
+			  "resource_production": {
+				"wood": 4.5,
+				"herbs": 1
+			  },
+			  "reward": "4.5 wood and 1 herb per worker."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 6500,
+			  "resource_cost": {
+				"wood": 80,
+				"stone": 30,
+				"enchanted_ore": 10
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 5,
+			  "resource_production": {
+				"wood": 5.5,
+				"herbs": 1.5
+			  },
+			  "reward": "5.5 wood and 1.5 herbs per worker."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 10000,
+			  "resource_cost": {
+				"wood": 100,
+				"stone": 40,
+				"enchanted_ore": 20
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 6,
+			  "resource_production": {
+				"wood": 7,
+				"herbs": 2
+			  },
+			  "reward": "7 wood and 2 herbs per worker."
+			}
+		  ]
+		}
+	  ]
+	},
+	"mining_operation": {
+	  "id": "mining_operation",
+	  "name": "Mining Operation",
+	  "size": [
+		2,
+		3
+	  ],
+	  "max_count": -1,
+	  "unlock": {
+		"player_level": 1,
+		"count_per_5_levels": true
+	  },
+	  "description": "Workers quarry stone from open pits and cave tunnels. Each worker produces stone every minute.",
+	  "positions": [
+		{
+		  "id": "miner",
+		  "name": "Miner",
+		  "description": "Breaks rock and hauls stone to the surface.",
+		  "good_skills": [
+			"miner",
+            "carpenter"
+		  ],
+		  "bad_skills": [
+			"merchant",
+			"bartender",
+			"innkeeper",
+			"alchemist",
+            "cook"
+		  ]
+		}
+	  ],
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "description": "An open quarry with picks.",
+		  "unlock_condition": "default",
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 150,
+			  "resource_cost": {},
+			  "income_per_minute": 0,
+			  "staff_slots": 2,
+			  "resource_production": {
+				"stone": 1
+			  },
+			  "reward": "1 stone per worker per minute."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 300,
+			  "resource_cost": {},
+			  "income_per_minute": 0,
+			  "staff_slots": 2,
+			  "resource_production": {
+				"stone": 1.5
+			  },
+			  "reward": "1.5 stone per worker per minute."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 550,
+			  "resource_cost": {
+				"stone": 5
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 3,
+			  "resource_production": {
+				"stone": 2
+			  },
+			  "reward": "Extra slot. 2 stone per worker per minute."
+			}
+		  ]
+		},
+		{
+		  "tier": 2,
+		  "description": "A proper mine shaft with cart rails.",
+		  "unlock_condition": {
+			"player_level": 4
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 1000,
+			  "resource_cost": {
+				"stone": 15,
+				"wood": 10
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 3,
+			  "resource_production": {
+				"stone": 2.5
+			  },
+			  "reward": "Mine carts. 2.5 stone per worker per minute."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 1800,
+			  "resource_cost": {
+				"stone": 25,
+				"wood": 15
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 4,
+			  "resource_production": {
+				"stone": 3
+			  },
+			  "reward": "Deep shaft. 3 stone per worker per minute."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 2800,
+			  "resource_cost": {
+				"stone": 35,
+				"wood": 20
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 4,
+			  "resource_production": {
+				"stone": 3.5,
+				"enchanted_ore": 0.1
+			  },
+			  "reward": "3.5 stone and traces of enchanted ore per worker."
+			}
+		  ]
+		},
+		{
+		  "tier": 3,
+		  "description": "A vast underground complex with glowing ore veins.",
+		  "unlock_condition": {
+			"player_level": 8
+		  },
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 5000,
+			  "resource_cost": {
+				"stone": 60,
+				"wood": 20,
+				"enchanted_ore": 5
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 5,
+			  "resource_production": {
+				"stone": 4.5,
+				"enchanted_ore": 0.3
+			  },
+			  "reward": "4.5 stone and 0.3 ore per worker."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 8000,
+			  "resource_cost": {
+				"stone": 80,
+				"wood": 30,
+				"enchanted_ore": 10
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 5,
+			  "resource_production": {
+				"stone": 5.5,
+				"enchanted_ore": 0.6
+			  },
+			  "reward": "5.5 stone and 0.6 ore per worker."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 12000,
+			  "resource_cost": {
+				"stone": 120,
+				"wood": 40,
+				"enchanted_ore": 20
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 6,
+			  "resource_production": {
+				"stone": 7,
+				"enchanted_ore": 1
+			  },
+			  "reward": "Master mine. 7 stone and 1 ore per worker."
+			}
+		  ]
+		}
+	  ]
+	},
+	"tree": {
+	  "id": "tree",
+	  "name": "Tree",
+	  "size": [
+		2,
+		2
+	  ],
+	  "max_count": -1,
+	  "unlock": "default",
+	  "category": "decor",
+	  "needs_road": false,
+	  "description": "A leafy tree. Purely decorative \u2014 plant anywhere, no road needed.",
+	  "positions": [],
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "description": "A leafy tree. Purely decorative \u2014 plant anywhere, no road needed.",
+		  "unlock_condition": "default",
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 25,
+			  "resource_cost": {},
+			  "income_per_minute": 0,
+			  "staff_slots": 0,
+			  "reward": "A touch of nature for your streets."
+			}
+		  ]
+		}
+	  ]
+	},
+	"flower_bed": {
+	  "id": "flower_bed",
+	  "name": "Flower Bed",
+	  "size": [
+		1,
+		1
+	  ],
+	  "max_count": -1,
+	  "unlock": "default",
+	  "category": "decor",
+	  "needs_road": false,
+	  "description": "A small patch of wildflowers. Purely decorative.",
+	  "positions": [],
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "description": "A small patch of wildflowers. Purely decorative.",
+		  "unlock_condition": "default",
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 15,
+			  "resource_cost": {},
+			  "income_per_minute": 0,
+			  "staff_slots": 0,
+			  "reward": "Brightens up any corner."
+			}
+		  ]
+		}
+	  ]
+	},
+	"well": {
+	  "id": "well",
+	  "name": "Well",
+	  "size": [
+		2,
+		2
+	  ],
+	  "max_count": -1,
+	  "unlock": "default",
+	  "category": "decor",
+	  "needs_road": false,
+	  "description": "A stone well. Decorative centrepiece for a square or garden.",
+	  "positions": [],
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "description": "A stone well. Decorative centrepiece for a square or garden.",
+		  "unlock_condition": "default",
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 60,
+			  "resource_cost": {},
+			  "income_per_minute": 0,
+			  "staff_slots": 0,
+			  "reward": "The heart of a village square."
+			}
+		  ]
+		}
+	  ]
+	}
+  }
+}

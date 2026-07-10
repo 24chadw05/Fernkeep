@@ -1,0 +1,151 @@
+[gd_scene format=3 uid="uid://b7sgppxeo2hqn"]
+
+[ext_resource type="Texture2D" uid="uid://cr1iwiq08dl34" path="res://assets/tilesets/FERN_static_atlas.png" id="2_ground"]
+[ext_resource type="Script" uid="uid://b7g3qf8gijrnr" path="res://scripts/systems/WorldGenerator.gd" id="3_k2bbc"]
+[ext_resource type="Script" uid="uid://bcj0b7hs23714" path="res://scripts/managers/CameraController.gd" id="5_vxy3g"]
+[ext_resource type="Script" uid="uid://btjuuua6laa30" path="res://scripts/systems/BuildGrid.gd" id="6_lueha"]
+[ext_resource type="Script" uid="uid://djguv7b268ar3" path="res://scripts/managers/GameManager.gd" id="7_gamemanager"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="8_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/BuildMenu.tscn" id="9_buildmenu"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ArrivalPopup.tscn" id="10_arrivalpopup"]
+[ext_resource type="PackedScene" path="res://scenes/ui/CitizenPanel.tscn" id="11_citizenpanel"]
+[ext_resource type="PackedScene" path="res://scenes/ui/BuildingInspector.tscn" id="12_inspector"]
+[ext_resource type="PackedScene" path="res://scenes/ui/BuildingQuickView.tscn" id="13_quickview"]
+[ext_resource type="PackedScene" path="res://scenes/ui/TownHallPanel.tscn" id="14_townhallpanel"]
+[ext_resource type="PackedScene" path="res://scenes/ui/SpriteSelectPanel.tscn" id="15_sspanel"]
+[ext_resource type="PackedScene" path="res://scenes/ui/EscapeMenu.tscn" id="16_escapemenu"]
+[ext_resource type="PackedScene" path="res://scenes/ui/SaveSlotsPanel.tscn" id="17_saveslots"]
+[ext_resource type="PackedScene" path="res://scenes/ui/SettingsPanel.tscn" id="18_settings"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MarketPanel.tscn" id="19_marketpanel"]
+[ext_resource type="PackedScene" path="res://scenes/ui/QuestPanel.tscn" id="20_questpanel"]
+[ext_resource type="PackedScene" path="res://scenes/ui/TavernMenuPanel.tscn" id="21_tavernmenu"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MagicTowerPanel.tscn" id="22_magictower"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3pl5x"]
+texture = ExtResource("2_ground")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+16:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_efwbf"]
+tile_size = Vector2i(64, 64)
+sources/1 = SubResource("TileSetAtlasSource_3pl5x")
+
+[node name="Node2D" type="Node2D" unique_id=1462415636]
+script = ExtResource("7_gamemanager")
+
+[node name="TileMap" type="TileMap" parent="." unique_id=1285371247]
+tile_set = SubResource("TileSet_efwbf")
+format = 2
+layer_0/name = "Ground"
+script = ExtResource("3_k2bbc")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1553979663]
+
+[node name="HUD" parent="CanvasLayer" unique_id=191620883 instance=ExtResource("8_hud")]
+
+[node name="BuildMenu" parent="CanvasLayer" unique_id=1593244481 instance=ExtResource("9_buildmenu")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ArrivalPopup" parent="CanvasLayer" unique_id=1797007204 instance=ExtResource("10_arrivalpopup")]
+layout_mode = 3
+anchors_preset = 8
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CitizenPanel" parent="CanvasLayer" unique_id=66603404 instance=ExtResource("11_citizenpanel")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BuildingInspector" parent="CanvasLayer" unique_id=1219284780 instance=ExtResource("12_inspector")]
+layout_mode = 3
+anchors_preset = 1
+offset_left = -332.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 492.0
+grow_horizontal = 0
+
+[node name="BuildingQuickView" parent="CanvasLayer" unique_id=1355830684 instance=ExtResource("13_quickview")]
+
+[node name="TownHallPanel" parent="CanvasLayer" unique_id=979242802 instance=ExtResource("14_townhallpanel")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpriteSelectPanel" parent="CanvasLayer" unique_id=1393555990 instance=ExtResource("15_sspanel")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -240.0
+offset_top = 8.0
+offset_right = -15.0
+offset_bottom = 420.0
+
+[node name="EscapeMenu" parent="CanvasLayer" unique_id=24075313 instance=ExtResource("16_escapemenu")]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="SaveSlotsPanel" parent="CanvasLayer" unique_id=1821629118 instance=ExtResource("17_saveslots")]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="SettingsPanel" parent="CanvasLayer" unique_id=2084239741 instance=ExtResource("18_settings")]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarketPanel" parent="CanvasLayer" unique_id=1997241953 instance=ExtResource("19_marketpanel")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="QuestPanel" parent="CanvasLayer" instance=ExtResource("20_questpanel")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TavernMenuPanel" parent="CanvasLayer" instance=ExtResource("21_tavernmenu")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MagicTowerPanel" parent="CanvasLayer" instance=ExtResource("22_magictower")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1818266305]
+script = ExtResource("5_vxy3g")
+
+[node name="BuildGrid" type="Node2D" parent="." unique_id=1215959002]
+script = ExtResource("6_lueha")
+
+[node name="Roads" type="Node2D" parent="." unique_id=463017417]
+
+[node name="Buildings" type="Node2D" parent="." unique_id=943095160]
+
+[node name="NPCs" type="Node2D" parent="." unique_id=948980052]
