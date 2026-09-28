@@ -1,6 +1,56 @@
-[gd_scene format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/HUD.gd" id="1_hud"]
+[ext_resource type="Texture2D" path="res://assets/sprites/villager_1.png" id="2_villager"]
+[ext_resource type="Texture2D" path="res://assets/ui/newspaper.png" id="3_newspaper"]
+
+[sub_resource type="StyleBoxFlat" id="sb_arrivals_normal"]
+bg_color = Color(0.925, 0.858, 0.702, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.227, 0.157, 0.094, 1)
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+
+[sub_resource type="StyleBoxFlat" id="sb_arrivals_hover"]
+bg_color = Color(0.965, 0.918, 0.77, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.16, 0.1, 0.05, 1)
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+
+[sub_resource type="StyleBoxFlat" id="sb_arrivals_pressed"]
+bg_color = Color(0.77, 0.674, 0.463, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.16, 0.1, 0.05, 1)
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+
+[sub_resource type="StyleBoxFlat" id="sb_arrivals_badge"]
+bg_color = Color(0.72, 0.13, 0.1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.3, 0.05, 0.04, 1)
+corner_radius_top_left = 26
+corner_radius_top_right = 26
+corner_radius_bottom_right = 26
+corner_radius_bottom_left = 26
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
@@ -8,74 +58,206 @@ script = ExtResource("1_hud")
 [node name="Panel" type="Panel" parent="."]
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 220.0
-offset_bottom = 420.0
+offset_right = 430.0
+offset_bottom = 1050.0
 
 [node name="VBox" type="VBoxContainer" parent="Panel"]
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 208.0
-offset_bottom = 408.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 414.0
+offset_bottom = 1035.0
 
 [node name="GoldLabel" type="Label" parent="Panel/VBox"]
 text = "Gold: 0"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 28
 
 [node name="LevelLabel" type="Label" parent="Panel/VBox"]
 text = "Level 1 (0/100 XP)"
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 24
 
 [node name="HappinessLabel" type="Label" parent="Panel/VBox"]
 text = "Happiness: 100%"
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 24
 
 [node name="CitizensLabel" type="Label" parent="Panel/VBox"]
 text = "Citizens: 0"
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 24
 
 [node name="TimeLabel" type="Label" parent="Panel/VBox"]
 text = "Day 1  •  Spring  •  Year 1"
-theme_override_font_sizes/font_size = 11
-theme_override_colors/font_color = Color(0.75, 0.85, 1.0, 1.0)
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.26, 0.31, 0.39, 1.0)
 
 [node name="Resources" type="HBoxContainer" parent="Panel/VBox"]
 
 [node name="WoodLabel" type="Label" parent="Panel/VBox/Resources"]
 text = "Wood: 50"
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 22
 size_flags_horizontal = 3
 
 [node name="StoneLabel" type="Label" parent="Panel/VBox/Resources"]
 text = "Stone: 30"
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 22
 size_flags_horizontal = 3
 
 [node name="Separator" type="HSeparator" parent="Panel/VBox"]
 
 [node name="BuildButton" type="Button" parent="Panel/VBox"]
 text = "Build"
-custom_minimum_size = Vector2(0, 36)
+custom_minimum_size = Vector2(0, 72)
 
 [node name="CitizensButton" type="Button" parent="Panel/VBox"]
 text = "Citizens"
-custom_minimum_size = Vector2(0, 36)
+custom_minimum_size = Vector2(0, 72)
+
+[node name="RevenueButton" type="Button" parent="Panel/VBox"]
+text = "Revenue"
+custom_minimum_size = Vector2(0, 72)
 
 [node name="QuestsButton" type="Button" parent="Panel/VBox"]
 text = "Quests"
-custom_minimum_size = Vector2(0, 36)
+custom_minimum_size = Vector2(0, 72)
+
+[node name="ForageButton" type="Button" parent="Panel/VBox"]
+text = "Forage (3)"
+custom_minimum_size = Vector2(0, 72)
+
+[node name="FishButton" type="Button" parent="Panel/VBox"]
+text = "Fish (3)"
+custom_minimum_size = Vector2(0, 72)
+
+[node name="CaravanButton" type="Button" parent="Panel/VBox"]
+visible = false
+text = "🐫 Caravan!"
+custom_minimum_size = Vector2(0, 72)
+theme_override_colors/font_color = Color(0.41, 0.35, 0.16, 1.0)
 
 [node name="SaveButton" type="Button" parent="Panel/VBox"]
 text = "Save"
-custom_minimum_size = Vector2(0, 36)
+custom_minimum_size = Vector2(0, 72)
+
+[node name="BackpackButton" type="TextureButton" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -140.0
+offset_right = -20.0
+offset_bottom = -20.0
+ignore_texture_size = true
+stretch_mode = 5
+tooltip_text = "Inventory"
+
+[node name="ArrivalsButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -140.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 140.0
+tooltip_text = "Arrivals waiting at the gates"
+theme_override_styles/normal = SubResource("sb_arrivals_normal")
+theme_override_styles/hover = SubResource("sb_arrivals_hover")
+theme_override_styles/pressed = SubResource("sb_arrivals_pressed")
+
+[node name="Portrait" type="TextureRect" parent="ArrivalsButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 14.0
+offset_right = -22.0
+offset_bottom = -14.0
+texture = ExtResource("2_villager")
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="Badge" type="Panel" parent="ArrivalsButton"]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 4.0
+offset_bottom = 4.0
+theme_override_styles/panel = SubResource("sb_arrivals_badge")
+mouse_filter = 2
+
+[node name="CountLabel" type="Label" parent="ArrivalsButton/Badge"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 26
+theme_override_colors/font_color = Color(0.97, 0.94, 0.85, 1.0)
+mouse_filter = 2
+
+[node name="NewsButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -280.0
+offset_top = 20.0
+offset_right = -160.0
+offset_bottom = 140.0
+tooltip_text = "City news"
+theme_override_styles/normal = SubResource("sb_arrivals_normal")
+theme_override_styles/hover = SubResource("sb_arrivals_hover")
+theme_override_styles/pressed = SubResource("sb_arrivals_pressed")
+
+[node name="Portrait" type="TextureRect" parent="NewsButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+texture = ExtResource("3_newspaper")
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="Badge" type="Panel" parent="NewsButton"]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 4.0
+offset_bottom = 4.0
+theme_override_styles/panel = SubResource("sb_arrivals_badge")
+mouse_filter = 2
+
+[node name="CountLabel" type="Label" parent="NewsButton/Badge"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 26
+theme_override_colors/font_color = Color(0.97, 0.94, 0.85, 1.0)
+mouse_filter = 2
 
 [node name="CancelRoadButton" type="Button" parent="Panel/VBox"]
 visible = false
 text = "✕  Cancel Road Mode"
-custom_minimum_size = Vector2(0, 36)
-theme_override_colors/font_color = Color(1.0, 0.35, 0.35, 1.0)
+custom_minimum_size = Vector2(0, 72)
+theme_override_colors/font_color = Color(0.39, 0.07, 0.07, 1.0)
 
 [connection signal="pressed" from="Panel/VBox/BuildButton" to="." method="_on_build_button_pressed"]
 [connection signal="pressed" from="Panel/VBox/CitizensButton" to="." method="_on_citizens_button_pressed"]
+[connection signal="pressed" from="Panel/VBox/RevenueButton" to="." method="_on_revenue_button_pressed"]
 [connection signal="pressed" from="Panel/VBox/QuestsButton" to="." method="_on_quests_button_pressed"]
+[connection signal="pressed" from="Panel/VBox/ForageButton" to="." method="_on_forage_button_pressed"]
+[connection signal="pressed" from="Panel/VBox/FishButton" to="." method="_on_fish_button_pressed"]
+[connection signal="pressed" from="Panel/VBox/CaravanButton" to="." method="_on_caravan_button_pressed"]
+[connection signal="pressed" from="BackpackButton" to="." method="_on_backpack_pressed"]
+[connection signal="pressed" from="ArrivalsButton" to="." method="_on_arrivals_pressed"]
+[connection signal="pressed" from="NewsButton" to="." method="_on_news_pressed"]
 [connection signal="pressed" from="Panel/VBox/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Panel/VBox/CancelRoadButton" to="." method="_on_cancel_road_pressed"]

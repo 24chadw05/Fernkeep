@@ -27,7 +27,7 @@ mouse_filter = 2
 
 [node name="Panel" type="Panel" parent="Center"]
 layout_mode = 2
-custom_minimum_size = Vector2(300, 340)
+custom_minimum_size = Vector2(600, 680)
 
 [node name="Margin" type="MarginContainer" parent="Center/Panel"]
 layout_mode = 1
@@ -47,32 +47,32 @@ theme_override_constants/separation = 8
 layout_mode = 2
 text = "Game Paused"
 horizontal_alignment = 1
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 36
 
 [node name="Separator" type="HSeparator" parent="Center/Panel/Margin/VBox"]
 layout_mode = 2
 
 [node name="ResumeButton" type="Button" parent="Center/Panel/Margin/VBox"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 80)
 text = "Resume"
 
 [node name="SaveButton" type="Button" parent="Center/Panel/Margin/VBox"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 80)
 text = "Save Game"
 
 [node name="NewSaveButton" type="Button" parent="Center/Panel/Margin/VBox"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 80)
 text = "New Save"
 
 [node name="SettingsButton" type="Button" parent="Center/Panel/Margin/VBox"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 80)
 text = "Settings"
 
 [node name="QuitButton" type="Button" parent="Center/Panel/Margin/VBox"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 80)
 text = "Close Game"

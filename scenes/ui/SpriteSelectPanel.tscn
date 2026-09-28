@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://scripts/ui/SpriteSelectPanel.gd" id="1_ssp"]
 
 [node name="SpriteSelectPanel" type="Control"]
-position = Vector2(-240, 8)
-size = Vector2(225, 412)
+position = Vector2(-460, 8)
+size = Vector2(420, 800)
 script = ExtResource("1_ssp")
 
 [node name="Panel" type="Panel" parent="."]
@@ -14,24 +14,24 @@ anchor_bottom = 1.0
 [node name="TitleLabel" type="Label" parent="Panel"]
 offset_left = 12.0
 offset_top = 10.0
-offset_right = 190.0
-offset_bottom = 34.0
-theme_override_font_sizes/font_size = 15
+offset_right = 380.0
+offset_bottom = 66.0
+theme_override_font_sizes/font_size = 30
 
 [node name="CloseButton" type="Button" parent="Panel"]
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -36.0
-offset_top = 6.0
-offset_right = -6.0
-offset_bottom = 36.0
+offset_left = -72.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 72.0
 text = "X"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
-offset_left = 6.0
-offset_top = 42.0
-offset_right = 219.0
-offset_bottom = 406.0
+offset_left = 8.0
+offset_top = 80.0
+offset_right = 412.0
+offset_bottom = 792.0
 
 [node name="VBox" type="VBoxContainer" parent="Panel/ScrollContainer"]
 layout_mode = 2

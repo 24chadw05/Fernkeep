@@ -1,7 +1,6 @@
 {
   "dishes": {
     "comment": "Dishes served in taverns and restaurants. Ingredients come from foraging, fishing, farming, and market orders.",
-
     "hearty_stew": {
       "id": "hearty_stew",
       "name": "Hearty Stew",
@@ -14,13 +13,24 @@
         "vegetables": 2,
         "water": 1
       },
-      "ingredient_sources": ["farm", "market"],
+      "ingredient_sources": [
+        "farm",
+        "market"
+      ],
       "gold_per_serve": 3.0,
       "reputation_gain": 1,
       "happiness_bonus": 5.0,
-      "description": "A filling bowl of whatever's in season. Citizens love it."
+      "description": "A filling bowl of whatever's in season. Citizens love it.",
+      "cuisine": "hearth",
+      "buff": {
+        "name": "Warm Bellies",
+        "days": 1,
+        "stacks": false,
+        "effect": {
+          "city_happiness_bonus": 3
+        }
+      }
     },
-
     "roast_vegetable_platter": {
       "id": "roast_vegetable_platter",
       "name": "Roast Vegetable Platter",
@@ -32,50 +42,87 @@
         "vegetables": 3,
         "herbs": 1
       },
-      "ingredient_sources": ["farm"],
+      "ingredient_sources": [
+        "farm"
+      ],
       "gold_per_serve": 4.0,
       "reputation_gain": 2,
       "happiness_bonus": 6.0,
-      "description": "Seasonal vegetables roasted with forest herbs."
+      "description": "Seasonal vegetables roasted with forest herbs.",
+      "cuisine": "verdant",
+      "buff": {
+        "name": "Garden Goodness",
+        "days": 1,
+        "stacks": false,
+        "effect": {
+          "city_happiness_bonus": 2,
+          "farm_yield_bonus": 0.1
+        }
+      }
     },
-
     "forest_mushroom_soup": {
       "id": "forest_mushroom_soup",
       "name": "Forest Mushroom Soup",
       "type": "dish",
       "tier": 1,
-      "unlock": { "forage_find": "mushroom" },
+      "unlock": {
+        "forage_find": "mushroom"
+      },
       "tavern_tier_required": 1,
       "ingredients": {
         "mushroom": 3,
         "herbs": 1,
         "grain": 1
       },
-      "ingredient_sources": ["forage"],
+      "ingredient_sources": [
+        "forage"
+      ],
       "gold_per_serve": 6.0,
       "reputation_gain": 3,
       "happiness_bonus": 8.0,
-      "description": "Foraged mushrooms slow-cooked with wild herbs. A forest favourite."
+      "description": "Foraged mushrooms slow-cooked with wild herbs. A forest favourite.",
+      "cuisine": "verdant",
+      "buff": {
+        "name": "Forager's Instinct",
+        "days": 1,
+        "stacks": false,
+        "effect": {
+          "city_happiness_bonus": 2,
+          "rare_find_chance_bonus": 0.1
+        }
+      }
     },
-
     "grilled_river_fish": {
       "id": "grilled_river_fish",
       "name": "Grilled River Fish",
       "type": "dish",
       "tier": 1,
-      "unlock": { "fishing_catch": "river_fish" },
+      "unlock": {
+        "fishing_catch": "river_fish"
+      },
       "tavern_tier_required": 1,
       "ingredients": {
         "river_fish": 2,
         "herbs": 1
       },
-      "ingredient_sources": ["fishing"],
+      "ingredient_sources": [
+        "fishing"
+      ],
       "gold_per_serve": 7.0,
       "reputation_gain": 3,
       "happiness_bonus": 8.0,
-      "description": "Fresh-caught fish from the river, simply seasoned."
+      "description": "Fresh-caught fish from the river, simply seasoned.",
+      "cuisine": "hearth",
+      "buff": {
+        "name": "Steady Hands",
+        "days": 1,
+        "stacks": false,
+        "effect": {
+          "city_happiness_bonus": 2,
+          "fishing_zone_bonus": 0.15
+        }
+      }
     },
-
     "bread_and_cheese": {
       "id": "bread_and_cheese",
       "name": "Bread and Cheese",
@@ -86,96 +133,160 @@
       "ingredients": {
         "grain": 3
       },
-      "ingredient_sources": ["farm", "market"],
+      "ingredient_sources": [
+        "farm",
+        "market"
+      ],
       "gold_per_serve": 2.0,
       "reputation_gain": 1,
       "happiness_bonus": 3.0,
-      "description": "Simple but reliable. Every tavern has this on the menu."
+      "description": "Simple but reliable. Every tavern has this on the menu.",
+      "cuisine": "verdant",
+      "buff": {
+        "name": "Simple Comfort",
+        "days": 1,
+        "stacks": false,
+        "effect": {
+          "city_happiness_bonus": 2
+        }
+      }
     },
-
     "honey_glazed_root_vegetables": {
       "id": "honey_glazed_root_vegetables",
       "name": "Honey-Glazed Root Vegetables",
       "type": "dish",
       "tier": 2,
-      "unlock": { "forage_find": "wild_honey" },
+      "unlock": {
+        "forage_find": "wild_honey"
+      },
       "tavern_tier_required": 2,
       "ingredients": {
         "vegetables": 3,
         "wild_honey": 2,
         "herbs": 1
       },
-      "ingredient_sources": ["farm", "forage"],
+      "ingredient_sources": [
+        "farm",
+        "forage"
+      ],
       "gold_per_serve": 12.0,
       "reputation_gain": 6,
       "happiness_bonus": 12.0,
-      "description": "A sweet and savoury side that citizens request by name."
+      "description": "A sweet and savoury side that citizens request by name.",
+      "cuisine": "verdant",
+      "buff": {
+        "name": "Sweet Contentment",
+        "days": 2,
+        "stacks": false,
+        "effect": {
+          "city_happiness_bonus": 5
+        }
+      }
     },
-
     "herb_roasted_boar": {
       "id": "herb_roasted_boar",
       "name": "Herb-Roasted Boar",
       "type": "dish",
       "tier": 2,
-      "unlock": { "market_order": "boar_meat" },
+      "unlock": {
+        "market_order": "boar_meat"
+      },
       "tavern_tier_required": 2,
       "ingredients": {
         "boar_meat": 3,
         "herbs": 2,
         "basic_fruit": 1
       },
-      "ingredient_sources": ["market"],
+      "ingredient_sources": [
+        "market"
+      ],
       "gold_per_serve": 16.0,
       "reputation_gain": 8,
       "happiness_bonus": 15.0,
-      "description": "A celebration dish. Ordered by name during festivals."
+      "description": "A celebration dish. Ordered by name during festivals.",
+      "cuisine": "hearth",
+      "buff": {
+        "name": "Hard Day's Work",
+        "days": 1,
+        "stacks": false,
+        "effect": {
+          "productivity_bonus": 0.1
+        }
+      }
     },
-
     "smoked_lake_trout": {
       "id": "smoked_lake_trout",
       "name": "Smoked Lake Trout",
       "type": "dish",
       "tier": 2,
-      "unlock": { "fishing_catch": "lake_trout" },
+      "unlock": {
+        "fishing_catch": "lake_trout"
+      },
       "tavern_tier_required": 2,
       "ingredients": {
         "lake_trout": 2,
         "herbs": 2,
         "grain": 1
       },
-      "ingredient_sources": ["fishing"],
+      "ingredient_sources": [
+        "fishing"
+      ],
       "gold_per_serve": 18.0,
       "reputation_gain": 9,
       "happiness_bonus": 16.0,
-      "description": "Slow-smoked over applewood. A dish that earns reputation."
+      "description": "Slow-smoked over applewood. A dish that earns reputation.",
+      "cuisine": "hearth",
+      "buff": {
+        "name": "Tavern Favourite",
+        "days": 1,
+        "stacks": false,
+        "effect": {
+          "tavern_income_bonus": 0.25
+        }
+      }
     },
-
     "enchanted_berry_tart": {
       "id": "enchanted_berry_tart",
       "name": "Enchanted Berry Tart",
       "type": "dish",
       "tier": 2,
-      "unlock": { "forage_find": "enchanted_berries" },
+      "unlock": {
+        "forage_find": "enchanted_berries"
+      },
       "tavern_tier_required": 2,
       "ingredients": {
         "enchanted_berries": 3,
         "grain": 2,
         "wild_honey": 1
       },
-      "ingredient_sources": ["forage"],
+      "ingredient_sources": [
+        "forage"
+      ],
       "gold_per_serve": 22.0,
       "reputation_gain": 12,
       "happiness_bonus": 18.0,
       "seasonal_availability": "spring",
-      "description": "A spring delicacy. Citizens will travel to taste it."
+      "description": "A spring delicacy. Citizens will travel to taste it.",
+      "cuisine": "enchanted",
+      "buff": {
+        "name": "Enchanted Renown",
+        "days": 2,
+        "stacks": false,
+        "effect": {
+          "reputation_gain_bonus": 0.15,
+          "city_happiness_bonus": 3
+        }
+      }
     },
-
     "seasonal_harvest_feast": {
       "id": "seasonal_harvest_feast",
       "name": "Seasonal Harvest Feast",
       "type": "dish",
       "tier": 3,
-      "unlock": { "quest_completed": "harvest_festival_quest", "farm_level": 4 },
+      "unlock": {
+        "quest_completed": "harvest_festival_quest",
+        "farm_level": 4
+      },
       "tavern_tier_required": 3,
       "ingredients": {
         "seasonal_crops": 5,
@@ -184,20 +295,36 @@
         "boar_meat": 2,
         "wild_honey": 2
       },
-      "ingredient_sources": ["farm", "forage", "market"],
+      "ingredient_sources": [
+        "farm",
+        "forage",
+        "market"
+      ],
       "gold_per_serve": 45.0,
       "reputation_gain": 25,
       "happiness_bonus": 30.0,
       "seasonal_availability": "autumn",
-      "description": "The signature feast of the Harvest Rush. A major city reputation event."
+      "description": "The signature feast of the Harvest Rush. A major city reputation event.",
+      "cuisine": "verdant",
+      "buff": {
+        "name": "Festival of Plenty",
+        "days": 2,
+        "stacks": false,
+        "effect": {
+          "income_bonus": 0.1,
+          "farm_yield_bonus": 0.25,
+          "city_happiness_bonus": 5
+        }
+      }
     },
-
     "legendary_fish_pie": {
       "id": "legendary_fish_pie",
       "name": "Legendary Fish Pie",
       "type": "dish",
       "tier": 3,
-      "unlock": { "fishing_catch": "legendary_fish" },
+      "unlock": {
+        "fishing_catch": "legendary_fish"
+      },
       "tavern_tier_required": 3,
       "ingredients": {
         "legendary_fish": 1,
@@ -205,53 +332,96 @@
         "herbs": 2,
         "grain": 3
       },
-      "ingredient_sources": ["fishing", "farm"],
+      "ingredient_sources": [
+        "fishing",
+        "farm"
+      ],
       "gold_per_serve": 60.0,
       "reputation_gain": 35,
       "happiness_bonus": 35.0,
-      "description": "Made from a legendary fish catch. Unlocks a city-wide happiness bonus."
+      "description": "Made from a legendary fish catch. Unlocks a city-wide happiness bonus.",
+      "cuisine": "hearth",
+      "buff": {
+        "name": "Legend of the Lake",
+        "days": 3,
+        "stacks": false,
+        "effect": {
+          "reputation_gain_bonus": 0.25,
+          "income_bonus": 0.15,
+          "arrival_quality_bonus": 1,
+          "market_sell_bonus": 0.1
+        }
+      }
     },
-
     "winter_spiced_cider": {
       "id": "winter_spiced_cider",
       "name": "Winter Spiced Cider",
       "type": "drink",
       "tier": 2,
-      "unlock": { "season": "winter", "farm_level": 3 },
+      "unlock": {
+        "season": "winter",
+        "farm_level": 3
+      },
       "tavern_tier_required": 2,
       "ingredients": {
         "basic_fruit": 4,
         "rare_herbs": 1,
         "wild_honey": 1
       },
-      "ingredient_sources": ["farm", "forage"],
+      "ingredient_sources": [
+        "farm",
+        "forage"
+      ],
       "gold_per_serve": 14.0,
       "reputation_gain": 7,
       "happiness_bonus": 14.0,
       "seasonal_availability": "winter",
-      "description": "A warming winter drink. Counters the happiness penalty of the Frost Quiet."
+      "description": "A warming winter drink. Counters the happiness penalty of the Frost Quiet.",
+      "cuisine": "enchanted",
+      "buff": {
+        "name": "Winter Warmth",
+        "days": 2,
+        "stacks": false,
+        "effect": {
+          "city_happiness_bonus": 6,
+          "productivity_bonus": 0.05
+        }
+      }
     },
-
     "bloom_festival_tea": {
       "id": "bloom_festival_tea",
       "name": "Bloom Festival Tea",
       "type": "drink",
       "tier": 2,
-      "unlock": { "season": "spring", "forage_find": "rare_flowers" },
+      "unlock": {
+        "season": "spring",
+        "forage_find": "rare_flowers"
+      },
       "tavern_tier_required": 2,
       "ingredients": {
         "rare_flowers": 3,
         "wild_honey": 1
       },
-      "ingredient_sources": ["forage"],
+      "ingredient_sources": [
+        "forage"
+      ],
       "gold_per_serve": 10.0,
       "reputation_gain": 5,
       "happiness_bonus": 10.0,
       "seasonal_availability": "spring",
-      "description": "A floral spring tea brewed from rare blooms. Favoured during the Bloom Festival."
+      "description": "A floral spring tea brewed from rare blooms. Favoured during the Bloom Festival.",
+      "cuisine": "verdant",
+      "buff": {
+        "name": "Word of Blossom",
+        "days": 2,
+        "stacks": false,
+        "effect": {
+          "arrival_chance_bonus": 0.3,
+          "city_happiness_bonus": 2
+        }
+      }
     }
   },
-
   "potions": {
     "minor_gold_boost": {
       "id": "minor_gold_boost",
@@ -264,14 +434,18 @@
         "herbs": 2,
         "mushroom": 1
       },
-      "ingredient_sources": ["farm", "forage"],
+      "ingredient_sources": [
+        "farm",
+        "forage"
+      ],
       "effect_type": "temporary",
-      "effect": { "income_bonus": 0.1 },
+      "effect": {
+        "income_bonus": 0.1
+      },
       "duration_minutes": 10,
       "craft_time_seconds": 30,
       "description": "A pale green brew. Boosts all income by 10% for 10 in-game minutes."
     },
-
     "happiness_draught": {
       "id": "happiness_draught",
       "name": "Happiness Draught",
@@ -283,118 +457,155 @@
         "herbs": 2,
         "basic_fruit": 2
       },
-      "ingredient_sources": ["farm"],
+      "ingredient_sources": [
+        "farm"
+      ],
       "effect_type": "temporary",
-      "effect": { "city_happiness_bonus": 10.0 },
+      "effect": {
+        "city_happiness_bonus": 10.0
+      },
       "duration_minutes": 5,
       "craft_time_seconds": 30,
       "description": "A sweet pink potion. Temporarily boosts city happiness by 10 points."
     },
-
     "building_speed_tonic": {
       "id": "building_speed_tonic",
       "name": "Builder's Tonic",
       "type": "potion",
       "tier": 1,
-      "unlock": { "magic_tower_level": 2 },
+      "unlock": {
+        "magic_tower_level": 2
+      },
       "magic_tower_tier_required": 1,
       "ingredients": {
         "herbs": 3,
         "grain": 1
       },
-      "ingredient_sources": ["farm"],
+      "ingredient_sources": [
+        "farm"
+      ],
       "effect_type": "temporary",
-      "effect": { "build_speed_bonus": 0.25 },
+      "effect": {
+        "build_speed_bonus": 0.25
+      },
       "duration_minutes": 8,
       "craft_time_seconds": 45,
       "description": "A fizzy orange brew. Speeds up all construction by 25%."
     },
-
     "foragers_eye": {
       "id": "foragers_eye",
       "name": "Forager's Eye",
       "type": "potion",
       "tier": 1,
-      "unlock": { "forage_find": "mushroom" },
+      "unlock": {
+        "forage_find": "mushroom"
+      },
       "magic_tower_tier_required": 1,
       "ingredients": {
         "mushroom": 2,
         "rare_herbs": 1
       },
-      "ingredient_sources": ["forage", "farm"],
+      "ingredient_sources": [
+        "forage",
+        "farm"
+      ],
       "effect_type": "temporary",
-      "effect": { "rare_find_chance_bonus": 0.2 },
+      "effect": {
+        "rare_find_chance_bonus": 0.2
+      },
       "duration_minutes": 15,
       "craft_time_seconds": 60,
       "description": "A mossy green tonic. Increases rare forage find chance by 20%."
     },
-
     "gold_cap_tincture": {
       "id": "gold_cap_tincture",
       "name": "Treasury Tincture",
       "type": "potion",
       "tier": 2,
-      "unlock": { "magic_tower_level": 4 },
+      "unlock": {
+        "magic_tower_level": 4
+      },
       "magic_tower_tier_required": 2,
       "ingredients": {
         "rare_herbs": 2,
         "enchanted_berries": 2,
         "wild_honey": 1
       },
-      "ingredient_sources": ["farm", "forage"],
+      "ingredient_sources": [
+        "farm",
+        "forage"
+      ],
       "effect_type": "permanent",
-      "effect": { "gold_cap_increase": 2000 },
+      "effect": {
+        "gold_cap_increase": 2000
+      },
       "craft_time_seconds": 120,
       "description": "A permanent upgrade. Increases gold cap by 2,000."
     },
-
     "citizens_charm": {
       "id": "citizens_charm",
       "name": "Citizen's Charm",
       "type": "potion",
       "tier": 2,
-      "unlock": { "magic_tower_level": 4, "npc_quest": "enchanter_quest_1" },
+      "unlock": {
+        "magic_tower_level": 4,
+        "npc_quest": "enchanter_quest_1"
+      },
       "magic_tower_tier_required": 2,
       "ingredients": {
         "rare_flowers": 2,
         "enchanted_berries": 2,
         "rare_herbs": 1
       },
-      "ingredient_sources": ["forage"],
+      "ingredient_sources": [
+        "forage"
+      ],
       "effect_type": "temporary",
-      "effect": { "arrival_quality_bonus": 2, "arrival_chance_bonus": 0.3 },
+      "effect": {
+        "arrival_quality_bonus": 2,
+        "arrival_chance_bonus": 0.3
+      },
       "duration_minutes": 20,
       "craft_time_seconds": 90,
       "description": "A shimmering violet brew. Boosts the wealth and skill of arriving citizens."
     },
-
     "autumn_brew": {
       "id": "autumn_brew",
       "name": "Wanderer's Moon Brew",
       "type": "potion",
       "tier": 2,
-      "unlock": { "season": "autumn", "magic_tower_level": 3 },
+      "unlock": {
+        "season": "autumn",
+        "magic_tower_level": 3
+      },
       "magic_tower_tier_required": 1,
       "ingredients": {
         "enchanted_mushroom": 3,
         "rare_herbs": 2,
         "wild_honey": 1
       },
-      "ingredient_sources": ["forage"],
+      "ingredient_sources": [
+        "forage"
+      ],
       "seasonal_availability": "autumn",
       "effect_type": "temporary",
-      "effect": { "xp_gain_bonus": 0.25, "rare_npc_chance_bonus": 0.15 },
+      "effect": {
+        "xp_gain_bonus": 0.25,
+        "rare_npc_chance_bonus": 0.15
+      },
       "duration_minutes": 30,
       "craft_time_seconds": 120,
       "description": "Brewed under the Wanderer's Moon. Boosts XP gain and rare NPC arrival chance."
     },
-
     "essence_of_plenty": {
       "id": "essence_of_plenty",
       "name": "Essence of Plenty",
       "type": "potion",
       "tier": 3,
-      "unlock": { "magic_tower_tier": 3, "farm_level": 7 },
+      "unlock": {
+        "magic_tower_tier": 3,
+        "farm_level": 7
+      },
       "magic_tower_tier_required": 3,
       "ingredients": {
         "legendary_herbs": 2,
@@ -402,57 +613,140 @@
         "rare_ingredients": 2,
         "wild_honey": 2
       },
-      "ingredient_sources": ["farm", "forage"],
+      "ingredient_sources": [
+        "farm",
+        "forage"
+      ],
       "effect_type": "temporary",
-      "effect": { "farm_yield_bonus": 0.5, "income_bonus": 0.2 },
+      "effect": {
+        "farm_yield_bonus": 0.5,
+        "income_bonus": 0.2
+      },
       "duration_minutes": 60,
       "craft_time_seconds": 300,
       "description": "A legendary potion from an ancient recipe. Doubles farm output and raises all income."
     },
-
     "city_blessing": {
       "id": "city_blessing",
       "name": "City Blessing",
       "type": "potion",
       "tier": 3,
-      "unlock": { "magic_tower_tier": 3, "town_hall_tier": 3 },
+      "unlock": {
+        "magic_tower_tier": 3,
+        "town_hall_tier": 3
+      },
       "magic_tower_tier_required": 3,
       "ingredients": {
         "legendary_herbs": 3,
         "rare_ingredients": 3,
         "enchanted_ore": 5
       },
-      "ingredient_sources": ["farm", "forage", "blacksmith"],
+      "ingredient_sources": [
+        "farm",
+        "forage",
+        "blacksmith"
+      ],
       "effect_type": "permanent",
-      "effect": { "city_happiness_bonus_permanent": 5.0 },
+      "effect": {
+        "city_happiness_bonus_permanent": 5.0
+      },
       "craft_time_seconds": 600,
       "description": "A permanent city-wide blessing. Raises the happiness floor by 5 points forever."
     }
   },
-
   "ingredient_sources": {
     "comment": "Reference table for where each ingredient comes from.",
-    "grain":             { "source": "farm",    "tier_available": 1 },
-    "vegetables":        { "source": "farm",    "tier_available": 1 },
-    "basic_fruit":       { "source": "farm",    "tier_available": 1 },
-    "herbs":             { "source": "farm",    "tier_available": 1 },
-    "seasonal_crops":    { "source": "farm",    "tier_available": 1 },
-    "rare_herbs":        { "source": "farm",    "tier_available": 2 },
-    "better_fruit":      { "source": "farm",    "tier_available": 2 },
-    "premium_fruit":     { "source": "farm",    "tier_available": 2 },
-    "enchanted_crops":   { "source": "farm",    "tier_available": 3 },
-    "rare_ingredients":  { "source": "farm",    "tier_available": 3 },
-    "legendary_herbs":   { "source": "farm",    "tier_available": 3 },
-    "enchanted_fruit":   { "source": "farm",    "tier_available": 3 },
-    "mushroom":          { "source": "forage",  "tier_available": 1 },
-    "wild_honey":        { "source": "forage",  "tier_available": 1 },
-    "rare_flowers":      { "source": "forage",  "tier_available": 1, "seasonal": "spring" },
-    "enchanted_berries": { "source": "forage",  "tier_available": 2, "seasonal": "spring" },
-    "enchanted_mushroom":{ "source": "forage",  "tier_available": 2, "seasonal": "autumn" },
-    "river_fish":        { "source": "fishing", "tier_available": 1 },
-    "lake_trout":        { "source": "fishing", "tier_available": 2 },
-    "legendary_fish":    { "source": "fishing", "tier_available": 3, "rarity": "legendary" },
-    "boar_meat":         { "source": "market",  "tier_available": 2 },
-    "water":             { "source": "market",  "tier_available": 1 }
+    "grain": {
+      "source": "farm",
+      "tier_available": 1
+    },
+    "vegetables": {
+      "source": "farm",
+      "tier_available": 1
+    },
+    "basic_fruit": {
+      "source": "farm",
+      "tier_available": 1
+    },
+    "herbs": {
+      "source": "farm",
+      "tier_available": 1
+    },
+    "seasonal_crops": {
+      "source": "farm",
+      "tier_available": 1
+    },
+    "rare_herbs": {
+      "source": "farm",
+      "tier_available": 2
+    },
+    "better_fruit": {
+      "source": "farm",
+      "tier_available": 2
+    },
+    "premium_fruit": {
+      "source": "farm",
+      "tier_available": 2
+    },
+    "enchanted_crops": {
+      "source": "farm",
+      "tier_available": 3
+    },
+    "rare_ingredients": {
+      "source": "farm",
+      "tier_available": 3
+    },
+    "legendary_herbs": {
+      "source": "farm",
+      "tier_available": 3
+    },
+    "enchanted_fruit": {
+      "source": "farm",
+      "tier_available": 3
+    },
+    "mushroom": {
+      "source": "forage",
+      "tier_available": 1
+    },
+    "wild_honey": {
+      "source": "forage",
+      "tier_available": 1
+    },
+    "rare_flowers": {
+      "source": "forage",
+      "tier_available": 1,
+      "seasonal": "spring"
+    },
+    "enchanted_berries": {
+      "source": "forage",
+      "tier_available": 2,
+      "seasonal": "spring"
+    },
+    "enchanted_mushroom": {
+      "source": "forage",
+      "tier_available": 2,
+      "seasonal": "autumn"
+    },
+    "river_fish": {
+      "source": "fishing",
+      "tier_available": 1
+    },
+    "lake_trout": {
+      "source": "fishing",
+      "tier_available": 2
+    },
+    "legendary_fish": {
+      "source": "fishing",
+      "tier_available": 3,
+      "rarity": "legendary"
+    },
+    "boar_meat": {
+      "source": "market",
+      "tier_available": 2
+    },
+    "water": {
+      "source": "market",
+      "tier_available": 1
+    }
   }
 }

@@ -2,8 +2,8 @@ extends Control
 
 signal sprite_selected(building_id: String, sprite_path: String)
 
-const HIDDEN_X: float = -240.0
-const SHOWN_X:  float = 252.0
+const HIDDEN_X: float = -460.0
+const SHOWN_X:  float = 446.0  # clears the widened HUD (430px)
 
 var _building_id: String = ""
 
@@ -28,10 +28,10 @@ func show_for_building(building_id: String, variants: Array) -> void:
 
 	for variant in variants:
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(0, 82)
+		btn.custom_minimum_size = Vector2(0, 164)
 		btn.alignment           = HORIZONTAL_ALIGNMENT_LEFT
 		btn.text                = "  " + variant["label"]
-		btn.add_theme_constant_override("icon_max_width", 68)
+		btn.add_theme_constant_override("icon_max_width", 136)
 		btn.expand_icon = true
 		if ResourceLoader.exists(variant["path"]):
 			btn.icon = load(variant["path"])

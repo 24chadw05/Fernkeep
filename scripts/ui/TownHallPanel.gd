@@ -30,8 +30,15 @@ var lbl_net:        Label
 var resource_labels: Dictionary = {}   # resource_id → Label
 
 var lbl_th_tier:    Label
+var lbl_plots:      Label
 var lbl_th_upgrade: Label
 var upgrade_button: Button
+var lbl_prestige:   Label
+var prestige_button: Button
+
+# _refresh reads calculate_city_happiness(), which EMITS city_happiness_updated,
+# which we also listen to → guard against the re-entrant refresh loop.
+var _refreshing: bool = false
 
 var _popup: ConfirmPopup = null
 
@@ -53,6 +60,7 @@ func _ready() -> void:
 	TimeManager.connect("new_day",    func(_d, _s, _y): if visible: _refresh())
 	ProgressionManager.connect("level_up", func(_l, _u): if visible: _refresh())
 	CitizenManager.connect("city_happiness_updated", func(_h): if visible: _refresh())
+	PrestigeManager.prestige_stats_changed.connect(func(): if visible: _refresh_prestige())
 
 # ── Public ────────────────────────────────────────────────────────────────────
 
@@ -65,74 +73,101 @@ func show_panel(building: PlacedBuilding) -> void:
 # ── Tab builders ──────────────────────────────────────────────────────────────
 
 func _build_overview_tab() -> void:
-	lbl_level     = _section_label(overview_box, "PROGRESSION", Color(0.85, 0.75, 0.4))
-	lbl_xp        = _body_label(overview_box)
+	# Three columns spread across the panel width
+	var cols = _columns(overview_box, 3)
+
+	lbl_level     = _section_label(cols[0], "PROGRESSION", Color(0.5, 0.38, 0.06))
+	lbl_xp        = _body_label(cols[0])
 	xp_bar        = ProgressBar.new()
-	xp_bar.custom_minimum_size = Vector2(0, 14)
+	xp_bar.custom_minimum_size = Vector2(0, 28)
 	xp_bar.show_percentage     = false
-	overview_box.add_child(xp_bar)
-	_spacer(overview_box)
+	cols[0].add_child(xp_bar)
 
-	_section_label(overview_box, "POPULATION", Color(0.55, 0.85, 0.7))
-	lbl_citizens  = _body_label(overview_box)
-	lbl_housing   = _body_label(overview_box)
-	_spacer(overview_box)
+	_section_label(cols[1], "POPULATION", Color(0.16, 0.42, 0.3))
+	lbl_citizens  = _body_label(cols[1])
+	lbl_housing   = _body_label(cols[1])
 
-	_section_label(overview_box, "CITY MOOD", Color(0.7, 0.75, 1.0))
-	lbl_happiness = _body_label(overview_box)
+	_section_label(cols[2], "CITY MOOD", Color(0.25, 0.28, 0.55))
+	lbl_happiness = _body_label(cols[2])
 
 func _build_economy_tab() -> void:
-	_section_label(economy_box, "TREASURY", Color(0.95, 0.85, 0.35))
-	lbl_gold      = _body_label(economy_box)
-	_spacer(economy_box)
+	var cols = _columns(economy_box, 2)
 
-	_section_label(economy_box, "INCOME", Color(0.5, 0.9, 0.5))
-	lbl_income    = _body_label(economy_box)
-	lbl_rent      = _body_label(economy_box)
-	_spacer(economy_box)
+	_section_label(cols[0], "TREASURY", Color(0.55, 0.42, 0.05))
+	lbl_gold      = _body_label(cols[0])
+	_spacer(cols[0])
+	_section_label(cols[0], "INCOME", Color(0.15, 0.45, 0.12))
+	lbl_income    = _body_label(cols[0])
+	lbl_rent      = _body_label(cols[0])
 
-	_section_label(economy_box, "EXPENSES", Color(0.9, 0.45, 0.45))
-	lbl_wages     = _body_label(economy_box)
-	_spacer(economy_box)
-
-	_section_label(economy_box, "NET DAILY", Color(0.8, 0.8, 0.8))
-	lbl_net       = _body_label(economy_box)
+	_section_label(cols[1], "EXPENSES", Color(0.6, 0.16, 0.12))
+	lbl_wages     = _body_label(cols[1])
+	_spacer(cols[1])
+	_section_label(cols[1], "NET DAILY", Color(0.35, 0.27, 0.18))
+	lbl_net       = _body_label(cols[1])
 
 func _build_resources_tab() -> void:
-	_section_label(resources_box, "STOCKPILE", Color(0.75, 0.65, 0.5))
+	_section_label(resources_box, "STOCKPILE", Color(0.42, 0.32, 0.2))
+	# Table: Resource | In stock | Market value each | Total worth
+	var grid := GridContainer.new()
+	grid.columns = 4
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	grid.add_theme_constant_override("h_separation", 40)
+	grid.add_theme_constant_override("v_separation", 6)
+	resources_box.add_child(grid)
+	for h in ["Resource", "In stock", "Value each", "Total worth"]:
+		var head = Label.new()
+		head.text = h
+		head.add_theme_font_size_override("font_size", 22)
+		head.add_theme_color_override("font_color", Color(0.5, 0.4, 0.24))
+		head.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		grid.add_child(head)
 	var tracked = ["wood", "stone", "herbs", "fish", "grain", "vegetables", "enchanted_ore", "rare_ingredients"]
 	for res in tracked:
-		var lbl = _body_label(resources_box)
-		resource_labels[res] = lbl
+		var name_lbl = _table_cell(grid, ResourceManager.get_item_label(res))
+		name_lbl.add_theme_color_override("font_color", Color(0.3, 0.22, 0.14))
+		resource_labels[res] = _table_cell(grid, "0")
+		resource_labels[res + "_val"] = _table_cell(grid, "—")
+		resource_labels[res + "_tot"] = _table_cell(grid, "—")
 
 	_spacer(resources_box)
-	_section_label(resources_box, "PRODUCERS", Color(0.6, 0.75, 0.6))
+	_section_label(resources_box, "PRODUCERS", Color(0.22, 0.4, 0.2))
 	var producers_label = _body_label(resources_box)
 	resource_labels["_producers"] = producers_label
 
 func _build_townhall_tab() -> void:
-	_section_label(townhall_box, "TOWN HALL STATUS", Color(0.85, 0.75, 0.4))
-	lbl_th_tier   = _body_label(townhall_box)
-	_spacer(townhall_box)
+	var cols = _columns(townhall_box, 2)
 
-	_section_label(townhall_box, "UPGRADE", Color(0.6, 0.85, 0.6))
-	lbl_th_upgrade = _body_label(townhall_box)
+	_section_label(cols[0], "TOWN HALL STATUS", Color(0.5, 0.38, 0.06))
+	lbl_th_tier   = _body_label(cols[0])
+	lbl_plots     = _body_label(cols[0])
+	_spacer(cols[0])
+	_section_label(cols[0], "UPGRADE", Color(0.18, 0.45, 0.15))
+	lbl_th_upgrade = _body_label(cols[0])
 	upgrade_button = Button.new()
-	upgrade_button.custom_minimum_size = Vector2(0, 40)
-	upgrade_button.add_theme_font_size_override("font_size", 14)
+	upgrade_button.custom_minimum_size = Vector2(0, 80)
+	upgrade_button.add_theme_font_size_override("font_size", 28)
 	upgrade_button.pressed.connect(_show_upgrade_popup)
-	townhall_box.add_child(upgrade_button)
+	cols[0].add_child(upgrade_button)
 
-	_spacer(townhall_box)
-	_section_label(townhall_box, "STAFF", Color(0.7, 0.7, 0.9))
-	var staff_lbl = _body_label(townhall_box)
+	_section_label(cols[1], "STAFF", Color(0.28, 0.28, 0.5))
+	var staff_lbl = _body_label(cols[1])
 	resource_labels["_th_staff"] = staff_lbl
+	_spacer(cols[1])
+	_section_label(cols[1], "PRESTIGE — FOUND ANEW", Color(0.5, 0.3, 0.55))
+	lbl_prestige = _body_label(cols[1])
+	prestige_button = Button.new()
+	prestige_button.custom_minimum_size = Vector2(0, 80)
+	prestige_button.add_theme_font_size_override("font_size", 28)
+	prestige_button.pressed.connect(_show_prestige_popup)
+	cols[1].add_child(prestige_button)
 
 # ── Refresh ───────────────────────────────────────────────────────────────────
 
 func _refresh() -> void:
-	if not current_building:
+	if not current_building or _refreshing:
 		return
+	_refreshing = true
 
 	var time_str = "Day %d  •  %s  •  Year %d" % [
 		TimeManager.current_day, TimeManager.get_season_name(), TimeManager.current_year
@@ -162,12 +197,12 @@ func _refresh() -> void:
 	lbl_happiness.add_theme_color_override("font_color", _score_color(happiness))
 
 	# Economy
-	lbl_gold.text   = "Gold:  %.0f / %.0f" % [EconomyManager.gold, EconomyManager.gold_cap]
+	lbl_gold.text   = "Gold:  %.0f" % EconomyManager.gold
 	var income_min  = 0.0
 	var daily_rent  = 0.0
 	var daily_wages = 0.0
 	for b in BuildingManager.placed_buildings:
-		income_min  += b.get_income_per_minute()
+		income_min  += BuildingManager.get_live_income_per_minute(b)
 		for npc_id in b.assigned_staff:
 			var npc = CitizenManager.get_citizen_by_id(npc_id)
 			if npc:
@@ -182,17 +217,18 @@ func _refresh() -> void:
 	lbl_wages.text  = "Daily wages:  %.0f gold / day" % daily_wages
 	var net = daily_rent - daily_wages + (income_min * 60.0)
 	lbl_net.text    = "Net daily:  %.0f gold" % net
-	lbl_net.add_theme_color_override("font_color", Color(0.4, 0.9, 0.4) if net >= 0 else Color(0.9, 0.3, 0.3))
+	lbl_net.add_theme_color_override("font_color", Color(0.12, 0.43, 0.12) if net >= 0 else Color(0.62, 0.14, 0.1))
 
-	# Resources
-	var res_names = {
-		"wood": "Wood", "stone": "Stone", "herbs": "Herbs", "fish": "Fish",
-		"grain": "Grain", "vegetables": "Vegetables",
-		"enchanted_ore": "Enchanted Ore", "rare_ingredients": "Rare Ingredients"
-	}
-	for res_id in res_names:
-		if resource_labels.has(res_id):
-			resource_labels[res_id].text = "%s:  %d" % [res_names[res_id], int(ResourceManager.get_amount(res_id))]
+	# Resources table — stock, market value each, total worth
+	var tracked = ["wood", "stone", "herbs", "fish", "grain", "vegetables", "enchanted_ore", "rare_ingredients"]
+	for res_id in tracked:
+		if not resource_labels.has(res_id):
+			continue
+		var amount = int(ResourceManager.get_amount(res_id))
+		var unit_val = MarketManager.get_current_value(res_id)
+		resource_labels[res_id].text = "%d" % amount
+		resource_labels[res_id + "_val"].text = "%.0fg" % unit_val
+		resource_labels[res_id + "_tot"].text = "%.0fg" % (amount * unit_val)
 
 	var producers: Array = []
 	for b in BuildingManager.placed_buildings:
@@ -210,6 +246,13 @@ func _refresh() -> void:
 	lbl_th_tier.text = "Tier %d  •  Level %d  (Global level %d)" % [
 		current_building.tier, current_building.level, current_building.get_global_level()
 	]
+	var used_plots = BuildingManager.get_non_town_hall_count()
+	var plot_limit = BuildingManager.get_building_slot_limit()
+	var expansion = BuildingManager.get_expansion_points()
+	lbl_plots.text = "Building plots:  %d / %d   (+%d from mastered buildings)" % [
+		used_plots, plot_limit, expansion
+	]
+	lbl_plots.add_theme_color_override("font_color", Color(0.16, 0.42, 0.3))
 	var upgrade_cost = current_building.get_upgrade_cost()
 	if upgrade_cost < 0:
 		lbl_th_upgrade.text  = "Maximum tier reached."
@@ -229,6 +272,31 @@ func _refresh() -> void:
 	var slots  = current_building.get_staff_slots()
 	if resource_labels.has("_th_staff"):
 		resource_labels["_th_staff"].text = "Staff:  %d / %d slots filled" % [filled, slots]
+
+	_refresh_prestige()
+	_refreshing = false
+
+func _refresh_prestige() -> void:
+	if not lbl_prestige:
+		return
+	var bonus_pct = (PrestigeManager.get_income_multiplier() - 1.0) * 100.0
+	var status = "Renown: %.0f  (+%.0f%% income, permanent)  •  Founded anew %d time(s)" % [
+		PrestigeManager.renown, bonus_pct, PrestigeManager.prestige_count
+	]
+	if PrestigeManager.can_prestige():
+		lbl_prestige.text = "%s\nReady! Reset the city for +%.0f Renown and a new beginning." % [
+			status, PrestigeManager.renown_reward()
+		]
+		lbl_prestige.add_theme_color_override("font_color", Color(0.15, 0.45, 0.12))
+		prestige_button.text = "Found Anew…  (+%.0f Renown)" % PrestigeManager.renown_reward()
+		prestige_button.disabled = false
+	else:
+		lbl_prestige.text = "%s\nUnlocks when your Town Hall reaches Tier 3 (global level %d)." % [
+			status, PrestigeManager.PRESTIGE_TOWN_HALL_LEVEL
+		]
+		lbl_prestige.add_theme_color_override("font_color", Color(0.42, 0.33, 0.22))
+		prestige_button.text = "Prestige Locked"
+		prestige_button.disabled = true
 
 # ── Actions ───────────────────────────────────────────────────────────────────
 
@@ -292,6 +360,10 @@ func _show_upgrade_popup() -> void:
 func _execute_upgrade() -> void:
 	if not current_building:
 		return
+	var blocker = BuildingManager.get_upgrade_blocker(current_building)
+	if blocker != "":
+		SignalBus.show_notification_timed.emit(blocker, 1.5)
+		return
 	if BuildingManager.upgrade_building(current_building.id):
 		ProgressionManager.town_hall_level = current_building.get_global_level()
 		SignalBus.show_notification.emit(
@@ -299,32 +371,136 @@ func _execute_upgrade() -> void:
 		)
 		_refresh()
 
+# ── Prestige ──────────────────────────────────────────────────────────────────
+
+func _show_prestige_popup() -> void:
+	if not PrestigeManager.can_prestige():
+		return
+	# Scenario chooser overlay — pick a fresh beginning before confirming the reset
+	var overlay := Control.new()
+	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+
+	var dim := ColorRect.new()
+	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	dim.color = Color(0.0, 0.0, 0.0, 0.55)
+	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	overlay.add_child(dim)
+
+	var center := CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	overlay.add_child(center)
+
+	var panel := PanelContainer.new()
+	panel.custom_minimum_size = Vector2(900, 0)
+	center.add_child(panel)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 10)
+	panel.add_child(vbox)
+
+	var title := Label.new()
+	title.text = "Found Anew — Choose Your Beginning"
+	title.add_theme_font_size_override("font_size", 32)
+	title.add_theme_color_override("font_color", Color(0.5, 0.3, 0.55))
+	vbox.add_child(title)
+
+	var warn := Label.new()
+	warn.text = "This resets your city, citizens, gold, and buildings. You keep your Renown (+%.0f from this founding) and its permanent income bonus." % PrestigeManager.renown_reward()
+	warn.add_theme_font_size_override("font_size", 22)
+	warn.add_theme_color_override("font_color", Color(0.6, 0.16, 0.12))
+	warn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vbox.add_child(warn)
+
+	for scenario_id in PrestigeManager.SCENARIOS:
+		var info: Dictionary = PrestigeManager.SCENARIOS[scenario_id]
+		var btn := Button.new()
+		btn.custom_minimum_size = Vector2(0, 76)
+		btn.add_theme_font_size_override("font_size", 24)
+		btn.text = "%s — %s" % [info.get("name", scenario_id), info.get("blurb", "")]
+		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		btn.pressed.connect(func():
+			overlay.queue_free()
+			_confirm_prestige(scenario_id)
+		)
+		vbox.add_child(btn)
+
+	var cancel := Button.new()
+	cancel.text = "Cancel"
+	cancel.custom_minimum_size = Vector2(0, 64)
+	cancel.pressed.connect(func(): overlay.queue_free())
+	vbox.add_child(cancel)
+
+	add_child(overlay)
+
+func _confirm_prestige(scenario_id: String) -> void:
+	var info: Dictionary = PrestigeManager.get_scenario(scenario_id)
+	var rows: Array = [
+		{"type": "header", "text": "YOU KEEP"},
+		{"type": "note", "text": "Renown %.0f → %.0f  (+%.0f%% permanent income)" % [
+			PrestigeManager.renown, PrestigeManager.renown + PrestigeManager.renown_reward(),
+			(1.0 + (PrestigeManager.renown + PrestigeManager.renown_reward()) * PrestigeManager.RENOWN_INCOME_PER_POINT - 1.0) * 100.0
+		]},
+		{"type": "header", "text": "YOU RESET"},
+		{"type": "note", "text": "All gold, resources, buildings, and citizens — reborn as %s." % info.get("name", "a new city")},
+	]
+	_popup.open(
+		"Found Anew  —  %s" % info.get("name", "New Beginning"),
+		rows,
+		"Found Anew",
+		func(): PrestigeManager.execute_prestige(scenario_id)
+	)
+
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
-func _section_label(parent: VBoxContainer, text: String, color: Color) -> Label:
+# Split a tab's content into N equal-width columns spread across the panel
+func _columns(parent: VBoxContainer, count: int) -> Array:
+	var row := HBoxContainer.new()
+	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_theme_constant_override("separation", 48)
+	parent.add_child(row)
+	var cols: Array = []
+	for i in range(count):
+		var col := VBoxContainer.new()
+		col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		col.add_theme_constant_override("separation", 6)
+		row.add_child(col)
+		cols.append(col)
+	return cols
+
+func _table_cell(grid: GridContainer, text: String) -> Label:
 	var lbl = Label.new()
 	lbl.text = text
-	lbl.add_theme_font_size_override("font_size", 11)
+	lbl.add_theme_font_size_override("font_size", 24)
+	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	grid.add_child(lbl)
+	return lbl
+
+func _section_label(parent: Container, text: String, color: Color) -> Label:
+	var lbl = Label.new()
+	lbl.text = text
+	lbl.add_theme_font_size_override("font_size", 22)
 	lbl.add_theme_color_override("font_color", color)
 	parent.add_child(lbl)
 	return lbl
 
-func _body_label(parent: VBoxContainer) -> Label:
+func _body_label(parent: Container) -> Label:
 	var lbl = Label.new()
-	lbl.add_theme_font_size_override("font_size", 13)
+	lbl.add_theme_font_size_override("font_size", 26)
 	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	parent.add_child(lbl)
 	return lbl
 
 func _spacer(parent: VBoxContainer) -> void:
 	var sep = HSeparator.new()
-	sep.custom_minimum_size = Vector2(0, 6)
+	sep.custom_minimum_size = Vector2(0, 12)
 	parent.add_child(sep)
 
 func _score_color(score: float) -> Color:
-	if score >= 75: return Color(0.3, 0.9, 0.3)
-	if score >= 50: return Color(0.9, 0.8, 0.2)
-	return Color(0.9, 0.3, 0.3)
+	if score >= 75: return Color(0.15, 0.45, 0.12)
+	if score >= 50: return Color(0.55, 0.42, 0.05)
+	return Color(0.62, 0.14, 0.1)
 
 func _mood_word(score: float) -> String:
 	if score >= 90: return "(Thriving)"

@@ -7,11 +7,11 @@
 [ext_resource type="Script" uid="uid://djguv7b268ar3" path="res://scripts/managers/GameManager.gd" id="7_gamemanager"]
 [ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="8_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/BuildMenu.tscn" id="9_buildmenu"]
-[ext_resource type="PackedScene" path="res://scenes/ui/ArrivalPopup.tscn" id="10_arrivalpopup"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ArrivalsPanel.tscn" id="10_arrivalspanel"]
 [ext_resource type="PackedScene" path="res://scenes/ui/CitizenPanel.tscn" id="11_citizenpanel"]
 [ext_resource type="PackedScene" path="res://scenes/ui/BuildingInspector.tscn" id="12_inspector"]
 [ext_resource type="PackedScene" path="res://scenes/ui/BuildingQuickView.tscn" id="13_quickview"]
-[ext_resource type="PackedScene" path="res://scenes/ui/TownHallPanel.tscn" id="14_townhallpanel"]
+[ext_resource type="PackedScene" uid="uid://bnlc2sppiy03m" path="res://scenes/ui/TownHallPanel.tscn" id="14_townhallpanel"]
 [ext_resource type="PackedScene" path="res://scenes/ui/SpriteSelectPanel.tscn" id="15_sspanel"]
 [ext_resource type="PackedScene" path="res://scenes/ui/EscapeMenu.tscn" id="16_escapemenu"]
 [ext_resource type="PackedScene" path="res://scenes/ui/SaveSlotsPanel.tscn" id="17_saveslots"]
@@ -20,6 +20,20 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/QuestPanel.tscn" id="20_questpanel"]
 [ext_resource type="PackedScene" path="res://scenes/ui/TavernMenuPanel.tscn" id="21_tavernmenu"]
 [ext_resource type="PackedScene" path="res://scenes/ui/MagicTowerPanel.tscn" id="22_magictower"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ForagePanel.tscn" id="23_foragepanel"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ReassignPanel.tscn" id="24_reassign"]
+[ext_resource type="PackedScene" path="res://scenes/ui/FishingPanel.tscn" id="25_fishing"]
+[ext_resource type="PackedScene" path="res://scenes/ui/CaravanPanel.tscn" id="26_caravan"]
+[ext_resource type="PackedScene" path="res://scenes/ui/InventoryPanel.tscn" id="27_inventory"]
+[ext_resource type="PackedScene" path="res://scenes/ui/RevenuePanel.tscn" id="28_revenue"]
+[ext_resource type="PackedScene" path="res://scenes/ui/TradePortPanel.tscn" id="29_tradeport"]
+[ext_resource type="PackedScene" path="res://scenes/ui/GuildHallPanel.tscn" id="30_guildhall"]
+[ext_resource type="PackedScene" path="res://scenes/ui/CharacterProfilePanel.tscn" id="31_charprofile"]
+[ext_resource type="PackedScene" path="res://scenes/ui/FestivalPanel.tscn" id="32_festival"]
+[ext_resource type="PackedScene" path="res://scenes/ui/NewsPanel.tscn" id="33_newspanel"]
+[ext_resource type="PackedScene" path="res://scenes/ui/WelcomeBackPanel.tscn" id="34_welcomeback"]
+[ext_resource type="PackedScene" path="res://scenes/ui/KitchenPanel.tscn" id="35_kitchen"]
+[ext_resource type="PackedScene" path="res://scenes/ui/TutorialOverlay.tscn" id="36_tutorial"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3pl5x"]
 texture = ExtResource("2_ground")
@@ -65,26 +79,28 @@ anchors_preset = 15
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ArrivalPopup" parent="CanvasLayer" unique_id=1797007204 instance=ExtResource("10_arrivalpopup")]
+[node name="ArrivalsPanel" parent="CanvasLayer" unique_id=796325393 instance=ExtResource("10_arrivalspanel")]
 layout_mode = 3
-anchors_preset = 8
+anchors_preset = 15
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="CitizenPanel" parent="CanvasLayer" unique_id=66603404 instance=ExtResource("11_citizenpanel")]
 layout_mode = 3
 anchors_preset = 15
+offset_left = 5.0
+offset_top = 10.0
+offset_right = 5.0
+offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BuildingInspector" parent="CanvasLayer" unique_id=1219284780 instance=ExtResource("12_inspector")]
 layout_mode = 3
-anchors_preset = 1
-offset_left = -332.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 492.0
-grow_horizontal = 0
+offset_left = -3.0
+offset_top = 8.0
+offset_right = -3.0
+offset_bottom = 8.0
 
 [node name="BuildingQuickView" parent="CanvasLayer" unique_id=1355830684 instance=ExtResource("13_quickview")]
 
@@ -97,10 +113,10 @@ grow_vertical = 2
 [node name="SpriteSelectPanel" parent="CanvasLayer" unique_id=1393555990 instance=ExtResource("15_sspanel")]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -240.0
-offset_top = 8.0
-offset_right = -15.0
-offset_bottom = 420.0
+offset_left = 7.0
+offset_top = 9.0
+offset_right = 232.0
+offset_bottom = 421.0
 
 [node name="EscapeMenu" parent="CanvasLayer" unique_id=24075313 instance=ExtResource("16_escapemenu")]
 anchor_right = 1.0
@@ -120,23 +136,103 @@ anchors_preset = 15
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="QuestPanel" parent="CanvasLayer" instance=ExtResource("20_questpanel")]
+[node name="QuestPanel" parent="CanvasLayer" unique_id=1119396975 instance=ExtResource("20_questpanel")]
 layout_mode = 3
 anchors_preset = 15
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TavernMenuPanel" parent="CanvasLayer" instance=ExtResource("21_tavernmenu")]
+[node name="TavernMenuPanel" parent="CanvasLayer" unique_id=1819577171 instance=ExtResource("21_tavernmenu")]
 layout_mode = 3
 anchors_preset = 15
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MagicTowerPanel" parent="CanvasLayer" instance=ExtResource("22_magictower")]
+[node name="MagicTowerPanel" parent="CanvasLayer" unique_id=1444115372 instance=ExtResource("22_magictower")]
 layout_mode = 3
 anchors_preset = 15
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ForagePanel" parent="CanvasLayer" unique_id=560903230 instance=ExtResource("23_foragepanel")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReassignPanel" parent="CanvasLayer" unique_id=606210473 instance=ExtResource("24_reassign")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FishingPanel" parent="CanvasLayer" unique_id=90801346 instance=ExtResource("25_fishing")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CaravanPanel" parent="CanvasLayer" unique_id=1288889283 instance=ExtResource("26_caravan")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InventoryPanel" parent="CanvasLayer" unique_id=839264158 instance=ExtResource("27_inventory")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RevenuePanel" parent="CanvasLayer" instance=ExtResource("28_revenue")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TradePortPanel" parent="CanvasLayer" instance=ExtResource("29_tradeport")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GuildHallPanel" parent="CanvasLayer" instance=ExtResource("30_guildhall")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharacterProfilePanel" parent="CanvasLayer" instance=ExtResource("31_charprofile")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FestivalPanel" parent="CanvasLayer" instance=ExtResource("32_festival")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewsPanel" parent="CanvasLayer" instance=ExtResource("33_newspanel")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="KitchenPanel" parent="CanvasLayer" instance=ExtResource("35_kitchen")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WelcomeBackPanel" parent="CanvasLayer" instance=ExtResource("34_welcomeback")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TutorialOverlay" parent="." instance=ExtResource("36_tutorial")]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1818266305]
 script = ExtResource("5_vxy3g")
@@ -149,3 +245,5 @@ script = ExtResource("6_lueha")
 [node name="Buildings" type="Node2D" parent="." unique_id=943095160]
 
 [node name="NPCs" type="Node2D" parent="." unique_id=948980052]
+
+[node name="Travellers" type="Node2D" parent="."]

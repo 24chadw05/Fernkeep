@@ -177,16 +177,23 @@ func _serve_daily_meals() -> void:
 				served += 1
 			if served == 0:
 				continue
-			var gold = float(dish.get("gold_per_serve", 0.0)) * served
+			# A restaurant serving its signature cuisine earns more gold and fame
+			var spec_cuisine = str(b.get_spec_info().get("cuisine", ""))
+			var on_speciality = spec_cuisine != "" and str(dish.get("cuisine", "")) == spec_cuisine
+			var gold = float(dish.get("gold_per_serve", 0.0)) * served * CookingManager.get_serve_multiplier(dish_id) \
+				* get_tavern_income_multiplier()
+			if on_speciality:
+				gold *= 1.25
 			EconomyManager.add_gold(gold, "%s served %s ×%d" % [b.get_display_name(), dish.get("name", dish_id), served])
 			# First-ever serve of a dish earns its full reputation; repeats a trickle
 			var first_time = not served_dish_counts.has(dish_id)
 			served_dish_counts[dish_id] = int(served_dish_counts.get(dish_id, 0)) + served
 			var rep = float(dish.get("reputation_gain", 0))
+			var rep_mult = 2.0 if on_speciality else 1.0
 			if first_time:
-				ReputationManager.add_reputation(rep, "First taste of %s" % dish.get("name", dish_id))
+				ReputationManager.add_reputation(rep * rep_mult, "First taste of %s" % dish.get("name", dish_id))
 			elif rep > 0.0:
-				ReputationManager.add_reputation(maxf(rep * 0.15, 0.5), "Serving %s" % dish.get("name", dish_id))
+				ReputationManager.add_reputation(maxf(rep * 0.15, 0.5) * rep_mult, "Serving %s" % dish.get("name", dish_id))
 			# The finest dish served today lifts city spirits until tomorrow
 			meal_happiness_bonus = maxf(meal_happiness_bonus, float(dish.get("happiness_bonus", 0.0)) * 0.2)
 			emit_signal("dish_served", dish_id, b.id, gold, served)
@@ -240,31 +247,78 @@ func _finish_craft() -> void:
 	if potion.get("effect_type", "temporary") == "permanent":
 		_apply_permanent_effect(effect)
 	else:
-		active_effects.append({
-			"name": potion.get("name", potion_id),
-			"potion_id": potion_id,
-			"effect": effect.duplicate(),
-			"remaining": float(potion.get("duration_minutes", 10.0)) * 60.0,
-		})
+		add_timed_effect("potion:" + potion_id, str(potion.get("name", potion_id)), effect,
+			float(potion.get("duration_minutes", 10.0)) * 60.0, bool(potion.get("stackable", true)))
+		active_effects[-1]["potion_id"] = potion_id
 	SignalBus.show_notification.emit("%s is ready! %s" % [potion.get("name", potion_id), potion.get("description", "")])
 	emit_signal("potion_crafted", potion_id)
 	emit_signal("effects_changed")
 
 func _apply_permanent_effect(effect: Dictionary) -> void:
-	if effect.has("gold_cap_increase"):
-		EconomyManager.upgrade_gold_cap(EconomyManager.gold_cap + float(effect["gold_cap_increase"]))
+	# gold_cap_increase effects are now inert — the treasury has no cap
 	if effect.has("city_happiness_bonus_permanent"):
 		permanent_happiness_bonus += float(effect["city_happiness_bonus_permanent"])
 
-# Non-potion buffs (quest rewards, festival bonuses) share the effect pipeline
+# ── Timed effects: one engine for potions, food, quests and festivals ────────
+#
+# Every timed bonus in the game is an entry in active_effects:
+#   {"id", "name", "effect": {key: value}, "remaining": seconds, "stacks": bool}
+# Stacking effects (potions by default) ADD to each other. Non-stacking effects
+# (all food buffs; any potion with "stackable": false in recipes.json) never
+# pile up: re-applying the same id refreshes its timer, and for each stat only
+# the strongest non-stacking effect counts. Totals = sum(stacking) + max(rest).
+
+# Quest rewards, festival bonuses — stacking, like potions always were.
 func add_temp_effect(display_name: String, effect: Dictionary, duration_seconds: float) -> void:
+	add_timed_effect("", display_name, effect, duration_seconds, true)
+
+func add_timed_effect(id: String, display_name: String, effect: Dictionary,
+		duration_seconds: float, stacks: bool = true) -> void:
+	if not stacks and id != "":
+		for e in active_effects:
+			if e.get("id", "") == id:
+				# Same buff again: take the longer of the two timers, never add.
+				e["remaining"] = maxf(float(e["remaining"]), duration_seconds)
+				e["effect"] = effect.duplicate()
+				emit_signal("effects_changed")
+				return
 	active_effects.append({
+		"id": id,
 		"name": display_name,
 		"potion_id": "",
 		"effect": effect.duplicate(),
 		"remaining": duration_seconds,
+		"stacks": stacks,
 	})
 	emit_signal("effects_changed")
+
+# Stat labels for describing any effect dictionary to the player.
+# "%" entries are fractions shown as percentages; the rest are flat numbers.
+const EFFECT_LABELS: Dictionary = {
+	"city_happiness_bonus":    ["+%s city happiness", false],
+	"income_bonus":            ["+%s%% all income", true],
+	"tavern_income_bonus":     ["+%s%% tavern takings", true],
+	"productivity_bonus":      ["+%s%% staff productivity", true],
+	"reputation_gain_bonus":   ["+%s%% reputation gained", true],
+	"farm_yield_bonus":        ["+%s%% farm output", true],
+	"rare_find_chance_bonus":  ["+%s%% rare forage finds", true],
+	"fishing_zone_bonus":      ["+%s%% wider catch zone when fishing", true],
+	"arrival_chance_bonus":    ["arrivals +%s%% faster", true],
+	"arrival_quality_bonus":   ["+%s wealth for new arrivals", false],
+	"market_sell_bonus":       ["+%s%% market sell prices", true],
+	"xp_gain_bonus":           ["+%s%% XP", true],
+}
+
+func describe_effect(effect: Dictionary) -> String:
+	var parts: Array = []
+	for key in effect:
+		var spec = EFFECT_LABELS.get(key, null)
+		if spec == null:
+			continue
+		var v := float(effect[key])
+		var num: String = str(roundi(v * 100.0)) if spec[1] else (str(roundi(v)) if is_equal_approx(v, roundf(v)) else "%.1f" % v)
+		parts.append(str(spec[0]) % num)
+	return ", ".join(PackedStringArray(parts))
 
 func add_permanent_happiness(amount: float) -> void:
 	permanent_happiness_bonus += amount
@@ -272,10 +326,15 @@ func add_permanent_happiness(amount: float) -> void:
 # ── Effect queries (read by other managers) ───────────────────────────────────
 
 func _sum_effect(key: String) -> float:
-	var total = 0.0
+	var total := 0.0
+	var strongest := 0.0
 	for e in active_effects:
-		total += float(e["effect"].get(key, 0.0))
-	return total
+		var v := float(e["effect"].get(key, 0.0))
+		if e.get("stacks", true):
+			total += v
+		else:
+			strongest = maxf(strongest, v)
+	return total + strongest
 
 func get_income_multiplier() -> float:
 	return 1.0 + _sum_effect("income_bonus")
@@ -291,6 +350,24 @@ func get_arrival_rate_multiplier() -> float:
 
 func get_arrival_quality_bonus() -> int:
 	return int(_sum_effect("arrival_quality_bonus"))
+
+func get_reputation_gain_multiplier() -> float:
+	return 1.0 + _sum_effect("reputation_gain_bonus")
+
+func get_tavern_income_multiplier() -> float:
+	return 1.0 + _sum_effect("tavern_income_bonus")
+
+func get_productivity_multiplier() -> float:
+	return 1.0 + _sum_effect("productivity_bonus")
+
+func get_fishing_zone_multiplier() -> float:
+	return 1.0 + _sum_effect("fishing_zone_bonus")
+
+func get_market_sell_multiplier() -> float:
+	return 1.0 + _sum_effect("market_sell_bonus")
+
+func get_rare_find_bonus() -> float:
+	return _sum_effect("rare_find_chance_bonus")
 
 func get_city_happiness_bonus() -> float:
 	return permanent_happiness_bonus + meal_happiness_bonus + _sum_effect("city_happiness_bonus")
@@ -347,10 +424,12 @@ func to_dict() -> Dictionary:
 	var effects_out: Array = []
 	for e in active_effects:
 		effects_out.append({
+			"id": e.get("id", ""),
 			"name": e.get("name", ""),
 			"potion_id": e.get("potion_id", ""),
 			"effect": e["effect"].duplicate(),
 			"remaining": e["remaining"],
+			"stacks": e.get("stacks", true),
 		})
 	return {
 		"unlocked_dishes": unlocked_dishes.duplicate(),
@@ -383,10 +462,12 @@ func from_dict(data: Dictionary) -> void:
 		if effect.is_empty():
 			continue
 		active_effects.append({
+			"id": str(e.get("id", "")),
 			"name": str(e.get("name", potion.get("name", "Bonus"))),
 			"potion_id": potion_id,
 			"effect": effect.duplicate(),
 			"remaining": float(e.get("remaining", 0.0)),
+			"stacks": bool(e.get("stacks", true)),   # pre-food saves: potions stacked
 		})
 	refresh_unlocks(true)  # picks up any defaults missing from older saves
 	emit_signal("effects_changed")

@@ -44,6 +44,34 @@ func get_building_level_data(id: String, tier: int, level: int) -> Dictionary:
 func get_all_building_ids() -> Array:
 	return buildings.get("buildings", {}).keys()
 
+# ── Revenue formula ────────────────────────────────────────────────────────────
+# income/day (== income per real minute, since 1 game day = 60 s) =
+#   invested gold  ×  DAILY_ROI  ×  income_weight
+# Productivity from staffing/happiness is applied on top by BuildingManager.
+
+const DAILY_ROI: float = 0.08  # base return: ~12.5 game-days to pay a building off
+
+var _cumulative_cost_cache: Dictionary = {}  # "id:tier:level" → float
+
+# Total gold spent to reach (tier, level): sum of every level's gold_cost so far
+func get_cumulative_cost(id: String, tier: int, level: int) -> float:
+	var key := "%s:%d:%d" % [id, tier, level]
+	if _cumulative_cost_cache.has(key):
+		return _cumulative_cost_cache[key]
+	var total := 0.0
+	for t in get_building(id).get("tiers", []):
+		for l in t.get("levels", []):
+			if int(t.get("tier", 1)) < tier or (int(t.get("tier", 1)) == tier and int(l.get("level", 1)) <= level):
+				total += float(l.get("gold_cost", 0))
+	_cumulative_cost_cache[key] = total
+	return total
+
+func get_base_income_per_minute(id: String, tier: int, level: int) -> float:
+	var weight := float(get_building(id).get("income_weight", 1.0))
+	if weight <= 0.0:
+		return 0.0
+	return get_cumulative_cost(id, tier, level) * DAILY_ROI * weight
+
 func get_building_positions(id: String) -> Array:
 	return get_building(id).get("positions", [])
 
@@ -77,6 +105,12 @@ func get_arrival_weights(player_level: int) -> Dictionary:
 
 func get_age_ranges() -> Dictionary:
 	return citizens_data.get("age_ranges", {})
+
+func get_hobby(hobby_id: String) -> Dictionary:
+	return citizens_data.get("hobbies", {}).get(hobby_id, {})
+
+func get_all_hobby_ids() -> Array:
+	return citizens_data.get("hobbies", {}).keys()
 
 func get_all_job_skill_ids() -> Array:
 	return citizens_data.get("job_skills", {}).keys()

@@ -32,6 +32,17 @@ TimeManager="*res://scripts/managers/TimeManager.gd"
 ReputationManager="*res://scripts/managers/ReputationManager.gd"
 QuestManager="*res://scripts/managers/QuestManager.gd"
 RecipeManager="*res://scripts/managers/RecipeManager.gd"
+ForageManager="*res://scripts/managers/ForageManager.gd"
+FishingManager="*res://scripts/managers/FishingManager.gd"
+CaravanManager="*res://scripts/managers/CaravanManager.gd"
+TradePortManager="*res://scripts/managers/TradePortManager.gd"
+PrestigeManager="*res://scripts/managers/PrestigeManager.gd"
+GuildHallManager="*res://scripts/managers/GuildHallManager.gd"
+FestivalManager="*res://scripts/managers/FestivalManager.gd"
+NewsManager="*res://scripts/managers/NewsManager.gd"
+CookingManager="*res://scripts/managers/CookingManager.gd"
+TutorialManager="*res://scripts/managers/TutorialManager.gd"
+AudioManager="*res://scripts/managers/AudioManager.gd"
 
 [display]
 
@@ -42,6 +53,10 @@ window/stretch/mode="canvas_items"
 [editor]
 
 version_control/autoload_on_startup=true
+
+[gui]
+
+theme/custom="res://ui_theme.tres"
 
 [physics]
 

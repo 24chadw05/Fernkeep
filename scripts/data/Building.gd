@@ -11,6 +11,43 @@ var assigned_residents: Array = []  # NPC IDs living here (house buildings only)
 var is_active: bool = true
 var sprite_path: String = ""  # chosen variant; "" falls back to SPRITE_MAP in BuildingNode
 var menu: Array = []  # dish ids on this tavern's menu (tavern buildings only)
+var specialization: String = ""  # T3L3 tavern branch: see SPECIALIZATIONS
+var taskmaster_cut: float = 0.01  # guild hall: Taskmaster's cut of each deal (1%-10%, raised via promotion)
+
+# The GDD's Tier-3 tavern branch: stay a (grander) tavern, or specialize
+# into a cuisine restaurant that champions matching dishes.
+const SPECIALIZATIONS: Dictionary = {
+	"grand_tavern": {
+		"label": "Grand Tavern", "cuisine": "",
+		"income_mult": 1.25, "menu_bonus": 2,
+		"sprite": "res://assets/buildings/Grand_Tavern.png",
+		"blurb": "+25% income and 2 extra menu slots — the biggest common room in the vale.",
+	},
+	"hearthfire_grill": {
+		"label": "Hearthfire Grill", "cuisine": "hearth",
+		"income_mult": 1.4, "menu_bonus": 0,
+		"sprite": "res://assets/buildings/Restaurant.png",
+		"blurb": "+40% income. Meat & fish dishes earn +25% gold and double reputation.",
+	},
+	"verdant_table": {
+		"label": "The Verdant Table", "cuisine": "verdant",
+		"income_mult": 1.4, "menu_bonus": 0,
+		"sprite": "res://assets/buildings/Restaurant.png",
+		"blurb": "+40% income. Garden & forage dishes earn +25% gold and double reputation.",
+	},
+	"enchanted_bistro": {
+		"label": "Enchanted Bistro", "cuisine": "enchanted",
+		"income_mult": 1.4, "menu_bonus": 0,
+		"sprite": "res://assets/buildings/Restaurant.png",
+		"blurb": "+40% income. Enchanted dishes earn +25% gold and double reputation.",
+	},
+}
+
+func get_spec_info() -> Dictionary:
+	return SPECIALIZATIONS.get(specialization, {})
+
+func can_specialize() -> bool:
+	return building_id == "tavern" and tier == 3 and level == 3 and specialization == ""
 
 func get_data() -> Dictionary:
 	return DataManager.get_building(building_id)
@@ -18,14 +55,18 @@ func get_data() -> Dictionary:
 func get_level_data() -> Dictionary:
 	return DataManager.get_building_level_data(building_id, tier, level)
 
+# Base revenue before productivity — proportional to gold invested in the
+# building (see DataManager.get_base_income_per_minute). The old per-level
+# "income_per_minute" JSON values are no longer read.
 func get_income_per_minute() -> float:
-	return get_level_data().get("income_per_minute", 0.0)
+	var base = DataManager.get_base_income_per_minute(building_id, tier, level)
+	return base * float(get_spec_info().get("income_mult", 1.0))
 
 func get_staff_slots() -> int:
 	return get_level_data().get("staff_slots", 0)
 
 func get_menu_slots() -> int:
-	return get_level_data().get("menu_slots", 0)
+	return int(get_level_data().get("menu_slots", 0)) + int(get_spec_info().get("menu_bonus", 0))
 
 func can_add_menu_dish() -> bool:
 	return menu.size() < get_menu_slots()
@@ -40,6 +81,9 @@ func remove_menu_dish(dish_id: String) -> void:
 	menu.erase(dish_id)
 
 func get_display_name() -> String:
+	var spec = get_spec_info()
+	if not spec.is_empty():
+		return spec["label"]
 	return get_data().get("name", building_id)
 
 func get_size() -> Vector2i:
@@ -106,6 +150,8 @@ func to_dict() -> Dictionary:
 		"is_active": is_active,
 		"sprite_path": sprite_path,
 		"menu": menu.duplicate(),
+		"specialization": specialization,
+		"taskmaster_cut": taskmaster_cut,
 	}
 
 func from_dict(data: Dictionary) -> void:
@@ -120,3 +166,5 @@ func from_dict(data: Dictionary) -> void:
 	is_active = data.get("is_active", true)
 	sprite_path = data.get("sprite_path", "")
 	menu = data.get("menu", []).duplicate()
+	specialization = str(data.get("specialization", ""))
+	taskmaster_cut = float(data.get("taskmaster_cut", 0.01))

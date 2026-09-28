@@ -7,15 +7,14 @@
 script = ExtResource("1_npcmov")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(0, -8)
-scale = Vector2(0.25, 0.25)
+position = Vector2(0, -24)
 texture = ExtResource("2_villager")
 
 [node name="NameLabel" type="Label" parent="."]
-offset_left = -30.0
-offset_top = -30.0
-offset_right = 30.0
-offset_bottom = -16.0
+offset_left = -48.0
+offset_top = -70.0
+offset_right = 48.0
+offset_bottom = -50.0
 horizontal_alignment = 1
 vertical_alignment = 2
-theme_override_font_sizes/font_size = 9
+theme_override_font_sizes/font_size = 14

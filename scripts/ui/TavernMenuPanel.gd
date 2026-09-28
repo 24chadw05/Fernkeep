@@ -34,6 +34,9 @@ func _rebuild() -> void:
 	subtitle_label.text = "Tier %d  •  %d/%d menu slots  •  %d staff serving  •  Dishes are cooked each day if ingredients are in stock" % [
 		b.tier, b.menu.size(), b.get_menu_slots(), b.assigned_staff.size()
 	]
+	var spec_cuisine = str(b.get_spec_info().get("cuisine", ""))
+	if spec_cuisine != "":
+		subtitle_label.text += "  •  ★ Specialty: %s dishes (+25%% gold, 2× rep)" % spec_cuisine
 	if b.assigned_staff.is_empty():
 		subtitle_label.text += "  ⚠ No staff — nothing will be served!"
 
@@ -65,7 +68,7 @@ func _rebuild() -> void:
 			var lbl := Label.new()
 			var hint = RecipeManager.describe_unlock(dish.get("unlock", {}))
 			lbl.text = "🔒 %s   %s" % [dish.get("name", dish_id), hint]
-			lbl.add_theme_font_size_override("font_size", 11)
+			lbl.add_theme_font_size_override("font_size", 22)
 			lbl.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
 			lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			dish_list.add_child(lbl)
@@ -73,7 +76,7 @@ func _rebuild() -> void:
 func _add_header(text: String) -> void:
 	var lbl := Label.new()
 	lbl.text = text
-	lbl.add_theme_font_size_override("font_size", 11)
+	lbl.add_theme_font_size_override("font_size", 22)
 	lbl.add_theme_color_override("font_color", Color(0.55, 0.55, 0.55))
 	dish_list.add_child(lbl)
 	dish_list.add_child(HSeparator.new())
@@ -81,8 +84,8 @@ func _add_header(text: String) -> void:
 func _add_hint(text: String) -> void:
 	var lbl := Label.new()
 	lbl.text = text
-	lbl.add_theme_font_size_override("font_size", 12)
-	lbl.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6))
+	lbl.add_theme_font_size_override("font_size", 24)
+	lbl.add_theme_color_override("font_color", Color(0.4, 0.29, 0.18))
 	dish_list.add_child(lbl)
 
 func _add_dish_row(dish_id: String, on_menu: bool) -> void:
@@ -98,7 +101,11 @@ func _add_dish_row(dish_id: String, on_menu: bool) -> void:
 
 	var name_lbl := Label.new()
 	name_lbl.text = dish.get("name", dish_id)
-	name_lbl.add_theme_font_size_override("font_size", 14)
+	var b_cuisine = str(current_building.get_spec_info().get("cuisine", ""))
+	if b_cuisine != "" and str(dish.get("cuisine", "")) == b_cuisine:
+		name_lbl.text += "  ★"
+		name_lbl.add_theme_color_override("font_color", Color(0.41, 0.35, 0.16))
+	name_lbl.add_theme_font_size_override("font_size", 28)
 	info.add_child(name_lbl)
 
 	var ingredients: Dictionary = dish.get("ingredients", {})
@@ -113,26 +120,26 @@ func _add_dish_row(dish_id: String, on_menu: bool) -> void:
 		float(dish.get("gold_per_serve", 0)), int(dish.get("reputation_gain", 0)),
 		float(dish.get("happiness_bonus", 0)), ", ".join(PackedStringArray(ing_parts))
 	]
-	detail_lbl.add_theme_font_size_override("font_size", 11)
+	detail_lbl.add_theme_font_size_override("font_size", 22)
 	detail_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var can_cook = ResourceManager.can_afford_cost(ingredients)
 	detail_lbl.add_theme_color_override("font_color",
-		Color(0.7, 0.85, 0.7) if can_cook else Color(0.9, 0.6, 0.5))
+		Color(0.2, 0.45, 0.15) if can_cook else Color(0.62, 0.2, 0.12))
 	info.add_child(detail_lbl)
 
 	var tier_req = int(dish.get("tavern_tier_required", 1))
 	if current_building.tier < tier_req:
 		var tier_lbl := Label.new()
 		tier_lbl.text = "Requires tavern tier %d" % tier_req
-		tier_lbl.add_theme_font_size_override("font_size", 11)
-		tier_lbl.add_theme_color_override("font_color", Color(0.9, 0.55, 0.35))
+		tier_lbl.add_theme_font_size_override("font_size", 22)
+		tier_lbl.add_theme_color_override("font_color", Color(0.43, 0.21, 0.09))
 		info.add_child(tier_lbl)
 
 	row.add_child(info)
 
 	var btn := Button.new()
-	btn.custom_minimum_size = Vector2(96, 34)
-	btn.add_theme_font_size_override("font_size", 13)
+	btn.custom_minimum_size = Vector2(192, 68)
+	btn.add_theme_font_size_override("font_size", 26)
 	if on_menu:
 		btn.text = "Remove"
 		btn.pressed.connect(func():

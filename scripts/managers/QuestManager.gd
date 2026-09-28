@@ -32,6 +32,14 @@ func _ready() -> void:
 func _connect_late_signals() -> void:
 	RecipeManager.dish_served.connect(_on_dish_served)
 	RecipeManager.potion_crafted.connect(_on_potion_crafted)
+	ForageManager.foraged.connect(_on_foraged)
+	FishingManager.fish_caught.connect(_on_foraged)
+	CaravanManager.caravan_trade.connect(_on_trade_completed)
+
+func _on_foraged(resource_id: String, amount: int) -> void:
+	if active_quests.is_empty():
+		return
+	_credit_counter(["gather"], func(obj): return str(obj.get("ingredient", "")) == resource_id, float(amount))
 
 # ── Public queries ────────────────────────────────────────────────────────────
 
@@ -230,10 +238,18 @@ func _on_resource_produced(building_id: String, resource_id: String, amount: flo
 func _on_trade_completed(kind: String, resource_id: String, quantity: int) -> void:
 	if active_quests.is_empty():
 		return
-	# Gathering by market order also counts (foraging/fishing come later)
-	_credit_counter(["gather"], func(obj): return kind == "buy" and str(obj.get("ingredient", "")) == resource_id, float(quantity))
-	# Any market/caravan/barter trade counts as one trade
-	_credit_counter(["trade"], func(_obj): return true, 1.0)
+	# Gathering by purchase also counts (market orders, caravan buys)
+	_credit_counter(["gather"], func(obj): return kind in ["buy", "caravan"] and str(obj.get("ingredient", "")) == resource_id, float(quantity))
+	# Trade objectives match by type: "caravan" needs caravan/barter deals,
+	# "barter" needs a barter; untyped objectives accept any trade
+	_credit_counter(["trade"], func(obj): return _trade_type_matches(str(obj.get("trade_type", "")), kind), 1.0)
+
+func _trade_type_matches(wanted: String, kind: String) -> bool:
+	if wanted == "":
+		return true
+	if wanted == "caravan":
+		return kind in ["caravan", "barter"]
+	return wanted == kind
 
 func _on_dish_served(dish_id: String, _building_instance_id: String, _gold: float, serves: int) -> void:
 	if active_quests.is_empty():

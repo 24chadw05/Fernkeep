@@ -14,58 +14,58 @@ anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -252.0
+offset_top = -470.0
 offset_bottom = 0.0
 
 [node name="TabBar" type="HBoxContainer" parent="Panel"]
 anchor_right = 1.0
-offset_left = 6.0
-offset_top = 6.0
-offset_right = -6.0
-offset_bottom = 44.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 84.0
 add_theme_constant_override("separation") = 4
 
 [node name="TabBuildings" type="Button" parent="Panel/TabBar"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(200, 0)
 text = "Buildings"
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 26
 
 [node name="TabRoads" type="Button" parent="Panel/TabBar"]
-custom_minimum_size = Vector2(80, 0)
+custom_minimum_size = Vector2(160, 0)
 flat = true
 text = "Roads"
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 26
 
 [node name="TabDecor" type="Button" parent="Panel/TabBar"]
-custom_minimum_size = Vector2(80, 0)
+custom_minimum_size = Vector2(160, 0)
 flat = true
 text = "Decor"
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 26
 
 [node name="Spacer" type="Control" parent="Panel/TabBar"]
 size_flags_horizontal = 3
 
 [node name="SlotsLabel" type="Label" parent="Panel/TabBar"]
 text = "Slots 0 / 4"
-theme_override_font_sizes/font_size = 12
-theme_override_colors/font_color = Color(0.75, 0.85, 1.0, 1.0)
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.26, 0.31, 0.39, 1.0)
 vertical_alignment = 1
 
 [node name="CloseButton" type="Button" parent="Panel/TabBar"]
-custom_minimum_size = Vector2(38, 0)
+custom_minimum_size = Vector2(76, 0)
 text = "✕"
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 32
 
 [node name="HSep" type="HSeparator" parent="Panel"]
 anchor_right = 1.0
-offset_top = 46.0
-offset_bottom = 52.0
+offset_top = 88.0
+offset_bottom = 94.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 6.0
-offset_top = 54.0
+offset_top = 100.0
 offset_right = -6.0
 offset_bottom = -6.0
 horizontal_scroll_mode = 1

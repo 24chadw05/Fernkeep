@@ -3,14 +3,10 @@
 [ext_resource type="Script" path="res://scripts/ui/BuildingInspector.gd" id="1_bi"]
 
 [node name="BuildingInspector" type="Control"]
-anchor_left = 1.0
+anchor_left = 0.75
 anchor_top = 0.0
 anchor_right = 1.0
-anchor_bottom = 0.0
-offset_left = -340.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = 500.0
+anchor_bottom = 1.0
 script = ExtResource("1_bi")
 
 [node name="Panel" type="Panel" parent="."]
@@ -18,72 +14,94 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Title" type="Label" parent="Panel"]
-offset_left = 12.0
+offset_left = 16.0
 offset_top = 10.0
-offset_right = 250.0
-offset_bottom = 36.0
+offset_right = 360.0
+offset_bottom = 62.0
 text = "Building"
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 40
 
 [node name="CloseButton" type="Button" parent="Panel"]
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -40.0
-offset_top = 6.0
-offset_right = -6.0
-offset_bottom = 40.0
+offset_left = -72.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 64.0
 text = "✕"
+theme_override_font_sizes/font_size = 36
 
-[node name="VBox" type="VBoxContainer" parent="Panel"]
+[node name="HSep" type="HSeparator" parent="Panel"]
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = 70.0
+offset_right = -8.0
+offset_bottom = 74.0
+
+[node name="Scroll" type="ScrollContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 12.0
-offset_top = 44.0
-offset_right = 320.0
-offset_bottom = 488.0
+offset_top = 80.0
+offset_right = -12.0
+offset_bottom = -12.0
+horizontal_scroll_mode = 0
 
-[node name="NameLabel" type="Label" parent="Panel/VBox"]
+[node name="VBox" type="VBoxContainer" parent="Panel/Scroll"]
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="NameLabel" type="Label" parent="Panel/Scroll/VBox"]
 text = "Building Name"
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 44
+autowrap_mode = 3
 
-[node name="TierLabel" type="Label" parent="Panel/VBox"]
+[node name="TierLabel" type="Label" parent="Panel/Scroll/VBox"]
 text = "Tier 1  •  Level 1"
-theme_override_font_sizes/font_size = 12
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1.0)
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(0.37, 0.27, 0.17, 1.0)
+autowrap_mode = 3
 
-[node name="IncomeLabel" type="Label" parent="Panel/VBox"]
-text = "Income: 0 gold / min"
-theme_override_font_sizes/font_size = 13
+[node name="IncomeLabel" type="Label" parent="Panel/Scroll/VBox"]
+text = "Income: 0 gold / day"
+theme_override_font_sizes/font_size = 30
+autowrap_mode = 3
 
-[node name="StaffLabel" type="Label" parent="Panel/VBox"]
+[node name="StaffLabel" type="Label" parent="Panel/Scroll/VBox"]
 text = "Staff: 0 / 0"
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 30
 
-[node name="Sep1" type="HSeparator" parent="Panel/VBox"]
+[node name="Sep1" type="HSeparator" parent="Panel/Scroll/VBox"]
 
-[node name="UpgradeSection" type="VBoxContainer" parent="Panel/VBox"]
+[node name="UpgradeSection" type="VBoxContainer" parent="Panel/Scroll/VBox"]
 
-[node name="UpgradeCostLabel" type="Label" parent="Panel/VBox/UpgradeSection"]
+[node name="UpgradeCostLabel" type="Label" parent="Panel/Scroll/VBox/UpgradeSection"]
 text = "Upgrade cost: —"
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 28
+autowrap_mode = 3
 
-[node name="UpgradeButton" type="Button" parent="Panel/VBox/UpgradeSection"]
-custom_minimum_size = Vector2(0, 38)
+[node name="UpgradeButton" type="Button" parent="Panel/Scroll/VBox/UpgradeSection"]
+custom_minimum_size = Vector2(0, 72)
 text = "Upgrade"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 32
 
-[node name="Sep2" type="HSeparator" parent="Panel/VBox"]
+[node name="Sep2" type="HSeparator" parent="Panel/Scroll/VBox"]
 
-[node name="StaffSection" type="VBoxContainer" parent="Panel/VBox"]
+[node name="StaffSection" type="VBoxContainer" parent="Panel/Scroll/VBox"]
+theme_override_constants/separation = 8
 
-[node name="StaffTitle" type="Label" parent="Panel/VBox/StaffSection"]
-text = "ASSIGNED STAFF"
-theme_override_font_sizes/font_size = 11
+[node name="StaffTitle" type="Label" parent="Panel/Scroll/VBox/StaffSection"]
+text = "EMPLOYEES"
+theme_override_font_sizes/font_size = 26
 theme_override_colors/font_color = Color(0.55, 0.55, 0.55, 1.0)
 
-[node name="StaffList" type="VBoxContainer" parent="Panel/VBox/StaffSection"]
+[node name="StaffList" type="VBoxContainer" parent="Panel/Scroll/VBox/StaffSection"]
+theme_override_constants/separation = 8
 
-[node name="SellSep" type="HSeparator" parent="Panel/VBox"]
+[node name="SellSep" type="HSeparator" parent="Panel/Scroll/VBox"]
 
-[node name="SellButton" type="Button" parent="Panel/VBox"]
-custom_minimum_size = Vector2(0, 38)
+[node name="SellButton" type="Button" parent="Panel/Scroll/VBox"]
+custom_minimum_size = Vector2(0, 72)
 text = "Sell Building"
-theme_override_colors/font_color = Color(0.95, 0.35, 0.35, 1.0)
+theme_override_font_sizes/font_size = 30
+theme_override_colors/font_color = Color(0.41, 0.08, 0.08, 1.0)

@@ -1,5 +1,7 @@
 extends Node2D
 
+const TILE_SIZE: int = 64
+
 var speed: float = 25.0
 var wander_radius: float = 300.0
 var target_pos: Vector2 = Vector2.ZERO
@@ -14,6 +16,8 @@ const VILLAGER_VARIANTS: int = 6
 @onready var sprite: Sprite2D = $Sprite
 
 func _ready() -> void:
+	# Citizens live on the roads — start them on the nearest paved cell
+	_snap_to_road()
 	target_pos = position
 	_pick_new_target()
 	if npc_data and name_label:
@@ -49,12 +53,33 @@ func _process(delta: float) -> void:
 	if sprite:
 		sprite.flip_h = dir.x < 0
 
+# Citizens only ever walk the road network: each hop steps to a random
+# adjacent road tile, so they stroll along the roads and never cross open grass.
 func _pick_new_target() -> void:
-	var offset = Vector2(
-		randf_range(-wander_radius, wander_radius),
-		randf_range(-wander_radius, wander_radius)
-	)
-	target_pos = position + offset
+	var cur := _world_to_cell(position)
+	if not RoadManager.is_road(cur):
+		var near = RoadManager.nearest_road_cell(cur)
+		if near == null:
+			target_pos = position  # no roads yet — stay put
+		else:
+			target_pos = _cell_center(near)
+		return
+	var neighbours: Array = RoadManager.road_neighbours(cur)
+	if neighbours.is_empty():
+		target_pos = position
+		return
+	target_pos = _cell_center(neighbours[randi() % neighbours.size()])
+
+func _snap_to_road() -> void:
+	var near = RoadManager.nearest_road_cell(_world_to_cell(position))
+	if near != null:
+		position = _cell_center(near)
+
+func _world_to_cell(p: Vector2) -> Vector2i:
+	return Vector2i(int(floor(p.x / TILE_SIZE)), int(floor(p.y / TILE_SIZE)))
+
+func _cell_center(c: Vector2i) -> Vector2:
+	return Vector2(c.x * TILE_SIZE + TILE_SIZE / 2.0, c.y * TILE_SIZE + TILE_SIZE / 2.0)
 
 func setup(npc: NPC) -> void:
 	npc_data = npc

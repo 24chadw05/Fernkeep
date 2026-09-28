@@ -29,7 +29,7 @@ func _build_slots() -> void:
 
 func _make_slot_row(slot: int, info: Dictionary) -> Control:
 	var panel = PanelContainer.new()
-	panel.custom_minimum_size = Vector2(0, 80)
+	panel.custom_minimum_size = Vector2(0, 160)
 
 	var margin = MarginContainer.new()
 	margin.add_theme_constant_override("margin_left", 10)
@@ -50,15 +50,15 @@ func _make_slot_row(slot: int, info: Dictionary) -> Control:
 	var name_edit = LineEdit.new()
 	name_edit.placeholder_text = "Slot %d" % slot
 	name_edit.text = info.get("name", "Slot %d" % slot) if info["exists"] else ""
-	name_edit.custom_minimum_size = Vector2(0, 30)
+	name_edit.custom_minimum_size = Vector2(0, 60)
 	name_edit.text_changed.connect(func(t): SaveManager.set_slot_name(slot, t))
 	info_col.add_child(name_edit)
 
 	var ts_label = Label.new()
-	ts_label.add_theme_font_size_override("font_size", 11)
+	ts_label.add_theme_font_size_override("font_size", 22)
 	if info["exists"]:
 		ts_label.text = info.get("timestamp", "")
-		ts_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
+		ts_label.add_theme_color_override("font_color", Color(0.37, 0.27, 0.17))
 	else:
 		ts_label.text = "Empty"
 		ts_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
@@ -71,13 +71,13 @@ func _make_slot_row(slot: int, info: Dictionary) -> Control:
 
 	var launch_btn = Button.new()
 	launch_btn.text = "Launch"
-	launch_btn.custom_minimum_size = Vector2(80, 0)
+	launch_btn.custom_minimum_size = Vector2(160, 0)
 	launch_btn.pressed.connect(func(): _launch(slot, name_edit.text))
 	btn_col.add_child(launch_btn)
 
 	var del_btn = Button.new()
 	del_btn.text = "Delete"
-	del_btn.custom_minimum_size = Vector2(80, 0)
+	del_btn.custom_minimum_size = Vector2(160, 0)
 	del_btn.disabled = not info["exists"]
 	del_btn.pressed.connect(func(): _delete(slot))
 	btn_col.add_child(del_btn)
@@ -85,6 +85,10 @@ func _make_slot_row(slot: int, info: Dictionary) -> Control:
 	return panel
 
 func _launch(slot: int, name_text: String) -> void:
+	# Bank the city that's running now before leaving it. Switching slots reloads
+	# the scene, and anything since the last autosave (up to 5 minutes) was lost.
+	SaveManager.save()
+
 	if SaveManager.has_save(slot) and name_text.strip_edges() != "":
 		SaveManager.set_slot_name(slot, name_text.strip_edges())
 

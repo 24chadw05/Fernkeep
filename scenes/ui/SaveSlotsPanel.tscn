@@ -27,7 +27,7 @@ mouse_filter = 2
 
 [node name="Panel" type="Panel" parent="Center"]
 layout_mode = 2
-custom_minimum_size = Vector2(440, 380)
+custom_minimum_size = Vector2(880, 760)
 
 [node name="Margin" type="MarginContainer" parent="Center/Panel"]
 layout_mode = 1
@@ -50,11 +50,11 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Save Slots"
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 34
 
 [node name="CloseButton" type="Button" parent="Center/Panel/Margin/VBox/Header"]
 layout_mode = 2
-custom_minimum_size = Vector2(36, 0)
+custom_minimum_size = Vector2(72, 0)
 text = "X"
 
 [node name="Separator" type="HSeparator" parent="Center/Panel/Margin/VBox"]

@@ -25,6 +25,8 @@ func _ready() -> void:
 func add_reputation(amount: float, reason: String = "") -> void:
 	if amount == 0.0:
 		return
+	if amount > 0.0:
+		amount *= RecipeManager.get_reputation_gain_multiplier()   # food/potion buffs
 	var old_title = get_title()
 	reputation = maxf(0.0, reputation + amount)
 	emit_signal("reputation_changed", reputation)

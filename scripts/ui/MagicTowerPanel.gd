@@ -52,11 +52,11 @@ func _rebuild() -> void:
 	# Brew in progress
 	if RecipeManager.is_crafting():
 		_progress_label = Label.new()
-		_progress_label.add_theme_font_size_override("font_size", 13)
-		_progress_label.add_theme_color_override("font_color", Color(0.8, 0.6, 0.95))
+		_progress_label.add_theme_font_size_override("font_size", 26)
+		_progress_label.add_theme_color_override("font_color", Color(0.32, 0.21, 0.41))
 		potion_list.add_child(_progress_label)
 		_progress_bar = ProgressBar.new()
-		_progress_bar.custom_minimum_size = Vector2(0, 18)
+		_progress_bar.custom_minimum_size = Vector2(0, 36)
 		_progress_bar.max_value = 100.0
 		_progress_bar.value = RecipeManager.get_craft_progress() * 100.0
 		potion_list.add_child(_progress_bar)
@@ -69,15 +69,18 @@ func _rebuild() -> void:
 			var lbl := Label.new()
 			var mins = int(e["remaining"]) / 60
 			var secs = int(e["remaining"]) % 60
-			lbl.text = "✦ %s — %d:%02d remaining" % [e.get("name", "Effect"), mins, secs]
-			lbl.add_theme_font_size_override("font_size", 12)
-			lbl.add_theme_color_override("font_color", Color(0.75, 0.9, 1.0))
+			var what := RecipeManager.describe_effect(e["effect"])
+			lbl.text = "✦ %s%s — %d:%02d remaining" % [e.get("name", "Effect"),
+				("  (%s)" % what) if what != "" else "", mins, secs]
+			lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			lbl.add_theme_font_size_override("font_size", 24)
+			lbl.add_theme_color_override("font_color", Color(0.26, 0.34, 0.39))
 			potion_list.add_child(lbl)
 		if RecipeManager.permanent_happiness_bonus > 0.0:
 			var perm_lbl := Label.new()
 			perm_lbl.text = "✦ Permanent blessings: +%.1f city happiness" % RecipeManager.permanent_happiness_bonus
-			perm_lbl.add_theme_font_size_override("font_size", 12)
-			perm_lbl.add_theme_color_override("font_color", Color(0.95, 0.85, 0.5))
+			perm_lbl.add_theme_font_size_override("font_size", 24)
+			perm_lbl.add_theme_color_override("font_color", Color(0.41, 0.35, 0.16))
 			potion_list.add_child(perm_lbl)
 		potion_list.add_child(HSeparator.new())
 
@@ -89,7 +92,7 @@ func _rebuild() -> void:
 	if not any_known:
 		var hint := Label.new()
 		hint.text = "No potion recipes known yet."
-		hint.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6))
+		hint.add_theme_color_override("font_color", Color(0.4, 0.29, 0.18))
 		potion_list.add_child(hint)
 
 	var locked: Array = []
@@ -105,7 +108,7 @@ func _rebuild() -> void:
 				potion.get("name", potion_id),
 				RecipeManager.describe_unlock(potion.get("unlock", {}))
 			]
-			lbl.add_theme_font_size_override("font_size", 11)
+			lbl.add_theme_font_size_override("font_size", 22)
 			lbl.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
 			lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			potion_list.add_child(lbl)
@@ -113,7 +116,7 @@ func _rebuild() -> void:
 func _add_header(text: String) -> void:
 	var lbl := Label.new()
 	lbl.text = text
-	lbl.add_theme_font_size_override("font_size", 11)
+	lbl.add_theme_font_size_override("font_size", 22)
 	lbl.add_theme_color_override("font_color", Color(0.55, 0.55, 0.55))
 	potion_list.add_child(lbl)
 	potion_list.add_child(HSeparator.new())
@@ -131,13 +134,13 @@ func _add_potion_row(potion_id: String) -> void:
 
 	var name_lbl := Label.new()
 	name_lbl.text = potion.get("name", potion_id)
-	name_lbl.add_theme_font_size_override("font_size", 14)
-	name_lbl.add_theme_color_override("font_color", Color(0.85, 0.7, 0.95))
+	name_lbl.add_theme_font_size_override("font_size", 28)
+	name_lbl.add_theme_color_override("font_color", Color(0.35, 0.26, 0.41))
 	info.add_child(name_lbl)
 
 	var desc_lbl := Label.new()
 	desc_lbl.text = potion.get("description", "")
-	desc_lbl.add_theme_font_size_override("font_size", 11)
+	desc_lbl.add_theme_font_size_override("font_size", 22)
 	desc_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	info.add_child(desc_lbl)
 
@@ -152,26 +155,26 @@ func _add_potion_row(potion_id: String) -> void:
 	ing_lbl.text = "Needs: %s  •  Brew time: %ds" % [
 		", ".join(PackedStringArray(ing_parts)), int(potion.get("craft_time_seconds", 30))
 	]
-	ing_lbl.add_theme_font_size_override("font_size", 11)
+	ing_lbl.add_theme_font_size_override("font_size", 22)
 	ing_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	ing_lbl.add_theme_color_override("font_color",
-		Color(0.7, 0.85, 0.7) if ResourceManager.can_afford_cost(ingredients) else Color(0.9, 0.6, 0.5))
+		Color(0.2, 0.45, 0.15) if ResourceManager.can_afford_cost(ingredients) else Color(0.62, 0.2, 0.12))
 	info.add_child(ing_lbl)
 
 	var blocker = RecipeManager.get_craft_blocker(potion_id)
 	if blocker != "" and blocker != "Missing ingredients.":
 		var block_lbl := Label.new()
 		block_lbl.text = blocker
-		block_lbl.add_theme_font_size_override("font_size", 11)
-		block_lbl.add_theme_color_override("font_color", Color(0.9, 0.55, 0.35))
+		block_lbl.add_theme_font_size_override("font_size", 22)
+		block_lbl.add_theme_color_override("font_color", Color(0.43, 0.21, 0.09))
 		info.add_child(block_lbl)
 
 	row.add_child(info)
 
 	var btn := Button.new()
 	btn.text = "Brew"
-	btn.custom_minimum_size = Vector2(96, 34)
-	btn.add_theme_font_size_override("font_size", 13)
+	btn.custom_minimum_size = Vector2(192, 68)
+	btn.add_theme_font_size_override("font_size", 26)
 	btn.disabled = blocker != ""
 	btn.pressed.connect(func():
 		if RecipeManager.start_craft(potion_id):

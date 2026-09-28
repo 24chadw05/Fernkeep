@@ -1,23 +1,7 @@
 extends Control
 
-# Distinct placeholder colors per resource — replace with sprites later
-const RESOURCE_CONFIG: Dictionary = {
-	"wood":             {"display": "Wood",             "color": Color(0.55, 0.35, 0.15)},
-	"stone":            {"display": "Stone",            "color": Color(0.60, 0.60, 0.60)},
-	"herbs":            {"display": "Herbs",            "color": Color(0.20, 0.70, 0.30)},
-	"fish":             {"display": "Fish",             "color": Color(0.20, 0.50, 0.80)},
-	"grain":            {"display": "Grain",            "color": Color(0.85, 0.75, 0.20)},
-	"vegetables":       {"display": "Vegetables",       "color": Color(0.30, 0.75, 0.30)},
-	"enchanted_ore":    {"display": "Enchanted Ore",    "color": Color(0.60, 0.20, 0.90)},
-	"rare_ingredients": {"display": "Rare Ingredients", "color": Color(0.90, 0.40, 0.20)},
-	"water":            {"display": "Water",            "color": Color(0.45, 0.70, 0.95)},
-	"mushroom":         {"display": "Mushrooms",        "color": Color(0.75, 0.55, 0.40)},
-	"wild_honey":       {"display": "Wild Honey",       "color": Color(0.95, 0.70, 0.15)},
-	"boar_meat":        {"display": "Boar Meat",        "color": Color(0.80, 0.35, 0.30)},
-	"basic_fruit":      {"display": "Fruit",            "color": Color(0.90, 0.45, 0.55)},
-	"premium_fruit":    {"display": "Premium Fruit",    "color": Color(0.95, 0.30, 0.65)},
-	"rare_herbs":       {"display": "Rare Herbs",       "color": Color(0.10, 0.55, 0.45)},
-}
+# Rows come straight from MarketManager.goods; names and icons come from
+# ResourceManager.ITEM_INFO — one registry for the whole game.
 
 var current_building: PlacedBuilding = null
 
@@ -37,6 +21,7 @@ func _ready() -> void:
 	MarketManager.prices_updated.connect(_on_prices_updated)
 	ResourceManager.resource_changed.connect(_on_resource_changed)
 	EconomyManager.gold_changed.connect(func(_g): if visible: _refresh_button_states())
+	MarketManager.orders_changed.connect(func(): if visible: _update_subtitle())
 	_build_rows()
 
 # ── Public ────────────────────────────────────────────────────────────────────
@@ -44,18 +29,31 @@ func _ready() -> void:
 func show_panel(building: PlacedBuilding) -> void:
 	current_building = building
 	title_label.text = "Market"
-	subtitle_label.text = "Tier %d  •  Level %d  •  Buy and sell resources" % [
-		building.tier, building.level
-	]
+	_update_subtitle()
 	_refresh_all()
 	visible = true
+
+func _update_subtitle() -> void:
+	var parts: Array = []
+	if current_building:
+		parts.append("Tier %d  •  Level %d" % [current_building.tier, current_building.level])
+	parts.append("Specialty goods delivered in ~%s" % MarketManager.eta_text(MarketManager.get_delivery_seconds()))
+	if MarketManager.get_bulk_discount(25) > 0.0:
+		parts.append("Bulk: −10%% on 25+, −20%% on 50+")
+	if not MarketManager.orders.is_empty():
+		var inc: Array = []
+		for o in MarketManager.orders:
+			inc.append("%d %s (%s)" % [int(o.qty), ResourceManager.get_item_label(o.resource_id),
+				MarketManager.eta_text(float(o.seconds_left))])
+		parts.append("Incoming: " + ", ".join(PackedStringArray(inc)))
+	subtitle_label.text = "  •  ".join(PackedStringArray(parts))
 
 # ── Row construction ──────────────────────────────────────────────────────────
 
 func _build_rows() -> void:
 	_build_header()
 	resource_list.add_child(_make_hsep())
-	for res_id in RESOURCE_CONFIG:
+	for res_id in MarketManager.goods:
 		_build_resource_row(res_id)
 		resource_list.add_child(_make_hsep())
 
@@ -64,40 +62,43 @@ func _build_header() -> void:
 	row.add_theme_constant_override("separation", 10)
 	_fixed_label(row, "", 52, Color(0.5, 0.5, 0.5))       # sprite column
 	_fixed_label(row, "RESOURCE", 160, Color(0.55, 0.55, 0.55))
-	var buy_hdr := _expand_label(row, "BUY", Color(0.75, 0.70, 0.30))
+	var buy_hdr := _expand_label(row, "BUY", Color(0.5, 0.38, 0.06))
 	buy_hdr.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	var sell_hdr := _expand_label(row, "SELL", Color(0.35, 0.75, 0.35))
+	var sell_hdr := _expand_label(row, "SELL", Color(0.15, 0.45, 0.12))
 	sell_hdr.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	for lbl in [buy_hdr, sell_hdr]:
-		lbl.add_theme_font_size_override("font_size", 11)
+		lbl.add_theme_font_size_override("font_size", 22)
 	resource_list.add_child(row)
 
 func _build_resource_row(res_id: String) -> void:
-	var cfg: Dictionary = RESOURCE_CONFIG[res_id]
-
 	var row := HBoxContainer.new()
-	row.custom_minimum_size = Vector2(0, 76)
+	row.custom_minimum_size = Vector2(0, 152)
 	row.add_theme_constant_override("separation", 10)
 
-	# ── Sprite placeholder ──────────────────────────────────────────────
+	# ── Item sprite ─────────────────────────────────────────────────────
 	var center := CenterContainer.new()
-	center.custom_minimum_size = Vector2(52, 0)
-	var rect := ColorRect.new()
-	rect.custom_minimum_size = Vector2(44, 44)
-	rect.color = cfg["color"]
-	center.add_child(rect)
+	center.custom_minimum_size = Vector2(104, 0)
+	var icon := TextureRect.new()
+	var icon_path = ResourceManager.get_item_icon_path(res_id)
+	if icon_path != "" and ResourceLoader.exists(icon_path):
+		icon.texture = load(icon_path)
+	icon.custom_minimum_size = Vector2(88, 88)
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	center.add_child(icon)
 	row.add_child(center)
 
 	# ── Resource name + stock ───────────────────────────────────────────
 	var info_box := VBoxContainer.new()
-	info_box.custom_minimum_size = Vector2(160, 0)
+	info_box.custom_minimum_size = Vector2(320, 0)
 	info_box.alignment = BoxContainer.ALIGNMENT_CENTER
 	var name_lbl := Label.new()
-	name_lbl.text = cfg["display"]
-	name_lbl.add_theme_font_size_override("font_size", 14)
+	name_lbl.text = ResourceManager.get_item_label(res_id)
+	name_lbl.add_theme_font_size_override("font_size", 28)
 	var owned_lbl := Label.new()
-	owned_lbl.add_theme_font_size_override("font_size", 12)
-	owned_lbl.add_theme_color_override("font_color", Color(0.70, 0.85, 0.70))
+	owned_lbl.add_theme_font_size_override("font_size", 24)
+	owned_lbl.add_theme_color_override("font_color", Color(0.32, 0.24, 0.15))
 	info_box.add_child(name_lbl)
 	info_box.add_child(owned_lbl)
 	row.add_child(info_box)
@@ -111,8 +112,8 @@ func _build_resource_row(res_id: String) -> void:
 	buy_box.add_theme_constant_override("separation", 4)
 
 	var buy_price_lbl := Label.new()
-	buy_price_lbl.add_theme_font_size_override("font_size", 12)
-	buy_price_lbl.add_theme_color_override("font_color", Color(0.95, 0.85, 0.40))
+	buy_price_lbl.add_theme_font_size_override("font_size", 24)
+	buy_price_lbl.add_theme_color_override("font_color", Color(0.41, 0.35, 0.1))
 	buy_price_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 	var buy_ctrl := HBoxContainer.new()
@@ -123,11 +124,11 @@ func _build_resource_row(res_id: String) -> void:
 	buy_spin.max_value = 9999
 	buy_spin.value = 1
 	buy_spin.step = 1
-	buy_spin.custom_minimum_size = Vector2(90, 0)
+	buy_spin.custom_minimum_size = Vector2(180, 0)
 	var buy_btn := Button.new()
 	buy_btn.text = "Buy"
-	buy_btn.custom_minimum_size = Vector2(72, 34)
-	buy_btn.add_theme_font_size_override("font_size", 13)
+	buy_btn.custom_minimum_size = Vector2(144, 68)
+	buy_btn.add_theme_font_size_override("font_size", 26)
 	buy_ctrl.add_child(buy_spin)
 	buy_ctrl.add_child(buy_btn)
 
@@ -144,8 +145,8 @@ func _build_resource_row(res_id: String) -> void:
 	sell_box.add_theme_constant_override("separation", 4)
 
 	var sell_price_lbl := Label.new()
-	sell_price_lbl.add_theme_font_size_override("font_size", 12)
-	sell_price_lbl.add_theme_color_override("font_color", Color(0.40, 0.90, 0.40))
+	sell_price_lbl.add_theme_font_size_override("font_size", 24)
+	sell_price_lbl.add_theme_color_override("font_color", Color(0.12, 0.43, 0.12))
 	sell_price_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 	var sell_ctrl := HBoxContainer.new()
@@ -156,11 +157,11 @@ func _build_resource_row(res_id: String) -> void:
 	sell_spin.max_value = 9999
 	sell_spin.value = 1
 	sell_spin.step = 1
-	sell_spin.custom_minimum_size = Vector2(90, 0)
+	sell_spin.custom_minimum_size = Vector2(180, 0)
 	var sell_btn := Button.new()
 	sell_btn.text = "Sell"
-	sell_btn.custom_minimum_size = Vector2(72, 34)
-	sell_btn.add_theme_font_size_override("font_size", 13)
+	sell_btn.custom_minimum_size = Vector2(144, 68)
+	sell_btn.add_theme_font_size_override("font_size", 26)
 	sell_ctrl.add_child(sell_spin)
 	sell_ctrl.add_child(sell_btn)
 
@@ -202,10 +203,15 @@ func _update_row(res_id: String) -> void:
 
 	var unit_buy:  float = MarketManager.get_unit_buy_price(res_id)
 	var unit_sell: float = MarketManager.get_unit_sell_price(res_id)
-	var buy_total: float = unit_buy * buy_qty
+	var buy_total: float = MarketManager.get_buy_price(res_id, buy_qty)
 	var sell_total: float = unit_sell * sell_qty
+	var discount := MarketManager.get_bulk_discount(buy_qty)
 
-	row["buy_price_lbl"].text  = "%.1fg each  →  %.0fg total" % [unit_buy,  buy_total]
+	row["buy_price_lbl"].text  = "%.1fg each  →  %.0fg total%s" % [unit_buy, buy_total,
+		("  (bulk −%d%%)" % int(discount * 100.0)) if discount > 0.0 else ""]
+	var ordered := MarketManager.is_ordered_good(res_id)
+	row["buy_btn"].text = "Order" if ordered else "Buy"
+	row["buy_btn"].tooltip_text = ("Delivered in ~%s" % MarketManager.eta_text(MarketManager.get_delivery_seconds())) if ordered else "Straight off the stall"
 	row["sell_price_lbl"].text = "%.1fg each  →  %.0fg total" % [unit_sell, sell_total]
 	row["owned_lbl"].text = "In stock: %d" % ResourceManager.get_amount(res_id)
 
@@ -247,7 +253,7 @@ func _on_resource_changed(resource_id: String, _amount: int) -> void:
 func _fixed_label(parent: Control, text: String, min_width: int, color: Color) -> Label:
 	var lbl := Label.new()
 	lbl.text = text
-	lbl.add_theme_font_size_override("font_size", 11)
+	lbl.add_theme_font_size_override("font_size", 22)
 	lbl.add_theme_color_override("font_color", color)
 	lbl.custom_minimum_size = Vector2(min_width, 0)
 	parent.add_child(lbl)
@@ -263,10 +269,10 @@ func _expand_label(parent: Control, text: String, color: Color) -> Label:
 
 func _make_hsep() -> HSeparator:
 	var sep := HSeparator.new()
-	sep.custom_minimum_size = Vector2(0, 2)
+	sep.custom_minimum_size = Vector2(0, 4)
 	return sep
 
 func _make_vsep() -> VSeparator:
 	var sep := VSeparator.new()
-	sep.custom_minimum_size = Vector2(2, 0)
+	sep.custom_minimum_size = Vector2(4, 0)
 	return sep

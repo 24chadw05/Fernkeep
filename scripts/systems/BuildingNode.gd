@@ -16,6 +16,7 @@ const SPRITE_MAP: Dictionary = {
 	"town_hall":         "res://assets/buildings/Town_Hall.png",
 	"tavern":            "res://assets/buildings/Tavern.png",
 	"market":            "res://assets/buildings/Market.png",
+	"trade_port":        "res://assets/buildings/Trade_Port.png",
 	"guild_hall":        "res://assets/buildings/Guild_Hall.png",
 	"magic_tower":       "res://assets/buildings/Magic_Tower.png",
 	"farm":              "res://assets/buildings/Farm.png",
@@ -46,6 +47,7 @@ func setup(building: PlacedBuilding) -> void:
 	var sprite_path = building.sprite_path if building.sprite_path != "" else SPRITE_MAP.get(building.building_id, "")
 	if sprite_path != "" and ResourceLoader.exists(sprite_path):
 		$Visual.visible = false   # hide placeholder when a real sprite exists
+		$Border.visible = false   # no footprint shading — let the grass show through
 
 		var tex: Texture2D = load(sprite_path)
 		var spr            = Sprite2D.new()
@@ -59,10 +61,8 @@ func setup(building: PlacedBuilding) -> void:
 		$Visual.position = Vector2(1, 1)
 		$Visual.size     = px_size - Vector2(2, 2)
 
-	# Name label floats above the sprite
-	$NameLabel.size        = px_size
-	$NameLabel.text        = building.get_display_name()
-	$NameLabel.z_index     = 2
+	# Name label removed — buildings are identified by their sprite
+	$NameLabel.visible = false
 
 	# Prevent world-space Controls from intercepting GUI hover checks
 	$Border.mouse_filter    = Control.MOUSE_FILTER_IGNORE

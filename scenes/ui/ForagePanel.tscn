@@ -1,0 +1,65 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/ForagePanel.gd" id="1_forage"]
+
+[node name="ForagePanel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+visible = false
+script = ExtResource("1_forage")
+
+[node name="BG" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.106, 0.169, 0.102, 0.97)
+
+[node name="Header" type="Control" parent="."]
+anchor_right = 1.0
+offset_bottom = 130.0
+
+[node name="Title" type="Label" parent="Header"]
+offset_left = 30.0
+offset_top = 14.0
+offset_right = 900.0
+offset_bottom = 74.0
+text = "Foraging"
+theme_override_font_sizes/font_size = 44
+theme_override_colors/font_color = Color(0.85, 0.95, 0.75, 1.0)
+
+[node name="ChargesLabel" type="Label" parent="Header"]
+offset_left = 30.0
+offset_top = 78.0
+offset_right = 700.0
+offset_bottom = 120.0
+text = "Trips left today: 3"
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.7, 0.8, 0.65, 1.0)
+
+[node name="LeaveButton" type="Button" parent="Header"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -360.0
+offset_top = 14.0
+offset_right = -30.0
+offset_bottom = 84.0
+text = "⬅  Head Home"
+theme_override_font_sizes/font_size = 28
+
+[node name="PlayArea" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 140.0
+offset_right = -40.0
+offset_bottom = -70.0
+
+[node name="SummaryLabel" type="Label" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -90.0
+offset_bottom = -24.0
+horizontal_alignment = 1
+text = "Click plants and mushrooms to gather them."
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(0.9, 0.95, 0.8, 1.0)

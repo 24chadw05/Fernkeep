@@ -179,7 +179,8 @@
 			}
 		  ]
 		}
-	  ]
+	  ],
+	  "income_weight": 0.0
 	},
 	"house": {
 	  "id": "house",
@@ -338,7 +339,8 @@
 			}
 		  ]
 		}
-	  ]
+	  ],
+	  "income_weight": 0.35
 	},
 	"tavern": {
 	  "id": "tavern",
@@ -539,7 +541,8 @@
 			}
 		  ]
 		}
-	  ]
+	  ],
+	  "income_weight": 1.0
 	},
 	"market": {
 	  "id": "market",
@@ -712,6 +715,142 @@
 			  "income_per_minute": 80.0,
 			  "staff_slots": 7,
 			  "reward": "Regional trade dominance. Maximum bulk discounts."
+			}
+		  ]
+		}
+	  ],
+	  "income_weight": 1.0
+	},
+	"trade_port": {
+	  "id": "trade_port",
+	  "name": "Trade Port",
+	  "size": [
+		4,
+		3
+	  ],
+	  "max_count": 1,
+	  "unlock": {
+		"town_hall_level": 4
+	  },
+	  "description": "Barter resources for other resources at a rolled discount. Offers re-stock every 15 minutes. Nobody works here \u2014 the caravaners run it themselves.",
+	  "positions": [],
+	  "income_weight": 0,
+	  "tiers": [
+		{
+		  "tier": 1,
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 800,
+			  "resource_cost": {
+				"wood": 40,
+				"stone": 20
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 0,
+			  "reward": "Resource bartering unlocked \u2014 5 rotating offers."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 1400,
+			  "resource_cost": {
+				"wood": 60,
+				"stone": 30
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 0,
+			  "reward": "A busier dock draws better hagglers."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 2200,
+			  "resource_cost": {
+				"wood": 80,
+				"stone": 50
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 0,
+			  "reward": "Sturdier warehouses for the wares."
+			}
+		  ]
+		},
+		{
+		  "tier": 2,
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 3500,
+			  "resource_cost": {
+				"wood": 120,
+				"stone": 80
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 0,
+			  "reward": "Word spreads along the trade roads."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 5000,
+			  "resource_cost": {
+				"wood": 160,
+				"stone": 110
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 0,
+			  "reward": "New contacts in distant markets."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 7000,
+			  "resource_cost": {
+				"wood": 200,
+				"stone": 150,
+				"enchanted_ore": 10
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 0,
+			  "reward": "The port hums from dawn to dusk."
+			}
+		  ]
+		},
+		{
+		  "tier": 3,
+		  "levels": [
+			{
+			  "level": 1,
+			  "gold_cost": 9500,
+			  "resource_cost": {
+				"wood": 260,
+				"stone": 200,
+				"enchanted_ore": 20
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 0,
+			  "reward": "A landmark of commerce."
+			},
+			{
+			  "level": 2,
+			  "gold_cost": 12500,
+			  "resource_cost": {
+				"wood": 320,
+				"stone": 260,
+				"enchanted_ore": 35
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 0,
+			  "reward": "Traders speak of Fernkeep in far lands."
+			},
+			{
+			  "level": 3,
+			  "gold_cost": 16000,
+			  "resource_cost": {
+				"wood": 400,
+				"stone": 320,
+				"enchanted_ore": 50
+			  },
+			  "income_per_minute": 0,
+			  "staff_slots": 0,
+			  "reward": "The grandest trading post in the realm."
 			}
 		  ]
 		}
@@ -908,7 +1047,8 @@
 			}
 		  ]
 		}
-	  ]
+	  ],
+	  "income_weight": 1.0
 	},
 	"farm": {
 	  "id": "farm",
@@ -1216,7 +1356,8 @@
 			}
 		  ]
 		}
-	  ]
+	  ],
+	  "income_weight": 0.45
 	},
 	"guild_hall": {
 	  "id": "guild_hall",
@@ -1233,34 +1374,19 @@
 	  "description": "Quest board, headhunting, and specialist NPC recruitment.",
 	  "positions": [
 		{
-		  "id": "quest_master",
-		  "name": "Quest Master",
-		  "description": "Manages the quest board and tracks expedition progress.",
+		  "id": "taskmaster",
+		  "name": "Taskmaster",
+		  "description": "Runs the quest board and takes a cut of every deal.",
 		  "good_skills": [
 			"scribe",
-			"hunter",
+			"merchant",
             "guard"
 		  ],
 		  "bad_skills": [
 			"cook",
 			"farmer",
-			"alchemist",
-            "bartender"
-		  ]
-		},
-		{
-		  "id": "guard_post",
-		  "name": "Guard Post",
-		  "description": "Enforces guild contracts and keeps order.",
-		  "good_skills": [
-			"guard",
-            "hunter"
-		  ],
-		  "bad_skills": [
-			"cook",
-			"alchemist",
 			"bartender",
-            "innkeeper"
+            "alchemist"
 		  ]
 		}
 	  ],
@@ -1279,9 +1405,10 @@
 				"wood": 25,
 				"stone": 10
 			  },
-			  "income_per_minute": 2.0,
+			  "income_per_minute": 0,
 			  "quest_slots": 2,
-			  "reward": "Quest board active. Basic NPC quests available."
+			  "reward": "Quest board active. Basic NPC quests available.",
+			  "staff_slots": 1
 			},
 			{
 			  "level": 2,
@@ -1290,9 +1417,10 @@
 				"wood": 35,
 				"stone": 15
 			  },
-			  "income_per_minute": 3.5,
+			  "income_per_minute": 0,
 			  "quest_slots": 3,
-			  "reward": "More quest slots. Higher quest reward tier."
+			  "reward": "More quest slots. Higher quest reward tier.",
+			  "staff_slots": 1
 			},
 			{
 			  "level": 3,
@@ -1301,9 +1429,10 @@
 				"wood": 50,
 				"stone": 25
 			  },
-			  "income_per_minute": 5.0,
+			  "income_per_minute": 0,
 			  "quest_slots": 4,
-			  "reward": "Headhunting option seeded. Specialist NPCs hinted."
+			  "reward": "Headhunting option seeded. Specialist NPCs hinted.",
+			  "staff_slots": 1
 			}
 		  ]
 		},
@@ -1322,10 +1451,11 @@
 				"wood": 60,
 				"stone": 35
 			  },
-			  "income_per_minute": 10.0,
+			  "income_per_minute": 0,
 			  "quest_slots": 5,
 			  "headhunt_cost": 500,
-			  "reward": "Headhunting unlocked. Specialist NPCs can be recruited."
+			  "reward": "Headhunting unlocked. Specialist NPCs can be recruited.",
+			  "staff_slots": 1
 			},
 			{
 			  "level": 2,
@@ -1334,10 +1464,11 @@
 				"wood": 75,
 				"stone": 50
 			  },
-			  "income_per_minute": 15.0,
+			  "income_per_minute": 0,
 			  "quest_slots": 6,
 			  "headhunt_cost": 400,
-			  "reward": "Headhunt cost reduced. Better specialist pool."
+			  "reward": "Headhunt cost reduced. Better specialist pool.",
+			  "staff_slots": 1
 			},
 			{
 			  "level": 3,
@@ -1346,10 +1477,11 @@
 				"wood": 90,
 				"stone": 65
 			  },
-			  "income_per_minute": 22.0,
+			  "income_per_minute": 0,
 			  "quest_slots": 8,
 			  "headhunt_cost": 300,
-			  "reward": "Expedition system seeded. Rare skill recruitment possible."
+			  "reward": "Expedition system seeded. Rare skill recruitment possible.",
+			  "staff_slots": 1
 			}
 		  ]
 		},
@@ -1369,10 +1501,11 @@
 				"wood": 80,
 				"enchanted_ore": 15
 			  },
-			  "income_per_minute": 35.0,
+			  "income_per_minute": 0,
 			  "quest_slots": 10,
 			  "headhunt_cost": 200,
-			  "reward": "Expedition system active. Rare skill NPCs arrive more often."
+			  "reward": "Expedition system active. Rare skill NPCs arrive more often.",
+			  "staff_slots": 1
 			},
 			{
 			  "level": 2,
@@ -1382,10 +1515,11 @@
 				"wood": 100,
 				"enchanted_ore": 25
 			  },
-			  "income_per_minute": 50.0,
+			  "income_per_minute": 0,
 			  "quest_slots": 12,
 			  "headhunt_cost": 150,
-			  "reward": "Multi-expedition dispatch. Legendary skill NPCs possible."
+			  "reward": "Multi-expedition dispatch. Legendary skill NPCs possible.",
+			  "staff_slots": 1
 			},
 			{
 			  "level": 3,
@@ -1395,14 +1529,16 @@
 				"wood": 130,
 				"enchanted_ore": 40
 			  },
-			  "income_per_minute": 70.0,
+			  "income_per_minute": 0,
 			  "quest_slots": 15,
 			  "headhunt_cost": 100,
-			  "reward": "Maximum guild prestige. Every rare skill type recruitable."
+			  "reward": "Maximum guild prestige. Every rare skill type recruitable.",
+			  "staff_slots": 1
 			}
 		  ]
 		}
-	  ]
+	  ],
+	  "income_weight": 0.0
 	},
 	"blacksmith": {
 	  "id": "blacksmith",
@@ -1614,7 +1750,8 @@
 			}
 		  ]
 		}
-	  ]
+	  ],
+	  "income_weight": 1.0
 	},
 	"logging_camp": {
 	  "id": "logging_camp",
@@ -1655,10 +1792,10 @@
 		  "levels": [
 			{
 			  "level": 1,
-			  "gold_cost": 100,
+			  "gold_cost": 250,
 			  "resource_cost": {},
 			  "income_per_minute": 0,
-			  "staff_slots": 2,
+			  "staff_slots": 1,
 			  "resource_production": {
 				"wood": 1
 			  },
@@ -1666,10 +1803,10 @@
 			},
 			{
 			  "level": 2,
-			  "gold_cost": 200,
+			  "gold_cost": 350,
 			  "resource_cost": {},
 			  "income_per_minute": 0,
-			  "staff_slots": 2,
+			  "staff_slots": 1,
 			  "resource_production": {
 				"wood": 1.5
 			  },
@@ -1677,7 +1814,7 @@
 			},
 			{
 			  "level": 3,
-			  "gold_cost": 400,
+			  "gold_cost": 550,
 			  "resource_cost": {
 				"wood": 5
 			  },
@@ -1799,7 +1936,8 @@
 			}
 		  ]
 		}
-	  ]
+	  ],
+	  "income_weight": 0.55
 	},
 	"mining_operation": {
 	  "id": "mining_operation",
@@ -1840,10 +1978,10 @@
 		  "levels": [
 			{
 			  "level": 1,
-			  "gold_cost": 150,
+			  "gold_cost": 300,
 			  "resource_cost": {},
 			  "income_per_minute": 0,
-			  "staff_slots": 2,
+			  "staff_slots": 1,
 			  "resource_production": {
 				"stone": 1
 			  },
@@ -1851,10 +1989,10 @@
 			},
 			{
 			  "level": 2,
-			  "gold_cost": 300,
+			  "gold_cost": 400,
 			  "resource_cost": {},
 			  "income_per_minute": 0,
-			  "staff_slots": 2,
+			  "staff_slots": 1,
 			  "resource_production": {
 				"stone": 1.5
 			  },
@@ -1862,7 +2000,7 @@
 			},
 			{
 			  "level": 3,
-			  "gold_cost": 550,
+			  "gold_cost": 650,
 			  "resource_cost": {
 				"stone": 5
 			  },
@@ -1984,7 +2122,8 @@
 			}
 		  ]
 		}
-	  ]
+	  ],
+	  "income_weight": 0.55
 	},
 	"tree": {
 	  "id": "tree",
@@ -2015,7 +2154,8 @@
 			}
 		  ]
 		}
-	  ]
+	  ],
+	  "income_weight": 0.0
 	},
 	"flower_bed": {
 	  "id": "flower_bed",
@@ -2046,7 +2186,8 @@
 			}
 		  ]
 		}
-	  ]
+	  ],
+	  "income_weight": 0.0
 	},
 	"well": {
 	  "id": "well",
@@ -2077,7 +2218,8 @@
 			}
 		  ]
 		}
-	  ]
+	  ],
+	  "income_weight": 0.0
 	}
   }
 }

@@ -6,7 +6,7 @@ extends Control
 
 const SECTIONS: Array = [
 	{"label": "HOUSING & CIVIC", "ids": ["house"]},
-	{"label": "COMMERCE",        "ids": ["tavern", "market", "guild_hall"]},
+	{"label": "COMMERCE",        "ids": ["tavern", "market", "trade_port", "guild_hall"]},
 	{"label": "INDUSTRY",        "ids": ["farm", "logging_camp", "mining_operation", "blacksmith"]},
 	{"label": "MYSTIC",          "ids": ["magic_tower"]},
 ]
@@ -28,7 +28,9 @@ const SPRITE_VARIANTS: Dictionary = {
 }
 
 const ROAD_TYPES: Array = [
-	{"id": "dirt", "label": "Dirt Road", "path": "res://assets/roads/dirt.png", "cost": "Free"},
+	{"id": "dirt",  "label": "Dirt Road",  "path": "res://assets/roads/dirt.png",  "cost": "Free"},
+	{"id": "stone", "label": "Stone Road", "path": "res://assets/roads/stone.png", "cost": "5 stone / tile"},
+	{"id": "wood",  "label": "Wood Road",  "path": "res://assets/roads/wood.png",  "cost": "5 wood / tile"},
 ]
 
 var _current_tab: String = "buildings"
@@ -46,6 +48,10 @@ var _cost_labels: Array = []
 func _ready() -> void:
 	visible = false
 	SignalBus.open_build_menu.connect(toggle)
+	SignalBus.close_all_panels.connect(func():
+		if visible:
+			_close()
+	)
 	close_button.pressed.connect(_close)
 	tab_buildings.pressed.connect(func(): _switch_tab("buildings"))
 	tab_roads.pressed.connect(func(): _switch_tab("roads"))
@@ -71,15 +77,23 @@ func toggle() -> void:
 	if visible:
 		_build_content()
 	else:
+		_cancel_build_modes()
 		SignalBus.build_menu_closed.emit()
 		if _sprite_panel:
 			_sprite_panel._slide_out()
 
 func _close() -> void:
 	visible = false
+	_cancel_build_modes()
 	SignalBus.build_menu_closed.emit()
 	if _sprite_panel:
 		_sprite_panel._slide_out()
+
+# Closing the menu (✕, Build toggle, ESC) also drops any active selection
+func _cancel_build_modes() -> void:
+	var build_grid: Node = get_tree().get_root().get_node_or_null("Node2D/BuildGrid")
+	if build_grid:
+		build_grid.cancel_all_modes()
 
 func _switch_tab(tab: String) -> void:
 	_current_tab = tab
@@ -116,7 +130,7 @@ func _build_building_items() -> void:
 
 		var header := Label.new()
 		header.text = section["label"]
-		header.add_theme_font_size_override("font_size", 10)
+		header.add_theme_font_size_override("font_size", 20)
 		header.add_theme_color_override("font_color", Color(0.55, 0.55, 0.55))
 		col.add_child(header)
 
@@ -130,7 +144,7 @@ func _build_building_items() -> void:
 
 		content_box.add_child(col)
 		var sep := VSeparator.new()
-		sep.custom_minimum_size = Vector2(10, 0)
+		sep.custom_minimum_size = Vector2(20, 0)
 		content_box.add_child(sep)
 
 func _build_decor_items() -> void:
@@ -138,7 +152,7 @@ func _build_decor_items() -> void:
 	col.add_theme_constant_override("separation", 2)
 	var header := Label.new()
 	header.text = "DECOR — no road needed, doesn't use building slots"
-	header.add_theme_font_size_override("font_size", 10)
+	header.add_theme_font_size_override("font_size", 20)
 	header.add_theme_color_override("font_color", Color(0.55, 0.55, 0.55))
 	col.add_child(header)
 	var row := HBoxContainer.new()
@@ -152,7 +166,7 @@ func _build_decor_items() -> void:
 
 func _build_road_items() -> void:
 	for road in ROAD_TYPES:
-		var card: PanelContainer = _make_card(road["label"], "Free", road["path"],
+		var card: PanelContainer = _make_card(road["label"], road["cost"], road["path"],
 			"Click and drag to paint", true, "")
 		var road_id: String = road["id"]
 		card.gui_input.connect(func(e: InputEvent): _on_road_card_input(e, road_id))
@@ -174,10 +188,10 @@ func _make_building_card(id: String) -> PanelContainer:
 	var is_unlocked: bool = ProgressionManager.check_unlock_condition(unlock, id)
 
 	var size: Array = data.get("size", [1, 1])
-	var income := float(level_data.get("income_per_minute", 0))
+	var income := DataManager.get_base_income_per_minute(id, 1, 1)
 	var info := "%d×%d" % [int(size[0]), int(size[1])]
 	if income > 0.0:
-		info += "  •  %.0fg/min" % income
+		info += "  •  %.0fg/day" % income
 
 	var variants: Array = SPRITE_VARIANTS.get(id, [])
 	var sprite_path: String = variants[0]["path"] if not variants.is_empty() \
@@ -194,7 +208,7 @@ func _make_card(title: String, cost_text: String, sprite_path: String, info: Str
 		unlocked: bool, icon_char: String = "", lock_reason: String = "",
 		gold_cost: float = -1.0) -> PanelContainer:
 	var card := PanelContainer.new()
-	card.custom_minimum_size = Vector2(118, 150)
+	card.custom_minimum_size = Vector2(236, 300)
 	if unlocked:
 		card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		card.mouse_entered.connect(func(): card.modulate = Color(1.12, 1.12, 1.05))
@@ -207,19 +221,19 @@ func _make_card(title: String, cost_text: String, sprite_path: String, info: Str
 
 	# Preview area: sprite, big glyph, or placeholder
 	var center := CenterContainer.new()
-	center.custom_minimum_size = Vector2(0, 70)
+	center.custom_minimum_size = Vector2(0, 140)
 	center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	if icon_char != "":
 		var icon := Label.new()
 		icon.text = icon_char
-		icon.add_theme_font_size_override("font_size", 36)
-		icon.add_theme_color_override("font_color", Color(0.85, 0.25, 0.25))
+		icon.add_theme_font_size_override("font_size", 72)
+		icon.add_theme_color_override("font_color", Color(0.45, 0.05, 0.05))
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		center.add_child(icon)
 	elif sprite_path != "" and ResourceLoader.exists(sprite_path):
 		var tex := TextureRect.new()
 		tex.texture = load(sprite_path)
-		tex.custom_minimum_size = Vector2(68, 68)
+		tex.custom_minimum_size = Vector2(136, 136)
 		tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		tex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		tex.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -229,7 +243,7 @@ func _make_card(title: String, cost_text: String, sprite_path: String, info: Str
 		center.add_child(tex)
 	else:
 		var placeholder := ColorRect.new()
-		placeholder.custom_minimum_size = Vector2(64, 64)
+		placeholder.custom_minimum_size = Vector2(128, 128)
 		placeholder.color = Color(0.28, 0.28, 0.32) if unlocked else Color(0.14, 0.14, 0.14)
 		placeholder.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		center.add_child(placeholder)
@@ -237,7 +251,7 @@ func _make_card(title: String, cost_text: String, sprite_path: String, info: Str
 
 	var name_lbl := Label.new()
 	name_lbl.text = ("🔒 " if not unlocked else "") + title
-	name_lbl.add_theme_font_size_override("font_size", 11)
+	name_lbl.add_theme_font_size_override("font_size", 22)
 	name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	name_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -247,8 +261,8 @@ func _make_card(title: String, cost_text: String, sprite_path: String, info: Str
 	if info != "":
 		var info_lbl := Label.new()
 		info_lbl.text = info
-		info_lbl.add_theme_font_size_override("font_size", 9)
-		info_lbl.add_theme_color_override("font_color", Color(0.62, 0.68, 0.78))
+		info_lbl.add_theme_font_size_override("font_size", 18)
+		info_lbl.add_theme_color_override("font_color", Color(0.33, 0.38, 0.47))
 		info_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		info_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		vbox.add_child(info_lbl)
@@ -256,7 +270,7 @@ func _make_card(title: String, cost_text: String, sprite_path: String, info: Str
 	if unlocked:
 		var cost_lbl := Label.new()
 		cost_lbl.text = cost_text
-		cost_lbl.add_theme_font_size_override("font_size", 10)
+		cost_lbl.add_theme_font_size_override("font_size", 20)
 		cost_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		cost_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		vbox.add_child(cost_lbl)
@@ -264,12 +278,12 @@ func _make_card(title: String, cost_text: String, sprite_path: String, info: Str
 			_cost_labels.append({"label": cost_lbl, "cost": gold_cost})
 			_colour_cost(cost_lbl, gold_cost)
 		else:
-			cost_lbl.add_theme_color_override("font_color", Color(0.80, 0.90, 0.40))
+			cost_lbl.add_theme_color_override("font_color", Color(0.37, 0.43, 0.12))
 	else:
 		var lock_lbl := Label.new()
 		lock_lbl.text = lock_reason
-		lock_lbl.add_theme_font_size_override("font_size", 9)
-		lock_lbl.add_theme_color_override("font_color", Color(0.85, 0.6, 0.35))
+		lock_lbl.add_theme_font_size_override("font_size", 18)
+		lock_lbl.add_theme_color_override("font_color", Color(0.45, 0.28, 0.11))
 		lock_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		lock_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		lock_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -280,7 +294,7 @@ func _make_card(title: String, cost_text: String, sprite_path: String, info: Str
 
 func _colour_cost(lbl: Label, cost: float) -> void:
 	lbl.add_theme_color_override("font_color",
-		Color(0.80, 0.90, 0.40) if EconomyManager.can_afford(cost) else Color(0.92, 0.45, 0.40))
+		Color(0.2, 0.42, 0.1) if EconomyManager.can_afford(cost) else Color(0.62, 0.16, 0.1))
 
 func _recolour_costs() -> void:
 	for entry in _cost_labels:
@@ -324,9 +338,9 @@ func _on_road_card_input(event: InputEvent, road_type: String) -> void:
 
 func _on_erase_card_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		visible = false
 		var build_grid: Node = get_tree().get_root().get_node_or_null("Node2D/BuildGrid")
 		if build_grid:
+			build_grid.cancel_all_modes()
 			build_grid.start_road_erase_mode()
 
 func _on_building_selected(building_id: String) -> void:
@@ -340,14 +354,16 @@ func _on_building_selected(building_id: String) -> void:
 func _on_sprite_selected(building_id: String, sprite_path: String) -> void:
 	_start_placement(building_id, sprite_path)
 
+# The menu stays open during placement — hovering it suspends the ghost so
+# you can reselect, switch tabs, or hit ✕ to cancel
 func _start_placement(building_id: String, sprite_path: String) -> void:
-	visible = false
 	var build_grid: Node = get_tree().get_root().get_node_or_null("Node2D/BuildGrid")
 	if build_grid:
+		build_grid.cancel_all_modes()
 		build_grid.start_placement(building_id, sprite_path)
 
 func _start_road_mode(road_type: String) -> void:
-	visible = false
 	var build_grid: Node = get_tree().get_root().get_node_or_null("Node2D/BuildGrid")
 	if build_grid:
+		build_grid.cancel_all_modes()
 		build_grid.start_road_mode(road_type)

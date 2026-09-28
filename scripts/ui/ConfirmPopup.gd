@@ -45,9 +45,12 @@ func _build(title: String, rows: Array, confirm_label: String) -> void:
 	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(center)
 
-	# Outer panel
+	# Outer panel — fit inside whatever we're parented to. Full-screen parents
+	# get the wide two-column layout; the narrow BuildingInspector column gets
+	# a stacked vertical one that stays on screen.
+	var narrow := size.x < 720.0
 	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(500, 0)
+	panel.custom_minimum_size = Vector2(minf(1000.0, size.x - 20.0), 0)
 	center.add_child(panel)
 
 	var margin := MarginContainer.new()
@@ -62,8 +65,9 @@ func _build(title: String, rows: Array, confirm_label: String) -> void:
 	# Title
 	var title_lbl := Label.new()
 	title_lbl.text = title
-	title_lbl.add_theme_font_size_override("font_size", 16)
-	title_lbl.add_theme_color_override("font_color", Color(1.0, 0.92, 0.55))
+	title_lbl.add_theme_font_size_override("font_size", 28 if narrow else 32)
+	title_lbl.add_theme_color_override("font_color", Color(0.39, 0.35, 0.16))
+	title_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(title_lbl)
 	vbox.add_child(_sep())
 
@@ -73,71 +77,99 @@ func _build(title: String, rows: Array, confirm_label: String) -> void:
 			"header":
 				var lbl := Label.new()
 				lbl.text = row.get("text", "")
-				lbl.add_theme_font_size_override("font_size", 11)
+				lbl.add_theme_font_size_override("font_size", 22)
 				lbl.add_theme_color_override("font_color", Color(0.55, 0.55, 0.55))
 				vbox.add_child(lbl)
 			"row":
-				vbox.add_child(_make_row(row))
+				vbox.add_child(_make_row(row, narrow))
 			"note":
 				var lbl := Label.new()
 				lbl.text = row.get("text", "")
-				lbl.add_theme_font_size_override("font_size", 12)
-				lbl.add_theme_color_override("font_color", Color(0.72, 0.80, 1.0))
+				lbl.add_theme_font_size_override("font_size", 24)
+				lbl.add_theme_color_override("font_color", Color(0.24, 0.28, 0.39))
 				lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 				vbox.add_child(lbl)
 			"unlock":
 				var lbl := Label.new()
 				lbl.text = "✦  " + row.get("text", "")
-				lbl.add_theme_font_size_override("font_size", 12)
-				lbl.add_theme_color_override("font_color", Color(0.35, 0.90, 0.60))
+				lbl.add_theme_font_size_override("font_size", 24)
+				lbl.add_theme_color_override("font_color", Color(0.09, 0.43, 0.24))
 				lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 				vbox.add_child(lbl)
 			"cost":
 				var lbl := Label.new()
 				lbl.text = row.get("text", "")
-				lbl.add_theme_font_size_override("font_size", 13)
-				lbl.add_theme_color_override("font_color", Color(0.95, 0.70, 0.28))
+				lbl.add_theme_font_size_override("font_size", 26)
+				lbl.add_theme_color_override("font_color", Color(0.41, 0.27, 0.04))
+				lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 				vbox.add_child(lbl)
 
 	vbox.add_child(_sep())
 
-	# Buttons
-	var btn_row := HBoxContainer.new()
-	btn_row.add_theme_constant_override("separation", 12)
-	btn_row.alignment = BoxContainer.ALIGNMENT_END
-
+	# Buttons — side by side when wide, stacked full-width when narrow
 	var cancel_btn := Button.new()
 	cancel_btn.text = "Cancel"
-	cancel_btn.custom_minimum_size = Vector2(100, 40)
 	cancel_btn.pressed.connect(_on_cancel)
-	btn_row.add_child(cancel_btn)
 
 	var confirm_btn := Button.new()
 	confirm_btn.text = confirm_label
-	confirm_btn.custom_minimum_size = Vector2(160, 40)
-	confirm_btn.add_theme_font_size_override("font_size", 14)
-	confirm_btn.add_theme_color_override("font_color", Color(0.25, 0.95, 0.45))
+	confirm_btn.add_theme_font_size_override("font_size", 28)
+	confirm_btn.add_theme_color_override("font_color", Color(0.03, 0.41, 0.14))
 	confirm_btn.pressed.connect(_on_confirm_pressed)
-	btn_row.add_child(confirm_btn)
 
-	vbox.add_child(btn_row)
+	if narrow:
+		var btn_col := VBoxContainer.new()
+		btn_col.add_theme_constant_override("separation", 10)
+		confirm_btn.custom_minimum_size = Vector2(0, 72)
+		cancel_btn.custom_minimum_size = Vector2(0, 64)
+		btn_col.add_child(confirm_btn)
+		btn_col.add_child(cancel_btn)
+		vbox.add_child(btn_col)
+	else:
+		var btn_row := HBoxContainer.new()
+		btn_row.add_theme_constant_override("separation", 12)
+		btn_row.alignment = BoxContainer.ALIGNMENT_END
+		cancel_btn.custom_minimum_size = Vector2(200, 80)
+		confirm_btn.custom_minimum_size = Vector2(320, 80)
+		btn_row.add_child(cancel_btn)
+		btn_row.add_child(confirm_btn)
+		vbox.add_child(btn_row)
 
-func _make_row(row: Dictionary) -> HBoxContainer:
+func _make_row(row: Dictionary, narrow: bool = false) -> Container:
+	# Narrow: label on its own line, "old → new" underneath
+	if narrow:
+		var col := VBoxContainer.new()
+		col.add_theme_constant_override("separation", 0)
+
+		var label_top := Label.new()
+		label_top.text = row.get("label", "")
+		label_top.add_theme_font_size_override("font_size", 24)
+		label_top.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		col.add_child(label_top)
+
+		var line := HBoxContainer.new()
+		line.add_theme_constant_override("separation", 10)
+		line.add_child(_value_label(row.get("old", ""), Color(0.4, 0.29, 0.18), 24))
+		var arr := Label.new()
+		arr.text = "→"
+		arr.add_theme_color_override("font_color", Color(0.45, 0.45, 0.45))
+		line.add_child(arr)
+		line.add_child(_value_label(row.get("new", ""), _highlight_color(row), 24))
+		col.add_child(line)
+		return col
+
 	var hbox := HBoxContainer.new()
 	hbox.add_theme_constant_override("separation", 10)
 
 	var label_lbl := Label.new()
 	label_lbl.text = row.get("label", "")
 	label_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	label_lbl.add_theme_font_size_override("font_size", 13)
+	label_lbl.add_theme_font_size_override("font_size", 26)
 	hbox.add_child(label_lbl)
 
-	var old_lbl := Label.new()
-	old_lbl.text = row.get("old", "")
-	old_lbl.custom_minimum_size = Vector2(110, 0)
+	var old_lbl := _value_label(row.get("old", ""), Color(0.4, 0.29, 0.18), 26)
+	old_lbl.custom_minimum_size = Vector2(220, 0)
 	old_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	old_lbl.add_theme_font_size_override("font_size", 13)
-	old_lbl.add_theme_color_override("font_color", Color(0.60, 0.60, 0.60))
 	hbox.add_child(old_lbl)
 
 	var arrow := Label.new()
@@ -145,21 +177,28 @@ func _make_row(row: Dictionary) -> HBoxContainer:
 	arrow.add_theme_color_override("font_color", Color(0.45, 0.45, 0.45))
 	hbox.add_child(arrow)
 
-	var new_lbl := Label.new()
-	new_lbl.text = row.get("new", "")
-	new_lbl.custom_minimum_size = Vector2(110, 0)
-	new_lbl.add_theme_font_size_override("font_size", 13)
-	match int(row.get("highlight", 0)):
-		1:  new_lbl.add_theme_color_override("font_color", Color(0.28, 0.90, 0.42))
-		-1: new_lbl.add_theme_color_override("font_color", Color(0.92, 0.35, 0.35))
-		_:  new_lbl.add_theme_color_override("font_color", Color(0.90, 0.85, 0.52))
+	var new_lbl := _value_label(row.get("new", ""), _highlight_color(row), 26)
+	new_lbl.custom_minimum_size = Vector2(220, 0)
 	hbox.add_child(new_lbl)
 
 	return hbox
 
+func _value_label(text: String, color: Color, font_size: int) -> Label:
+	var lbl := Label.new()
+	lbl.text = text
+	lbl.add_theme_font_size_override("font_size", font_size)
+	lbl.add_theme_color_override("font_color", color)
+	return lbl
+
+func _highlight_color(row: Dictionary) -> Color:
+	match int(row.get("highlight", 0)):
+		1:  return Color(0.05, 0.43, 0.14)
+		-1: return Color(0.42, 0.09, 0.09)
+		_:  return Color(0.43, 0.4, 0.19)
+
 func _sep() -> HSeparator:
 	var s := HSeparator.new()
-	s.custom_minimum_size = Vector2(0, 4)
+	s.custom_minimum_size = Vector2(0, 8)
 	return s
 
 func _on_confirm_pressed() -> void:

@@ -1,0 +1,79 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/GuildHallPanel.gd" id="1_ghp"]
+
+[node name="GuildHallPanel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+visible = false
+script = ExtResource("1_ghp")
+
+[node name="Panel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -720.0
+offset_top = -490.0
+offset_right = 720.0
+offset_bottom = 490.0
+
+[node name="Title" type="Label" parent="Panel"]
+offset_left = 16.0
+offset_top = 10.0
+offset_right = 700.0
+offset_bottom = 66.0
+text = "Guild Hall — Quest Board"
+theme_override_font_sizes/font_size = 34
+
+[node name="SubTitle" type="Label" parent="Panel"]
+offset_left = 16.0
+offset_top = 68.0
+offset_right = 1100.0
+offset_bottom = 106.0
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.42, 0.33, 0.22, 1.0)
+
+[node name="CloseButton" type="Button" parent="Panel"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -84.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 80.0
+text = "✕"
+theme_override_font_sizes/font_size = 32
+
+[node name="HSep" type="HSeparator" parent="Panel"]
+anchor_right = 1.0
+offset_top = 112.0
+offset_bottom = 116.0
+
+[node name="UpgradeBox" type="PanelContainer" parent="Panel"]
+offset_left = 12.0
+offset_top = 124.0
+offset_right = 470.0
+offset_bottom = 268.0
+
+[node name="EmployeeBox" type="PanelContainer" parent="Panel"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -470.0
+offset_top = 124.0
+offset_right = -12.0
+offset_bottom = 268.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 280.0
+offset_right = -12.0
+offset_bottom = -12.0
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
+
+[node name="BoardFlow" type="HBoxContainer" parent="Panel/ScrollContainer"]
+size_flags_horizontal = 3
+theme_override_constants/separation = 16

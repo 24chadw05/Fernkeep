@@ -36,11 +36,11 @@ func _ready() -> void:
 
 	_name_lbl = Label.new()
 	_name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_name_lbl.add_theme_color_override("font_color", Color(1.0, 0.92, 0.55))
+	_name_lbl.add_theme_color_override("font_color", Color(0.39, 0.35, 0.16))
 	header.add_child(_name_lbl)
 
 	_tier_lbl = Label.new()
-	_tier_lbl.add_theme_color_override("font_color", Color(0.65, 0.65, 0.65))
+	_tier_lbl.add_theme_color_override("font_color", Color(0.38, 0.28, 0.17))
 	header.add_child(_tier_lbl)
 
 	var close_btn = Button.new()
@@ -154,10 +154,10 @@ func _row(left: String, right: String, right_color: Color) -> HBoxContainer:
 	var row = HBoxContainer.new()
 	var ll = Label.new(); ll.text = left
 	ll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	ll.add_theme_font_size_override("font_size", 13)
+	ll.add_theme_font_size_override("font_size", 26)
 	var rl = Label.new(); rl.text = right
 	rl.add_theme_color_override("font_color", right_color)
-	rl.add_theme_font_size_override("font_size", 13)
+	rl.add_theme_font_size_override("font_size", 26)
 	row.add_child(ll); row.add_child(rl)
 	return row
 
@@ -165,7 +165,7 @@ func _dim(text: String) -> Label:
 	var l = Label.new()
 	l.text = "  " + text
 	l.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
-	l.add_theme_font_size_override("font_size", 13)
+	l.add_theme_font_size_override("font_size", 26)
 	return l
 
 func _reposition() -> void:
@@ -199,7 +199,7 @@ func _calc_value(b: PlacedBuilding) -> float:
 	return invest * tier_m * (1.0 + float(filled) / max(max_s, 1) * 0.35)
 
 func _calc_daily_income(b: PlacedBuilding) -> float:
-	var passive = b.get_income_per_minute()
+	var passive = BuildingManager.get_live_income_per_minute(b)
 	if b.building_id == "house":
 		for id in b.assigned_residents:
 			var n = CitizenManager.get_citizen_by_id(id)

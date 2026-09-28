@@ -20,3 +20,6 @@ mono_crash.*.json
 .DS_Store
 __pycache__/
 *.pyc
+
+# Private notes — keep local
+FERNKEEP_HANDOFF.pdf

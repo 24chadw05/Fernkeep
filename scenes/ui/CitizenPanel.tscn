@@ -22,115 +22,115 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -480.0
-offset_top = -300.0
-offset_right = 480.0
-offset_bottom = 300.0
+offset_left = -740.0
+offset_top = -490.0
+offset_right = 740.0
+offset_bottom = 490.0
 
 [node name="TitleLabel" type="Label" parent="Panel"]
 offset_left = 16.0
 offset_top = 10.0
-offset_right = 400.0
-offset_bottom = 38.0
+offset_right = 700.0
+offset_bottom = 74.0
 text = "Citizens"
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 36
 
 [node name="CloseButton" type="Button" parent="Panel"]
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -44.0
-offset_top = 6.0
-offset_right = -6.0
-offset_bottom = 42.0
+offset_left = -84.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 80.0
 text = "✕"
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 32
 
 [node name="Divider" type="HSeparator" parent="Panel"]
 offset_left = 0.0
-offset_top = 44.0
-offset_right = 960.0
-offset_bottom = 50.0
+offset_top = 84.0
+offset_right = 1480.0
+offset_bottom = 90.0
 
 [node name="Left" type="Panel" parent="Panel"]
 offset_left = 0.0
-offset_top = 50.0
-offset_right = 220.0
-offset_bottom = 600.0
+offset_top = 92.0
+offset_right = 380.0
+offset_bottom = 978.0
 
 [node name="Scroll" type="ScrollContainer" parent="Panel/Left"]
 offset_left = 0.0
 offset_top = 0.0
-offset_right = 220.0
-offset_bottom = 550.0
+offset_right = 380.0
+offset_bottom = 884.0
 
 [node name="CitizenList" type="VBoxContainer" parent="Panel/Left/Scroll"]
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 212.0
+offset_right = 372.0
 offset_bottom = 4.0
 size_flags_horizontal = 3
 
 [node name="VSep" type="VSeparator" parent="Panel"]
-offset_left = 222.0
-offset_top = 50.0
-offset_right = 228.0
-offset_bottom = 600.0
+offset_left = 382.0
+offset_top = 92.0
+offset_right = 390.0
+offset_bottom = 978.0
 
 [node name="Right" type="Control" parent="Panel"]
-offset_left = 230.0
-offset_top = 50.0
-offset_right = 960.0
-offset_bottom = 600.0
+offset_left = 396.0
+offset_top = 92.0
+offset_right = 1478.0
+offset_bottom = 978.0
 
 [node name="NoSelectionLabel" type="Label" parent="Panel/Right"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -140.0
-offset_top = -12.0
-offset_right = 140.0
-offset_bottom = 12.0
+offset_left = -300.0
+offset_top = -24.0
+offset_right = 300.0
+offset_bottom = 24.0
 text = "Select a citizen from the list."
 horizontal_alignment = 1
-theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1.0)
+theme_override_colors/font_color = Color(0.4, 0.29, 0.18, 1.0)
 
 [node name="Detail" type="VBoxContainer" parent="Panel/Right"]
 offset_left = 16.0
 offset_top = 8.0
-offset_right = 726.0
-offset_bottom = 542.0
+offset_right = 1064.0
+offset_bottom = 860.0
 visible = false
 
 [node name="NameLabel" type="Label" parent="Panel/Right/Detail"]
 text = "Citizen Name"
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 40
 
 [node name="DetailsLabel" type="Label" parent="Panel/Right/Detail"]
 text = "Age • Wealth"
-theme_override_font_sizes/font_size = 12
-theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 1.0)
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.35, 0.26, 0.16, 1.0)
 
 [node name="Sep1" type="HSeparator" parent="Panel/Right/Detail"]
 
 [node name="SkillsLabel" type="Label" parent="Panel/Right/Detail"]
 text = "Good skill: \nBad skill: "
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 26
 autowrap_mode = 2
 
 [node name="Sep2" type="HSeparator" parent="Panel/Right/Detail"]
 
 [node name="HousingLabel" type="Label" parent="Panel/Right/Detail"]
 text = "Housing: Renter • 0 gold/day"
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 24
 
 [node name="HappinessLabel" type="Label" parent="Panel/Right/Detail"]
 text = "Happiness: 100 / 100"
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 24
 
 [node name="DaysLabel" type="Label" parent="Panel/Right/Detail"]
 text = "Days in town: 0"
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 24
 
 [node name="Sep3" type="HSeparator" parent="Panel/Right/Detail"]
 
@@ -138,29 +138,29 @@ theme_override_font_sizes/font_size = 12
 
 [node name="JobSectionTitle" type="Label" parent="Panel/Right/Detail/JobSection"]
 text = "JOB ASSIGNMENT"
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 22
 theme_override_colors/font_color = Color(0.55, 0.55, 0.55, 1.0)
 
 [node name="JobLabel" type="Label" parent="Panel/Right/Detail/JobSection"]
 text = "Current job: Unemployed"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 28
 
 [node name="BuildingPicker" type="OptionButton" parent="Panel/Right/Detail/JobSection"]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 80)
 text = "— select a building —"
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 26
 
 [node name="Buttons" type="HBoxContainer" parent="Panel/Right/Detail/JobSection"]
-custom_minimum_size = Vector2(0, 44)
+custom_minimum_size = Vector2(0, 88)
 
 [node name="AssignButton" type="Button" parent="Panel/Right/Detail/JobSection/Buttons"]
 size_flags_horizontal = 3
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 80)
 text = "Assign"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 28
 
 [node name="UnassignButton" type="Button" parent="Panel/Right/Detail/JobSection/Buttons"]
 size_flags_horizontal = 3
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 80)
 text = "Unassign"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 28

@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/systems/Traveller.gd" id="1_trav"]
+[ext_resource type="Texture2D" path="res://assets/sprites/travellers/rider_1.png" id="2_rider"]
+
+[node name="Traveller" type="Node2D"]
+script = ExtResource("1_trav")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -28)
+texture = ExtResource("2_rider")

@@ -15,7 +15,9 @@ signal new_year(year: int)
 
 func _process(delta: float) -> void:
 	day_timer += delta
-	if day_timer >= DAY_LENGTH_SECONDS:
+	# while, not if: a hitch longer than a day (scene load, alt-tab) would
+	# otherwise swallow every day but one, skipping their wage/rent passes.
+	while day_timer >= DAY_LENGTH_SECONDS:
 		day_timer -= DAY_LENGTH_SECONDS
 		_advance_day()
 
@@ -45,6 +47,16 @@ func get_income_multiplier() -> float:
 		1: return 1.2   # Summer bonus
 		3: return 0.85  # Winter penalty
 		_: return 1.0
+
+# GDD seasons: "Summer — The Harvest Rush: farm output doubled."
+func get_farm_yield_multiplier() -> float:
+	return 2.0 if current_season_index == 1 else 1.0
+
+# GDD seasons: "Spring — The Bloom Festival: bonus happiness generation."
+# Added to city happiness on top of meals/potions.
+const SPRING_HAPPINESS_BONUS: float = 5.0
+func get_happiness_bonus() -> float:
+	return SPRING_HAPPINESS_BONUS if current_season_index == 0 else 0.0
 
 func get_display_string() -> String:
 	return "Day %d  •  %s  •  Year %d" % [get_day_in_season(), get_season_name(), current_year]

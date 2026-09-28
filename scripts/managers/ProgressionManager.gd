@@ -17,6 +17,8 @@ const XP_REWARDS = {
 	"trade_completed":    10.0,
 	"dish_unlocked":      30.0,
 	"season_completed":   75.0,
+	"foraging_trip":      12.0,
+	"fishing_trip":       12.0,
 }
 
 # Unlocks per level

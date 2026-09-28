@@ -1,61 +1,252 @@
 {
   "name_pools": {
     "first_names_male": [
-      "Aldric", "Bastian", "Caelan", "Dorian", "Emric", "Finn", "Gareth",
-      "Hadwin", "Idris", "Jasper", "Kellan", "Lorcan", "Maren", "Norwin",
-      "Osric", "Penn", "Quillan", "Roran", "Stellan", "Theron", "Uric",
-      "Valdis", "Wren", "Xander", "Yorick", "Zane", "Arden", "Bram",
-      "Corwin", "Drake", "Evander", "Faolan", "Gideon", "Holt", "Ivan",
-      "Jarvis", "Keiran", "Leif", "Magnus", "Noel", "Owen", "Pierce",
-      "Quinn", "Rowan", "Soren", "Tam", "Ulric", "Vance", "Wynn"
+      "Aldric",
+      "Bastian",
+      "Caelan",
+      "Dorian",
+      "Emric",
+      "Finn",
+      "Gareth",
+      "Hadwin",
+      "Idris",
+      "Jasper",
+      "Kellan",
+      "Lorcan",
+      "Maren",
+      "Norwin",
+      "Osric",
+      "Penn",
+      "Quillan",
+      "Roran",
+      "Stellan",
+      "Theron",
+      "Uric",
+      "Valdis",
+      "Wren",
+      "Xander",
+      "Yorick",
+      "Zane",
+      "Arden",
+      "Bram",
+      "Corwin",
+      "Drake",
+      "Evander",
+      "Faolan",
+      "Gideon",
+      "Holt",
+      "Ivan",
+      "Jarvis",
+      "Keiran",
+      "Leif",
+      "Magnus",
+      "Noel",
+      "Owen",
+      "Pierce",
+      "Quinn",
+      "Rowan",
+      "Soren",
+      "Tam",
+      "Ulric",
+      "Vance",
+      "Wynn"
     ],
     "first_names_female": [
-      "Aelith", "Brynn", "Caela", "Dara", "Elowen", "Faye", "Gwen",
-      "Halla", "Iona", "Jessa", "Kira", "Lyra", "Mira", "Nessa",
-      "Orla", "Petra", "Quinn", "Reva", "Sable", "Tara", "Una",
-      "Vesper", "Willa", "Xena", "Yara", "Zola", "Asha", "Brea",
-      "Calla", "Dwyn", "Evren", "Fern", "Glynn", "Hilde", "Isla",
-      "Jora", "Kael", "Lenna", "Maren", "Niamh", "Oona", "Peri",
-      "Rion", "Senna", "Tilda", "Ursa", "Vala", "Wren", "Zara"
+      "Aelith",
+      "Brynn",
+      "Caela",
+      "Dara",
+      "Elowen",
+      "Faye",
+      "Gwen",
+      "Halla",
+      "Iona",
+      "Jessa",
+      "Kira",
+      "Lyra",
+      "Mira",
+      "Nessa",
+      "Orla",
+      "Petra",
+      "Quinn",
+      "Reva",
+      "Sable",
+      "Tara",
+      "Una",
+      "Vesper",
+      "Willa",
+      "Xena",
+      "Yara",
+      "Zola",
+      "Asha",
+      "Brea",
+      "Calla",
+      "Dwyn",
+      "Evren",
+      "Fern",
+      "Glynn",
+      "Hilde",
+      "Isla",
+      "Jora",
+      "Kael",
+      "Lenna",
+      "Maren",
+      "Niamh",
+      "Oona",
+      "Peri",
+      "Rion",
+      "Senna",
+      "Tilda",
+      "Ursa",
+      "Vala",
+      "Wren",
+      "Zara"
     ],
     "first_names_neutral": [
-      "Ash", "Blair", "Cedar", "Dawn", "Echo", "Finch", "Grey",
-      "Haze", "Indigo", "Jade", "Kit", "Lark", "Moss", "North",
-      "Oak", "Pax", "Reed", "Sage", "Teal", "Vale"
+      "Ash",
+      "Blair",
+      "Cedar",
+      "Dawn",
+      "Echo",
+      "Finch",
+      "Grey",
+      "Haze",
+      "Indigo",
+      "Jade",
+      "Kit",
+      "Lark",
+      "Moss",
+      "North",
+      "Oak",
+      "Pax",
+      "Reed",
+      "Sage",
+      "Teal",
+      "Vale"
     ],
     "last_names": [
-      "Ashford", "Blackwood", "Copperhill", "Dawnmere", "Elderstone",
-      "Fairweather", "Goldbrook", "Hartwell", "Ironholm", "Jewelmoor",
-      "Kestrel", "Lightbourne", "Millstream", "Northvale", "Oakenshield",
-      "Pinehurst", "Quickwater", "Ravenscroft", "Silverbell", "Thornwick",
-      "Underholt", "Vellmar", "Whitmore", "Yarrow", "Aldgate",
-      "Briarcliff", "Coldwater", "Dustmantle", "Emberglow", "Foxhollow",
-      "Grimshaw", "Hearthstone", "Ivywood", "Junipervale", "Kettlebrook",
-      "Lanternmoor", "Mudforge", "Netherfield", "Orryn", "Pebblemarch",
-      "Quarrystone", "Rustleaf", "Saltmere", "Tumblewick", "Underbarrow",
-      "Vineshadow", "Willowmere", "Crossfield", "Duskmantle", "Fernhollow"
+      "Ashford",
+      "Blackwood",
+      "Copperhill",
+      "Dawnmere",
+      "Elderstone",
+      "Fairweather",
+      "Goldbrook",
+      "Hartwell",
+      "Ironholm",
+      "Jewelmoor",
+      "Kestrel",
+      "Lightbourne",
+      "Millstream",
+      "Northvale",
+      "Oakenshield",
+      "Pinehurst",
+      "Quickwater",
+      "Ravenscroft",
+      "Silverbell",
+      "Thornwick",
+      "Underholt",
+      "Vellmar",
+      "Whitmore",
+      "Yarrow",
+      "Aldgate",
+      "Briarcliff",
+      "Coldwater",
+      "Dustmantle",
+      "Emberglow",
+      "Foxhollow",
+      "Grimshaw",
+      "Hearthstone",
+      "Ivywood",
+      "Junipervale",
+      "Kettlebrook",
+      "Lanternmoor",
+      "Mudforge",
+      "Netherfield",
+      "Orryn",
+      "Pebblemarch",
+      "Quarrystone",
+      "Rustleaf",
+      "Saltmere",
+      "Tumblewick",
+      "Underbarrow",
+      "Vineshadow",
+      "Willowmere",
+      "Crossfield",
+      "Duskmantle",
+      "Fernhollow"
     ]
   },
-
   "wealth_levels": {
-    "1":  { "label": "Destitute",   "rent_multiplier": 0.4, "base_rent": 2.0,  "headhunt_cost": 0    },
-    "2":  { "label": "Poor",        "rent_multiplier": 0.6, "base_rent": 4.0,  "headhunt_cost": 0    },
-    "3":  { "label": "Modest",      "rent_multiplier": 0.8, "base_rent": 6.0,  "headhunt_cost": 0    },
-    "4":  { "label": "Comfortable", "rent_multiplier": 1.0, "base_rent": 8.0,  "headhunt_cost": 0    },
-    "5":  { "label": "Well-off",    "rent_multiplier": 1.2, "base_rent": 12.0, "headhunt_cost": 200  },
-    "6":  { "label": "Prosperous",  "rent_multiplier": 1.5, "base_rent": 18.0, "headhunt_cost": 400  },
-    "7":  { "label": "Wealthy",     "rent_multiplier": 2.0, "base_rent": 28.0, "headhunt_cost": 700  },
-    "8":  { "label": "Rich",        "rent_multiplier": 2.8, "base_rent": 45.0, "headhunt_cost": 1200 },
-    "9":  { "label": "Affluent",    "rent_multiplier": 3.8, "base_rent": 65.0, "headhunt_cost": 2000 },
-    "10": { "label": "Noble",       "rent_multiplier": 5.0, "base_rent": 90.0, "headhunt_cost": 3500 }
+    "1": {
+      "label": "Destitute",
+      "rent_multiplier": 0.4,
+      "base_rent": 2.0,
+      "headhunt_cost": 0
+    },
+    "2": {
+      "label": "Poor",
+      "rent_multiplier": 0.6,
+      "base_rent": 4.0,
+      "headhunt_cost": 0
+    },
+    "3": {
+      "label": "Modest",
+      "rent_multiplier": 0.8,
+      "base_rent": 6.0,
+      "headhunt_cost": 0
+    },
+    "4": {
+      "label": "Comfortable",
+      "rent_multiplier": 1.0,
+      "base_rent": 8.0,
+      "headhunt_cost": 0
+    },
+    "5": {
+      "label": "Well-off",
+      "rent_multiplier": 1.2,
+      "base_rent": 12.0,
+      "headhunt_cost": 200
+    },
+    "6": {
+      "label": "Prosperous",
+      "rent_multiplier": 1.5,
+      "base_rent": 18.0,
+      "headhunt_cost": 400
+    },
+    "7": {
+      "label": "Wealthy",
+      "rent_multiplier": 2.0,
+      "base_rent": 28.0,
+      "headhunt_cost": 700
+    },
+    "8": {
+      "label": "Rich",
+      "rent_multiplier": 2.8,
+      "base_rent": 45.0,
+      "headhunt_cost": 1200
+    },
+    "9": {
+      "label": "Affluent",
+      "rent_multiplier": 3.8,
+      "base_rent": 65.0,
+      "headhunt_cost": 2000
+    },
+    "10": {
+      "label": "Noble",
+      "rent_multiplier": 5.0,
+      "base_rent": 90.0,
+      "headhunt_cost": 3500
+    }
   },
-
   "job_skills": {
     "bartender": {
       "id": "bartender",
       "label": "Bartender",
       "rarity": "common",
-      "compatible_buildings": ["tavern"],
+      "compatible_buildings": [
+        "tavern"
+      ],
       "happiness_bonus": 20.0,
       "efficiency_bonus": 0.15,
       "description": "Keeps patrons happy and drinks flowing. Great tavern staff."
@@ -64,7 +255,9 @@
       "id": "farmer",
       "label": "Farmer",
       "rarity": "common",
-      "compatible_buildings": ["farm"],
+      "compatible_buildings": [
+        "farm"
+      ],
       "happiness_bonus": 18.0,
       "efficiency_bonus": 0.15,
       "description": "Knows crops and soil. Farm yield increases with a skilled farmer."
@@ -82,7 +275,9 @@
       "id": "cook",
       "label": "Cook",
       "rarity": "common",
-      "compatible_buildings": ["tavern"],
+      "compatible_buildings": [
+        "tavern"
+      ],
       "happiness_bonus": 22.0,
       "efficiency_bonus": 0.2,
       "description": "Unlocks additional menu items and improves dish quality."
@@ -91,7 +286,9 @@
       "id": "merchant",
       "label": "Merchant",
       "rarity": "common",
-      "compatible_buildings": ["market"],
+      "compatible_buildings": [
+        "market"
+      ],
       "happiness_bonus": 18.0,
       "efficiency_bonus": 0.15,
       "description": "Negotiates better deals and attracts more caravan traffic."
@@ -100,7 +297,10 @@
       "id": "herbalist",
       "label": "Herbalist",
       "rarity": "common",
-      "compatible_buildings": ["farm", "magic_tower"],
+      "compatible_buildings": [
+        "farm",
+        "magic_tower"
+      ],
       "happiness_bonus": 16.0,
       "efficiency_bonus": 0.15,
       "description": "Identifies and cultivates rare herbs. Boosts potion ingredient quality."
@@ -109,7 +309,10 @@
       "id": "guard",
       "label": "Guard",
       "rarity": "common",
-      "compatible_buildings": ["guild_hall", "town_hall"],
+      "compatible_buildings": [
+        "guild_hall",
+        "town_hall"
+      ],
       "happiness_bonus": 12.0,
       "efficiency_bonus": 0.1,
       "description": "Keeps order in the city. Small city happiness bonus."
@@ -118,7 +321,9 @@
       "id": "carpenter",
       "label": "Carpenter",
       "rarity": "common",
-      "compatible_buildings": ["guild_hall"],
+      "compatible_buildings": [
+        "guild_hall"
+      ],
       "happiness_bonus": 14.0,
       "efficiency_bonus": 0.1,
       "description": "Skilled builder. Slightly reduces wood cost on construction."
@@ -136,7 +341,9 @@
       "id": "alchemist",
       "label": "Alchemist",
       "rarity": "uncommon",
-      "compatible_buildings": ["magic_tower"],
+      "compatible_buildings": [
+        "magic_tower"
+      ],
       "happiness_bonus": 25.0,
       "efficiency_bonus": 0.25,
       "description": "Brews complex potions and extends their duration. Rare skill."
@@ -145,7 +352,10 @@
       "id": "scribe",
       "label": "Scribe",
       "rarity": "uncommon",
-      "compatible_buildings": ["guild_hall", "town_hall"],
+      "compatible_buildings": [
+        "guild_hall",
+        "town_hall"
+      ],
       "happiness_bonus": 15.0,
       "efficiency_bonus": 0.12,
       "description": "Keeps records, speeds up quest resolution times."
@@ -163,7 +373,9 @@
       "id": "innkeeper",
       "label": "Innkeeper",
       "rarity": "uncommon",
-      "compatible_buildings": ["tavern"],
+      "compatible_buildings": [
+        "tavern"
+      ],
       "happiness_bonus": 28.0,
       "efficiency_bonus": 0.2,
       "description": "Maximises guest satisfaction. Higher nightly room income."
@@ -172,7 +384,9 @@
       "id": "blacksmith_worker",
       "label": "Blacksmith's Apprentice",
       "rarity": "uncommon",
-      "compatible_buildings": ["blacksmith"],
+      "compatible_buildings": [
+        "blacksmith"
+      ],
       "happiness_bonus": 20.0,
       "efficiency_bonus": 0.2,
       "description": "Assists the master smith. Required for blacksmith at higher levels."
@@ -181,13 +395,14 @@
       "id": "forager",
       "label": "Forager",
       "rarity": "common",
-      "compatible_buildings": ["farm"],
+      "compatible_buildings": [
+        "farm"
+      ],
       "happiness_bonus": 14.0,
       "efficiency_bonus": 0.1,
       "description": "Gathers wild ingredients efficiently. Unlocks rare forage finds sooner."
     }
   },
-
   "special_skills": {
     "architect": {
       "id": "architect",
@@ -279,98 +494,228 @@
       }
     }
   },
-
   "bad_skills": {
     "clumsy": {
       "id": "clumsy",
       "label": "Clumsy",
       "description": "Prone to minor accidents. Slight efficiency penalty when assigned to any building.",
-      "effects": { "efficiency_penalty": 0.05 }
+      "effects": {
+        "efficiency_penalty": 0.05
+      }
     },
     "loud": {
       "id": "loud",
       "label": "Loud",
       "description": "Disrupts neighbours. Small happiness penalty to adjacent citizens.",
-      "effects": { "adjacent_happiness_penalty": 3.0 }
+      "effects": {
+        "adjacent_happiness_penalty": 3.0
+      }
     },
     "lazy": {
       "id": "lazy",
       "label": "Lazy",
       "description": "Works at reduced speed. Efficiency penalty when assigned as staff.",
-      "effects": { "efficiency_penalty": 0.1 }
+      "effects": {
+        "efficiency_penalty": 0.1
+      }
     },
     "wasteful": {
       "id": "wasteful",
       "label": "Wasteful",
       "description": "Uses more resources than necessary. Slight material cost increase.",
-      "effects": { "resource_cost_increase": 0.08 }
+      "effects": {
+        "resource_cost_increase": 0.08
+      }
     },
     "grumpy": {
       "id": "grumpy",
       "label": "Grumpy",
       "description": "Has a naturally low happiness ceiling. Harder to keep satisfied.",
-      "effects": { "happiness_cap_penalty": 15.0 }
+      "effects": {
+        "happiness_cap_penalty": 15.0
+      }
     },
     "gossipy": {
       "id": "gossipy",
       "label": "Gossipy",
       "description": "Spreads rumours. Occasional small city happiness dip event.",
-      "effects": { "occasional_happiness_event": -3.0 }
+      "effects": {
+        "occasional_happiness_event": -3.0
+      }
     },
     "superstitious": {
       "id": "superstitious",
       "label": "Superstitious",
       "description": "Refuses to work near the magic tower. Happiness penalty if assigned nearby.",
-      "effects": { "magic_tower_proximity_penalty": 10.0 }
+      "effects": {
+        "magic_tower_proximity_penalty": 10.0
+      }
     },
     "homesick": {
       "id": "homesick",
       "label": "Homesick",
       "description": "Happiness decays slightly faster unless city has high overall happiness.",
-      "effects": { "happiness_decay_rate": 0.05 }
+      "effects": {
+        "happiness_decay_rate": 0.05
+      }
     },
     "picky_eater": {
       "id": "picky_eater",
       "label": "Picky Eater",
-      "description": "Requires a specific food type in the tavern to maintain happiness.",
-      "effects": { "food_requirement": "specific" }
+      "description": "Only eats the finest — spends 20% more on food every day.",
+      "effects": {
+        "food_cost_multiplier": 1.2
+      }
     },
     "night_owl": {
       "id": "night_owl",
       "label": "Night Owl",
       "description": "Less effective in morning shifts. Slight daytime efficiency penalty.",
-      "effects": { "daytime_efficiency_penalty": 0.07 }
+      "effects": {
+        "daytime_efficiency_penalty": 0.07
+      }
     }
   },
-
   "arrival_weights": {
     "comment": "Probability weights for wealth level by player level bracket. Higher player level = better rolls.",
     "player_level_1_3": {
-      "wealth_distribution": [20, 30, 25, 15, 7, 2, 1, 0, 0, 0],
+      "wealth_distribution": [
+        20,
+        30,
+        25,
+        15,
+        7,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
       "special_skill_chance": 0.03,
       "rare_skill_chance": 0.08
     },
     "player_level_4_6": {
-      "wealth_distribution": [5, 15, 25, 25, 15, 8, 5, 2, 0, 0],
+      "wealth_distribution": [
+        5,
+        15,
+        25,
+        25,
+        15,
+        8,
+        5,
+        2,
+        0,
+        0
+      ],
       "special_skill_chance": 0.06,
       "rare_skill_chance": 0.12
     },
     "player_level_7_9": {
-      "wealth_distribution": [0, 5, 15, 20, 20, 18, 12, 7, 2, 1],
+      "wealth_distribution": [
+        0,
+        5,
+        15,
+        20,
+        20,
+        18,
+        12,
+        7,
+        2,
+        1
+      ],
       "special_skill_chance": 0.1,
       "rare_skill_chance": 0.18
     },
     "player_level_10_plus": {
-      "wealth_distribution": [0, 0, 5, 10, 18, 22, 20, 14, 8, 3],
+      "wealth_distribution": [
+        0,
+        0,
+        5,
+        10,
+        18,
+        22,
+        20,
+        14,
+        8,
+        3
+      ],
       "special_skill_chance": 0.15,
       "rare_skill_chance": 0.25
     }
   },
-
   "age_ranges": {
-    "young":  { "min": 18, "max": 28, "weight": 30 },
-    "adult":  { "min": 29, "max": 45, "weight": 45 },
-    "mature": { "min": 46, "max": 60, "weight": 20 },
-    "elder":  { "min": 61, "max": 80, "weight": 5  }
+    "young": {
+      "min": 18,
+      "max": 28,
+      "weight": 30
+    },
+    "adult": {
+      "min": 29,
+      "max": 45,
+      "weight": 45
+    },
+    "mature": {
+      "min": 46,
+      "max": 60,
+      "weight": 20
+    },
+    "elder": {
+      "min": 61,
+      "max": 80,
+      "weight": 5
+    }
+  },
+  "hobbies": {
+    "stargazing": {
+      "label": "Stargazing",
+      "daily_cost": 2,
+      "happiness_bonus": 5
+    },
+    "exercise": {
+      "label": "Exercise",
+      "daily_cost": 5,
+      "happiness_bonus": 8
+    },
+    "gardening": {
+      "label": "Gardening",
+      "daily_cost": 8,
+      "happiness_bonus": 8
+    },
+    "reading": {
+      "label": "Reading",
+      "daily_cost": 10,
+      "happiness_bonus": 8
+    },
+    "fishing": {
+      "label": "Fishing",
+      "daily_cost": 12,
+      "happiness_bonus": 9
+    },
+    "music": {
+      "label": "Music",
+      "daily_cost": 15,
+      "happiness_bonus": 10
+    },
+    "art": {
+      "label": "Art",
+      "daily_cost": 20,
+      "happiness_bonus": 11
+    },
+    "feasting": {
+      "label": "Feasting",
+      "daily_cost": 30,
+      "happiness_bonus": 12
+    },
+    "collecting": {
+      "label": "Trinket Collecting",
+      "daily_cost": 40,
+      "happiness_bonus": 14
+    },
+    "working": {
+      "label": "Workaholic",
+      "daily_cost": 0,
+      "happiness_bonus": 6,
+      "requires_job": true
+    }
   }
 }
