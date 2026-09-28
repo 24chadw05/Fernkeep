@@ -23,3 +23,18 @@ __pycache__/
 
 # Private notes — keep local
 FERNKEEP_HANDOFF.pdf
+
+# Only the game is uploaded. Plans, docs, tooling, backups and analysis output
+# stay local.
+*.docx
+*.pdf
+_original_art/
+tools/
+graphify-out/
+
+# Textures nothing in the game loads
+assets/buildings/Buildings.png*
+assets/tilesets/Tileset_Ground.png*
+assets/tilesets/Tileset_Road.png*
+assets/ui/button_*.png*
+assets/ui/parchment_*.png*
